@@ -3,14 +3,18 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import React from 'react';
+import Footer from "./Student/Components/Footer";
+import {Routes, Route} from 'react-router-dom';
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      {/* This is a comment */}
+      <Routes>
+        <Route></Route>
+      </Routes>
+      <Footer />
     </>
   );
 }
