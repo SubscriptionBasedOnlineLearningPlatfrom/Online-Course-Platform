@@ -3,7 +3,7 @@ import cors from "cors";
 import 'dotenv/config';
 import cookieParser from "cookie-parser";
 import pool from "./Config/database.js";
-// import courseRouter from "./Routers/CourseRouter.js";
+import courseRouter from "./Routers/CourseRouter.js";
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
 
 
 // routers
-// app.use('/courses',courseRouter);
+app.use('/courses',courseRouter);
 
 // Start the server
 app.listen(port, () => {
