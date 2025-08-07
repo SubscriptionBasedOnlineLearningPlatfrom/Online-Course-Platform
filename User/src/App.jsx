@@ -3,7 +3,9 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import React from 'react';
-import Navbar from "./Components/Navbar";
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Courses from "./pages/Courses";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -11,8 +13,9 @@ function App() {
   return (
     <>
       <Navbar/>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      {/* This is a comment */}
+      <Routes>
+        <Route path="/courses" element={<Courses />} /> 
+      </Routes>
     </>
   );
 }
