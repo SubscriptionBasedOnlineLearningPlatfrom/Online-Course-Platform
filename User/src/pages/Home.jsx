@@ -69,7 +69,7 @@ const Index = () => {
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
           Explore. Learn. 
 
-<span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Grow.</span>
+<span className="bg-gradient-to-r from-[#0173d1] to-[#85c1f3] bg-clip-text text-transparent"> Grow.</span>
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
           Unlock expert-led courses, keep track of your growth, and earn credentials that showcase your skills. Start advancing your knowledge today.               </p>
@@ -82,9 +82,9 @@ const Index = () => {
                 placeholder="What do you want to learn today?"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 pr-4 py-4 text-lg border-2 border-gray-200 focus:border-blue-500 rounded-full"
+                className="pl-12 pr-4 py-4 text-lg border-2 border-gray-200 focus:border-[#0173d1] rounded-full"
               />
-              <Button className="absolute right-2 top-1/2 transform -translate-y-1/2 rounded-full px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+              <Button className="absolute right-2 top-1/2 transform -translate-y-1/2 rounded-full px-6 bg-gradient-to-r from-[#0173d1] to-[#85c1f3] hover:from-[#85c1f3] hover:to-[#0173d1]">
                 Search
               </Button>
             </div>
@@ -92,12 +92,12 @@ const Index = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/courses">
-              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg rounded-full">
+              <Button size="lg" className="bg-gradient-to-r from-[#0173d1] to-[#85c1f3] hover:from-[#85c1f3] hover:to-[#0173d1] text-white px-8 py-4 text-lg rounded-full">
                 Browse Courses
               </Button>
             </Link>
             <Link to="/pricing">
-              <Button variant="outline" size="lg" className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-4 text-lg rounded-full">
+              <Button variant="outline" size="lg" className="border-2 border-[#0173d1] text-[#4682b4] hover:bg-blue-50 px-8 py-4 text-lg rounded-full">
                 View Pricing
               </Button>
             </Link>
@@ -111,7 +111,7 @@ const Index = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mb-4">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-[#0173d1] to-[#85c1f3] rounded-full mb-4">
                   <stat.icon className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-3xl font-bold text-gray-900 mb-2">{stat.value}</h3>
@@ -140,7 +140,7 @@ const Index = () => {
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute top-4 left-4">
-                    <Badge className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+                    <Badge className="bg-gradient-to-r from-[#0173d1] to-[#85c1f3] text-white">
                       {course.level}
                     </Badge>
                   </div>
@@ -153,7 +153,7 @@ const Index = () => {
                 </div>
                 
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-xl font-bold group-hover:text-blue-600 transition-colors">
+                  <CardTitle className="text-xl font-bold group-hover:text-[#0173d1] transition-colors">
                     {course.title}
                   </CardTitle>
                   <p className="text-gray-600">by {course.instructor}</p>
@@ -175,8 +175,8 @@ const Index = () => {
                   </div>
                   
                   <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-blue-600">{course.price}</span>
-                    <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                    <span className="text-2xl font-bold text-[#0173d1]">{course.price}</span>
+                    <Button className="bg-gradient-to-r from-[#0173d1] to-[#85c1f3] hover:from-[#85c1f3] hover:to-[#0173d1]">
                       Enroll Now
                     </Button>
                   </div>
@@ -198,7 +198,7 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card className="text-center p-8 border-0 shadow-lg hover:shadow-xl transition-shadow">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-6">
-                <BookOpen className="w-8 h-8 text-blue-600" />
+                <BookOpen className="w-8 h-8 text-[#0173d1]" />
               </div>
               <h3 className="text-xl font-bold mb-4">Expert-Led Courses</h3>
               <p className="text-gray-600">Learn from industry professionals and academic experts who bring real-world experience to every lesson.</p>
@@ -214,7 +214,7 @@ const Index = () => {
             
             <Card className="text-center p-8 border-0 shadow-lg hover:shadow-xl transition-shadow">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-100 rounded-full mb-6">
-                <Award className="w-8 h-8 text-purple-600" />
+                <Award className="w-8 h-8 text-[#85c1f3]" />
               </div>
               <h3 className="text-xl font-bold mb-4">Verified Certificates</h3>
               <p className="text-gray-600">Earn industry-recognized certificates upon course completion to showcase your new skills and knowledge.</p>
@@ -224,12 +224,12 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-r from-blue-600 to-purple-600">
+      <section className="py-20 px-4 bg-gradient-to-r from-[#0173d1] to-[#85c1f3]">
         <div className="container mx-auto text-center">
           <h2 className="text-4xl font-bold text-white mb-4">Ready to Start Learning?</h2>
           <p className="text-xl text-blue-100 mb-8">Join thousands of students already advancing their careers</p>
           <Link to="/register">
-            <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 text-lg rounded-full">
+            <Button size="lg" className="bg-white text-[#0173d1] hover:bg-gray-100 px-8 py-4 text-lg rounded-full">
               Get Started Today
             </Button>
           </Link>
