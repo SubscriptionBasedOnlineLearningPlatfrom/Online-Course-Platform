@@ -1,4 +1,4 @@
-import { get_course_details } from "../../Database/Course.js";
+import { get_course_details, getComments } from "../../Database/Course.js";
 import pool from "../Config/database.js";
 
 const course_details = async (req,res) => {
@@ -17,4 +17,15 @@ const course_details = async (req,res) => {
 
 }
 
-export {course_details};
+const get_comments = async (req, res) => {
+    try {
+        const course_id = req.params.courseId;
+        const result = await pool.query(getComments(course_id));
+        return res.json(result.rows);
+    } catch (error) {
+        console.error(error.message);
+        return res.status(500).json(error.message);
+    }
+}
+
+export {course_details, get_comments};

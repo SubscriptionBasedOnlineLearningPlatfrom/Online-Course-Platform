@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS users (
     password_hash VARCHAR(50),
     user_type VARCHAR(30),
     registration_date TIMESTAMP,
-    last_login TIMESTAMP
+    last_login TIMESTAMP,
+    user_image TEXT,
 );
 
 
@@ -22,6 +23,7 @@ CREATE TABLE IF NOT EXISTS instructors (
 
 CREATE TABLE IF NOT EXISTS courses (
     course_id SERIAL PRIMARY KEY,
+    course_image text,
     course_title VARCHAR(50),
     course_description TEXT,
     instructor_id INTEGER REFERENCES instructors(instructor_id),

@@ -1,6 +1,7 @@
 const get_course_details =(courseId) => {
                             return `SELECT 
                                 c.course_id,
+                                c.course_image,
                                 c.course_title,
                                 c.course_description,
                                 c.creation_date,
@@ -10,6 +11,7 @@ const get_course_details =(courseId) => {
                                 c.language,
                                 u.username AS instructor_name, 
                                 i.title AS instructor_title,
+                                u.user_image as instructor_image,
                                 i.rating AS instructor_rating,
                                 m.module_id,
                                 m.module_title,
@@ -23,5 +25,18 @@ const get_course_details =(courseId) => {
                             `;
 }
 
+const getComments = (courseId) => {
+    return `SELECT 
+                c.comment_id,
+                c.comment_text,
+                c.comment_date,
+                u.username AS commenter_name,
+                u.user_image AS commenter_image
+            FROM comments c
+            JOIN users u ON c.user_id = u.user_id
+            WHERE c.course_id = ${courseId}
+            ORDER BY c.comment_date DESC;`;
+}
 
-export {get_course_details};
+
+export {get_course_details, getComments};

@@ -5,6 +5,7 @@ import "./App.css";
 import React from 'react';
 import Footer from "./Student/Components/Footer";
 import {Routes, Route} from 'react-router-dom';
+import CourseDetails from "./Student/Components/CourseDetails";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -12,7 +13,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route></Route>
+        <Route path="/courses/:courseId" element={<CourseDetails />}/>
       </Routes>
       <Footer />
     </>
