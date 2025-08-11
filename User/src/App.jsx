@@ -9,6 +9,9 @@ import Navbar from "./components/Navbar.jsx";
 import Courses from "./pages/Courses";
 import Footer from "./Student/Components/Footer";
 
+import DisplayCourse from "./Student/Pages/DisplayCourse";
+import DashBoard from "./Student/Pages/DashBoard";
+
 
 
 function App() {
@@ -18,8 +21,11 @@ function App() {
     <>
       <Navbar/>
       <Routes>
-         <Route path="/" element={<Home />} /> 
+        <Route path="/courses" element={<DisplayCourse />}></Route>
+        <Route path="/dashboard" element={<DashBoard />}></Route>
+
         <Route path="/courses" element={<Courses />} /> 
+
       </Routes>
       <Footer />
 
