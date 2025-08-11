@@ -5,7 +5,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import React from 'react';
 import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar.jsx";
+import Navbar from "./components/Navbar";
 import Courses from "./pages/Courses";
 import Footer from "./Student/Components/Footer";
 
