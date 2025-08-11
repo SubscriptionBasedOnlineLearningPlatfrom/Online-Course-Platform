@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import CourseCard from "./CourseCard";
 
 const EnrolledCourses = () => {
@@ -70,6 +70,8 @@ const EnrolledCourses = () => {
   const [sortBy, setSortBy] = useState("recent");
   const [filterStatus, setFilterStatus] = useState("all"); // For enrolled
   const [selectedCategory, setSelectedCategory] = useState("all"); // For completed
+
+  
 
   // Load initial data when tab changes
   useEffect(() => {

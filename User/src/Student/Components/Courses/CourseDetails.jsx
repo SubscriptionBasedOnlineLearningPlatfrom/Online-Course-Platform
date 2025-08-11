@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import { useParams } from "react-router-dom";
 import CourseModules from "./CourseModules";
+import { CourseContext } from "../../Contexts/CourseContext";
 
 
 const CourseDetails = () => {
@@ -21,6 +22,9 @@ const CourseDetails = () => {
     const [loading, setLoading] = useState(true);
     const [modules,setModules] = useState([]);
     const [course, setCourse] = useState(null);
+    const { enrolled, setEnrolled } = useContext(CourseContext);
+
+    console.log(enrolled);
 
   // Dummy course data
   const dummyCourse = {
@@ -223,7 +227,7 @@ const CourseDetails = () => {
               <p className="text-blue-100 mb-4">
                 Join thousands of students already enrolled in this course.
               </p>
-              <button className="w-full bg-white text-blue-600 font-semibold py-3 px-4 rounded-xl hover:bg-gray-50 transition-colors duration-200">
+              <button onClick={() => setEnrolled(true)} className={`w-full bg-white text-blue-600 font-semibold py-3 px-4 rounded-xl hover:bg-gray-50 transition-colors duration-200 cursor-pointer ${enrolled ? 'opacity-50 cursor-not-allowed' : ''}`}>
                 Enroll Now - {formatPrice(course.price)}
               </button>
             </div>
