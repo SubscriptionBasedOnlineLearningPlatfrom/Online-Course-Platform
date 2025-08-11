@@ -6,6 +6,8 @@ import React from 'react';
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Courses from "./pages/Courses";
+import Footer from "./Student/Components/Footer";
+import {Routes, Route} from 'react-router-dom';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -16,6 +18,7 @@ function App() {
       <Routes>
         <Route path="/courses" element={<Courses />} /> 
       </Routes>
+      <Footer />
     </>
   );
 }
