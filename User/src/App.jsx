@@ -1,13 +1,14 @@
-import Home from "./pages/Home.jsx";
+// import Home from "./pages/Home.jsx";
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import React from 'react';
 import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Courses from "./pages/Courses";
+import Navbar from "./Components/Navbar";
+import Courses from "./Student/Pages/Courses";
 import Footer from "./Student/Components/Footer";
+import Home from "./Student/Pages/Home.jsx"; 
 
 import DisplayCourse from "./Student/Pages/DisplayCourse";
 import DashBoard from "./Student/Pages/DashBoard";
@@ -21,7 +22,8 @@ function App() {
     <>
       <Navbar/>
       <Routes>
-        <Route path="/courses" element={<DisplayCourse />}></Route>
+        <Route path="/" element={<Home/>}></Route>
+        <Route path="/displaycourses" element={<DisplayCourse />}></Route>
         <Route path="/dashboard" element={<DashBoard />}></Route>
 
         <Route path="/courses" element={<Courses />} /> 
