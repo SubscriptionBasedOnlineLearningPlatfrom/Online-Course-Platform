@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/Components/Home/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/Components/Home/ui/card";
+import { Badge } from "@/Components/Home/ui/badge";
+import { Input } from "@/Components/Home/ui/input";
 import { BookOpen, Users, Award, Star, Search, Play, Clock, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 
