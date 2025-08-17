@@ -258,7 +258,7 @@ const Comments = () => {
   }
 
  return (
-  <div className="mt-12">
+  <div className="mt-12 max-w-7xl mx-auto px-6">
     {/* Comments Section */}
     <div className="bg-white rounded-2xl shadow-lg p-8">
       {/* Section Header */}
