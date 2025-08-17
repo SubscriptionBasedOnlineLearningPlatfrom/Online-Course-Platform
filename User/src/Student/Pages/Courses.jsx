@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';  // assumed there is link for each course routed to course/id
 import course1 from '../assets/course1.jpg';
@@ -148,4 +149,3 @@ const Courses = () => {
 };
 
 export default Courses;
- */

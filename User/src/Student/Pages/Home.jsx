@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/Components/Home/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/Components/Home/ui/card";
@@ -9,7 +10,7 @@ import { Link } from "react-router-dom";
 // import Header from "@/components/Header";
 // import Footer from "@/components/Footer";
 
-const Index = () => {
+const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const featuredCourses = [
@@ -241,4 +242,6 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Home;
+
+      
