@@ -1,17 +1,17 @@
+
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/Components/Home/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/Components/Home/ui/card";
+import { Badge } from "@/Components/Home/ui/badge";
+import { Input } from "@/Components/Home/ui/input";
 import { BookOpen, Users, Award, Star, Search, Play, Clock, CheckCircle } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // import Header from "@/components/Header";
 // import Footer from "@/components/Footer";
 
-const Index = () => {
+const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const navigate = useNavigate();
 
   const featuredCourses = [
     {
@@ -177,8 +177,8 @@ const Index = () => {
                   
                   <div className="flex items-center justify-between">
                     <span className="text-2xl font-bold text-[#0173d1]">{course.price}</span>
-                    <Button className="bg-gradient-to-r from-[#0173d1] to-[#85c1f3] hover:from-[#85c1f3] hover:to-[#0173d1] cursor-pointer" onClick={() => navigate(`/displayCourses`)}>
-                      View
+                    <Button className="bg-gradient-to-r from-[#0173d1] to-[#85c1f3] hover:from-[#85c1f3] hover:to-[#0173d1]">
+                      Enroll Now
                     </Button>
                   </div>
                 </CardContent>
@@ -242,4 +242,6 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Home;
+
+      
