@@ -59,6 +59,9 @@ const Courses = () => {
       ) : (
         <p className="text-gray-500 mt-6">No courses found.</p>
       )}
+      {/*<Link to={`/courses/123/progress`}>
+          <button>View Progress</button>
+      </Link>----- this is a button to check progress tracking:testing purposes only*/}
     </div>
   );
 };
