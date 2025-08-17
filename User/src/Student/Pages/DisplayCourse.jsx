@@ -6,7 +6,7 @@ import Comments from '../Components/Courses/Comments'
 
 const DisplayCourse = () => {
   return (
-    <div>
+    <div className ="min-h-screen bg-gray-50 py-8">
         <CourseDetails />
         <Comments />
         <RelatedCourses />

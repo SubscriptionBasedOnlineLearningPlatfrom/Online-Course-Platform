@@ -21,11 +21,11 @@ function App() {
     <>
       <Navbar/>
       <Routes>
-        <Route path="/courses" element={<DisplayCourse />}></Route>
+        <Route path="/displayCourses" element={<DisplayCourse />}></Route>
         <Route path="/dashboard" element={<DashBoard />}></Route>
 
         <Route path="/courses" element={<Courses />} /> 
-
+        {/* <Route path="/" element={<Home />} /> */}
       </Routes>
       <Footer />
 
