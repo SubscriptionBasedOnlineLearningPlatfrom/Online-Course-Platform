@@ -103,8 +103,8 @@ const CourseDetails = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-6xl mx-auto px-4">
+    <div>
+      <div className="max-w-7xl mx-auto px-4">
         <div className="grid md:grid-cols-3 gap-8">
           {/* Hero Section */}
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden mb-8 md:col-span-2">
