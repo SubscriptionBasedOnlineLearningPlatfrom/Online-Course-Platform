@@ -1,6 +1,4 @@
-
-
-/* message to dev team - this component will be called in Course Detail page.there should be a view progress button in course detail page
+/* message to dev team - this component will be called in Course Content(page which contains modules, videos etc) page.there should be a view progress button in that page
    The link for that button should be this <Link to={`/courses/${course.id}/progress`}>View My Progress</Link>
 
 Also for this there should be a student progress table with s_id,c_id,moduel_id,completed(T/F),completed date
@@ -64,10 +62,25 @@ const CourseProgress = () => {
           <h3 className="text-lg font-semibold mb-2">Student ID</h3>
           <p className="text-gray-700">{studentId}</p>
         </div>
-        <div className="flex-1 min-w-[250px] bg-white shadow rounded-lg p-6 text-center">
-          <h3 className="text-lg font-semibold mb-2">Modules Completed</h3>
-          <p className="text-gray-700">{completedModules} / {totalModules} ({progressPercent}%)</p>
-        </div>
+<div className="flex-1 min-w-[250px] bg-white shadow rounded-lg p-6 text-center flex flex-col items-center justify-between">
+  <div>
+    <h3 className="text-lg font-semibold mb-2">Modules Completed</h3>
+    <p className="text-gray-700">
+      {completedModules} / {totalModules} ({progressPercent}%)
+    </p>
+  </div>
+
+  <button
+    disabled={completedModules !== totalModules}
+    className={`mt-4 w-full sm:w-auto px-4 py-2 rounded-lg font-semibold transition 
+      ${completedModules === totalModules 
+        ? "bg-blue-600 text-white hover:bg-blue-700" 
+        : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+  >
+    Download Certificate
+  </button>
+</div>
+
       </div>
 
       {/* Charts */}
