@@ -1,5 +1,6 @@
 /* message to dev team - this component will be called in Course Content(page which contains modules, videos etc) page.there should be a view progress button in that page
    The link for that button should be this <Link to={`/courses/${course.id}/progress`}>View My Progress</Link>
+   In the course content page there should be check boxes to mark so when completed mark check boxes- then completed=true
 
 Also for this there should be a student progress table with s_id,c_id,moduel_id,completed(T/F),completed date
 Token payload should include student id
