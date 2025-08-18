@@ -60,6 +60,12 @@ const Courses = () => {
       ) : (
         <p className="text-gray-500 mt-6">No courses found.</p>
       )}
+      {/*<Link
+        to={`/courses/123/progress`}
+        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+      >
+        View My Progress
+      </Link>     ---- Testing purposes only  */}
     </div>
   );
 };
