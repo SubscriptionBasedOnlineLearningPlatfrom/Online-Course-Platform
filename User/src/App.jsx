@@ -31,7 +31,7 @@ function App() {
         <Route path="/courses" element={<Courses />} /> {/* this is a page to display all courses which are visible to public users who are not logged in */}
         <Route path="/courses/:courseId/progress" element={<CourseProgress />} />  {/* student progress of the logged in student*/}
         <Route path="/displayCourses" element={<DisplayCourse />} /> {/* this is a page to display all courses which are visible to public users who are not logged in */}
-        <Route path="/payment" element={<PaymentCard />} />
+        
       </Routes>
       <Footer />
 

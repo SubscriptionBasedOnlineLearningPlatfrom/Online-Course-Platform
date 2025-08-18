@@ -32,7 +32,7 @@ const PaymentCard = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-[35%] mx-auto p-6 bg-white shadow-lg rounded-lg"
+      className="w-[100%] mx-auto p-3 bg-white shadow-lg rounded-lg"
     >
       <div className="space-y-8">
         {/* Payment Type Section */}
