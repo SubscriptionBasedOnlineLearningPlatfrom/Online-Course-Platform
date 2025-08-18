@@ -13,7 +13,7 @@ import DashBoard from "./Student/Pages/DashBoard";
 import Courses from "./Student/Pages/Courses";
 import CourseProgress from "./Student/Components/Courses/CourseProgress";
 import CourseDetails from "./Student/Components/Courses/CourseDetails";
-import PaymentCard from "./Student/Components/Payment/PaymentCard";
+import PaymentCard from "../../Instructor/src/Components/Payment/PaymentCard";
 
 
 
