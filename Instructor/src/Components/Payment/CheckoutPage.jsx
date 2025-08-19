@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
-import { PricingContext } from "../Contexts/PricingConetxt";
+// import { PricingContext } from "../../Context/PricingContext";
 
 export default function CheckoutPage() {
 
-    const {pricingData,setPricingData} = useContext(PricingContext);
+    // const {pricingData,setPricingData} = useContext(PricingContext);
 
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center p-6">

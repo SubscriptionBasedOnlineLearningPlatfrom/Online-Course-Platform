@@ -5,6 +5,7 @@ import './App.css'
 import React from 'react'; 
 import { Route, Routes } from 'react-router-dom';
 import Pricing from './Pages/Pricing';
+import ViewCreatedCourse from './Components/Courses/ViewCreatedCourse';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -13,6 +14,8 @@ function App() {
     <>
       <Routes>
         <Route path="/pricing" element={<Pricing />} />
+        <Route path="/ViewCreatedCourse" element={<ViewCreatedCourse />} />
+
       </Routes>
     </>
   )
