@@ -1,10 +1,9 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';  // assumed there is link for each course routed to course/id
-import course1 from '../assets/course1.jpg';
-import course2 from '../assets/course2.jpg';
-import course3 from '../assets/course3.jpg';
-import course4 from '../assets/course4.jpg';
+import course1 from '../../assets/course1.jpg';
+import course2 from '../../assets/course2.jpg';
+import course3 from '../../assets/course3.jpg';
+import course4 from '../../assets/course4.jpg';
 // temporarily added images
 
 const courses = [
@@ -149,3 +148,5 @@ const Courses = () => {
 };
 
 export default Courses;
+ */
+
