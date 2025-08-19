@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import React from 'react';
 import { Routes, Route } from "react-router-dom";
-import Navbar from "./Student/Components/Navbar";
+import Navbar from "./Student/Components/Navbar.jsx";
 import Footer from "./Student/Components/Footer";
 import Home from "./Student/Pages/Home.jsx"; 
 import DisplayCourse from "./Student/Pages/DisplayCourse";
