@@ -1,18 +1,14 @@
-// import Home from "./pages/Home.jsx";
 import { useState } from "react";
-
-import "./App.css";
-import React from 'react';
 import { Routes, Route } from "react-router-dom";
-import Navbar from "./Components/Navbar";
-import Courses from "./Student/Pages/Courses";
+import { Toaster } from "sonner"; // Import the Toaster
+import Home from "./Student/Pages/Home";
+import Navbar from "./Student/Components/Navbar";
 import Footer from "./Student/Components/Footer";
-import Home from "./Student/Pages/Home.jsx"; 
+import Courses from "./Student/Pages/Courses";
 import DisplayCourse from "./Student/Pages/DisplayCourse";
 import DashBoard from "./Student/Pages/DashBoard";
 import CourseProgress from "./Student/Components/Courses/CourseProgress";
-
-
+import CertificatePage from "./Student/Pages/Certificate";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -20,6 +16,7 @@ function App() {
   return (
     <>
       <Navbar/>
+      <Toaster richColors position="top-center" /> {/* Add the Toaster component here */}
       <Routes>
 
         <Route path="/" element={<Home/>}></Route>
@@ -29,11 +26,12 @@ function App() {
         <Route path="/courses" element={<Courses />} /> {/* this is a page to display all courses which are visible to public users who are not logged in */}
 
         <Route path="/courses/:courseId/progress" element={<CourseProgress />} />  {/* student progress of the logged in student*/}
+        <Route path="/certificate/:courseId" element={<CertificatePage />} />
+
         <Route path="/displayCourses" element={<DisplayCourse />} />
 
       </Routes>
       <Footer />
-
     </>
   );
 }
