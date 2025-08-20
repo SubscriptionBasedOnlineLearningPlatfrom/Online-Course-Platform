@@ -93,6 +93,13 @@ const Sidebar = () => {
           >
             Show Enrolled Students
           </Link>
+
+          <Link
+            to="/pricing"
+            className="block mt-4 py-2 px-3 rounded hover:bg-blue-200 cursor-pointer transition text-left"
+          >
+            Pricing
+          </Link>
         </nav>
       </div>
     </div>
