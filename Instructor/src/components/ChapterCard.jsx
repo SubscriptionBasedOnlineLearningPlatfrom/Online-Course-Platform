@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from "react";
 
 export default function ChapterCard({ chapter }) {
-  const [resources, setResources] = useState([]);
+  // Initialize state with existing files
+  const [resources, setResources] = useState(chapter.files || []);
 
-  // Handle file upload simulation
+  // Handle file upload
   const handleAddResource = (type) => {
     const input = document.createElement("input");
     input.type = "file";
     input.onchange = (e) => {
       const file = e.target.files[0];
       if (file) {
-        setResources((prev) => [
-          ...prev,
-          { id: Date.now(), type, name: file.name },
-        ]);
+        const newResource = {
+          id: Date.now(), // or backend id
+          type,
+          name: file.name,
+        };
+        setResources((prev) => [...prev, newResource]);
       }
     };
     input.click();
@@ -21,7 +24,10 @@ export default function ChapterCard({ chapter }) {
 
   // Remove resource
   const handleDeleteResource = (id) => {
-    setResources((prev) => prev.filter((res) => res.id !== id));
+    if (window.confirm("Are you sure you want to delete this file?")) {
+      setResources((prev) => prev.filter((res) => res.id !== id));
+      //   call DELETE /api/resources/:id
+    }
   };
 
   return (
