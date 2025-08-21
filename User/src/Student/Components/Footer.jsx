@@ -18,14 +18,14 @@ const Footer = () => {
               <h2 className="text-2xl font-bold text-white">ProLearnX</h2>
             </div>
             <div>
-              <p className="text-slate-400 hover:text-blue-400 leading-relaxed  max-w-md cursor-pointer">
+              <p className="text-slate-400 hover:text-[#0173d1] leading-relaxed  max-w-md cursor-pointer">
                 Transform your professional life with our extensive online
                 learning platform. Gain access to top-tier courses, monitor your
                 progress, and earn certificates that employers value. Take the
                 first step towards your future now!
               </p>
-              <p><a href="" className="text-slate-400 hover:text-blue-400 leading-relaxed  max-w-md cursor-pointer">#ProfessionalGrowth</a></p>
-              <p><a href="" className="text-slate-400 hover:text-blue-400 leading-relaxed  max-w-md cursor-pointer">#E-Learning</a></p>
+              <p><a href="" className="text-slate-400 hover:text-[#0173d1] leading-relaxed  max-w-md cursor-pointer">#ProfessionalGrowth</a></p>
+              <p><a href="" className="text-slate-400 hover:text-[#0173d1] leading-relaxed  max-w-md cursor-pointer">#E-Learning</a></p>
               
             </div>
 
@@ -94,7 +94,7 @@ const Footer = () => {
               <li>
                 <a
                   href="#"
-                  className="text-slate-400 hover:text-blue-400 transition-colors duration-300"
+                  className="text-slate-400 hover:text-[#0173d1] transition-colors duration-300"
                 >
                   Browse Courses
                 </a>
@@ -102,7 +102,7 @@ const Footer = () => {
               <li>
                 <a
                   href="#"
-                  className="text-slate-400 hover:text-blue-400 transition-colors duration-300"
+                  className="text-slate-400 hover:text-[#0173d1] transition-colors duration-300"
                 >
                   Categories
                 </a>
@@ -110,7 +110,7 @@ const Footer = () => {
               <li>
                 <a
                   href="#"
-                  className="text-slate-400 hover:text-blue-400 transition-colors duration-300"
+                  className="text-slate-400 hover:text-[#0173d1] transition-colors duration-300"
                 >
                   Pricing Plans
                 </a>
@@ -118,7 +118,7 @@ const Footer = () => {
               <li>
                 <a
                   href="#"
-                  className="text-slate-400 hover:text-blue-400 transition-colors duration-300"
+                  className="text-slate-400 hover:text-[#0173d1] transition-colors duration-300"
                 >
                   Become Instructor
                 </a>
@@ -126,7 +126,7 @@ const Footer = () => {
               <li>
                 <a
                   href="#"
-                  className="text-slate-400 hover:text-blue-400 transition-colors duration-300"
+                  className="text-slate-400 hover:text-[#0173d1] transition-colors duration-300"
                 >
                   Certificates
                 </a>
@@ -134,7 +134,7 @@ const Footer = () => {
               <li>
                 <a
                   href="#"
-                  className="text-slate-400 hover:text-blue-400 transition-colors duration-300"
+                  className="text-slate-400 hover:text-[#0173d1] transition-colors duration-300"
                 >
                   Help Center
                 </a>
@@ -150,7 +150,7 @@ const Footer = () => {
             <div className="space-y-4">
               <div className="flex items-start gap-3">
                 <svg
-                  className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0"
+                  className="w-5 h-5 text-[#0173d1] mt-0.5 flex-shrink-0"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
@@ -158,14 +158,14 @@ const Footer = () => {
                 </svg>
                 <a
                   href="mailto:mora@prolearnX.com"
-                  className="text-slate-400 hover:text-blue-400 transition-colors duration-300"
+                  className="text-slate-400 hover:text-[#0173d1] transition-colors duration-300"
                 >
                   mora@prolearnX.com
                 </a>
               </div>
               <div className="flex items-start gap-3">
                 <svg
-                  className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0"
+                  className="w-5 h-5 text-[#0173d1] mt-0.5 flex-shrink-0"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
@@ -173,7 +173,7 @@ const Footer = () => {
                 </svg>
                 <a
                   href="tel:+94751234567"
-                  className="text-slate-400 hover:text-blue-400 transition-colors duration-300"
+                  className="text-slate-400 hover:text-[#0173d1] transition-colors duration-300"
                 >
                   +94 (75) 123-4567
                 </a>
@@ -181,7 +181,7 @@ const Footer = () => {
 
               <div className="flex items-start gap-3">
                 <svg
-                  className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0"
+                  className="w-5 h-5 text-[#0173d1] mt-0.5 flex-shrink-0"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
@@ -189,20 +189,20 @@ const Footer = () => {
                 </svg>
                 <a
                   href="tel:+11213823765"
-                  className="text-slate-400 hover:text-blue-400 transition-colors duration-300"
+                  className="text-slate-400 hover:text-[#0173d1] transition-colors duration-300"
                 >
                   +11 (21) 382-3765
                 </a>
               </div>
               <div className="flex items-start gap-3">
                 <svg
-                  className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0"
+                  className="w-5 h-5 text-[#0173d1] mt-0.5 flex-shrink-0"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
                   <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                 </svg>
-                <div className="text-slate-400 hover:text-blue-400">
+                <div className="text-slate-400 hover:text-[#0173d1]">
                   <a>
                     <div>Bandaranayake Mawatha</div>
                     <div>Moratuwa, 10400 </div>
@@ -224,19 +224,19 @@ const Footer = () => {
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 text-sm">
               <a
                 href="#"
-                className="text-slate-500 hover:text-blue-400 transition-colors duration-300"
+                className="text-slate-500 hover:text-[#0173d1] transition-colors duration-300"
               >
                 Privacy Policy
               </a>
               <a
                 href="#"
-                className="text-slate-500 hover:text-blue-400 transition-colors duration-300"
+                className="text-slate-500 hover:text-[#0173d1] transition-colors duration-300"
               >
                 Terms of Service
               </a>
               <a
                 href="#"
-                className="text-slate-500 hover:text-blue-400 transition-colors duration-300"
+                className="text-slate-500 hover:text-[#0173d1] transition-colors duration-300"
               >
                 Cookie Policy
               </a>
