@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import './App.css'
 import LearnerFeedbackCarousel from './components/LearnerFeedbackCarousel';
-/* import AddCourse from './components/course/addCourse'; */
 import CurriculumPage from './pages/Curriculum';
 import Sidebar from './components/Sidebar'
 import { Route, Routes } from 'react-router-dom';
