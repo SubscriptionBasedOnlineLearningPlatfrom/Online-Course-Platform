@@ -1,14 +1,17 @@
-import { useState } from 'react'
-import './App.css'
-import LearnerFeedbackCarousel from './components/LearnerFeedbackCarousel';
-import CurriculumPage from './pages/Curriculum';
-import Sidebar from './components/Sidebar'
+import React from 'react';
+import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import React from 'react';;
-import AddCourse from './components/course/addCourse'
-import Pricing from './Pages/Pricing';
-import ViewCreatedCourse from './Components/Course/ViewCreatedCourse';
-import EnrollmentOverview from './Components/Enrollments/EnrollmentOverview';
+import './App.css';
+
+import Sidebar from './components/Sidebar';
+import LearnerFeedbackCarousel from './components/LearnerFeedbackCarousel';
+import AddCourse from './components/course/addCourse';
+import ViewCreatedCourse from './components/course/ViewCreatedCourse';
+import EnrollmentOverview from './components/Enrollments/EnrollmentOverview';
+
+import CurriculumPage from './pages/Curriculum';
+import Pricing from './pages/Pricing';
+
 
 function App() {
   const [count, setCount] = useState(0)
