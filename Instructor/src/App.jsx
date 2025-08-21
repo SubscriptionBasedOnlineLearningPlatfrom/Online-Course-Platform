@@ -10,6 +10,7 @@ import EnrollmentOverview from './Components/Enrollments/EnrollmentOverview';
 import CurriculumPage from './pages/Curriculum';
 import Pricing from './Pages/Pricing'
 import QuizCreation from './Components/Quizes/QuizCreation';
+import CommentsReplies from './Components/Comments/CommentsReplies';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
               <Route path="/EnrollmentOverview" element={<EnrollmentOverview />} />
               <Route path="/QuizCreation" element={<QuizCreation />} /> 
               <Route path="/courses" element={<ViewCreatedCourse />} />      
+              <Route path="/CommentsReplies" element={<CommentsReplies />} />      
           </Routes>
           {/*<LearnerFeedbackCarousel/>temporily added for testing - insert component to the correct position of the dashboard */}
         </div>
