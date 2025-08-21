@@ -269,7 +269,7 @@ const RelatedCourses = () => {
                     )}
                   </div>
                   
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-200">
+                  <button className="bg-gradient-to-r from-[#0173d1] to-[#85c1f3] hover:from-[#85c1f3] hover:to-[#0173d1] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-200">
                     View Course
                   </button>
                 </div>
@@ -280,7 +280,7 @@ const RelatedCourses = () => {
 
         {/* Show More Button */}
         <div className="text-center mt-8">
-          <button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold px-8 py-3 rounded-xl transition-all duration-200 transform hover:scale-105">
+          <button className="bg-gradient-to-r from-[#0173d1] to-[#85c1f3] hover:from-[#85c1f3] hover:to-[#0173d1] text-white font-semibold px-8 py-3 rounded-xl transition-all duration-200 transform hover:scale-105">
             Explore More Courses
           </button>
         </div>
