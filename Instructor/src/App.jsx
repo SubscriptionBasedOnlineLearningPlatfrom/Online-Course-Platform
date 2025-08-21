@@ -6,6 +6,7 @@ import AddCourse from './components/course/addCourse'
 import Pricing from './Pages/Pricing';
 import ViewCreatedCourse from './Components/Course/ViewCreatedCourse';
 import EnrollmentOverview from './Components/Enrollments/EnrollmentOverview';
+import QuizCreation from './Components/Quizes/QuizCreation';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -18,6 +19,7 @@ function App() {
         <Route path="/ViewCreatedCourse" element={<ViewCreatedCourse />} />
         <Route path="/EnrollmentOverview" element={<EnrollmentOverview />} />
         <Route path="/EnrollmentOverview" element={<EnrollmentOverview />} />
+        <Route path="/QuizCreation" element={<QuizCreation />} />
         
         
       </Routes>
