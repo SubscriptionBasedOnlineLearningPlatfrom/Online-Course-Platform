@@ -9,8 +9,7 @@ import DisplayCourse from "./Student/Pages/DisplayCourse";
 import DashBoard from "./Student/Pages/DashBoard";
 import Courses from "./Student/Pages/Courses";
 import CourseProgress from "./Student/Components/Courses/CourseProgress";
-import CourseDetails from "./Student/Components/Courses/CourseDetails";
-import PaymentCard from "../../Instructor/src/Components/Payment/PaymentCard";
+import { QuizComponent } from '../../User/src/Student/Components/Quizes/Quiz';
 
 
 
@@ -29,6 +28,7 @@ function App() {
         <Route path="/courses" element={<Courses />} /> {/* this is a page to display all courses which are visible to public users who are not logged in */}
         <Route path="/courses/:courseId/progress" element={<CourseProgress />} />  {/* student progress of the logged in student*/}
         <Route path="/displayCourses" element={<DisplayCourse />} /> {/* this is a page to display all courses which are visible to public users who are not logged in */}
+        <Route path="/QuizComponent" element={<QuizComponent />} />
         
       </Routes>
       <Footer />
