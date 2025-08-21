@@ -3,17 +3,17 @@ import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Sidebar from './components/Sidebar';
+
 import LearnerFeedbackCarousel from './components/LearnerFeedbackCarousel';
 /* import AddCourse from './components/course/addCourse'; */
 import ViewCreatedCourse from './components/Course/ViewCreatedCourse';
 import EnrollmentOverview from './components/Enrollments/EnrollmentOverview';
-
-import AddCourse from './components/course/addCourse';
+import QuizCreation from './Components/Quizes/QuizCreation';
 
 import CurriculumPage from './pages/Curriculum';
 import Pricing from './Pages/Pricing'
 
-import QuizCreation from './Components/Quizes/QuizCreation';
+
 
 
 function App() {
