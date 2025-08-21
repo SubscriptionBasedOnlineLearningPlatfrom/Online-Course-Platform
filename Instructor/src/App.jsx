@@ -1,13 +1,15 @@
 import { useState } from 'react'
 import './App.css'
-import React from 'react'; 
 import LearnerFeedbackCarousel from './components/LearnerFeedbackCarousel';
 /* import AddCourse from './components/course/addCourse'; */
 import CurriculumPage from './pages/Curriculum';
 import Sidebar from './components/Sidebar'
 import { Route, Routes } from 'react-router-dom';
+import React from 'react';;
+import AddCourse from './components/course/addCourse'
 import Pricing from './Pages/Pricing';
-import ViewCreatedCourse from './Components/Courses/ViewCreatedCourse';
+import ViewCreatedCourse from './Components/Course/ViewCreatedCourse';
+import EnrollmentOverview from './Components/Enrollments/EnrollmentOverview';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -25,7 +27,9 @@ function App() {
               />
               {/* <Route path="/add-course" element={<AddCourse />} /> */}
               <Route path="/pricing" element={<Pricing />} />
-              <Route path="/courses" element={<ViewCreatedCourse />} />
+              <Route path="/ViewCreatedCourse" element={<ViewCreatedCourse />} />
+              <Route path="/add-course" element={<AddCourse />} />
+              <Route path="/EnrollmentOverview" element={<EnrollmentOverview />} />
           </Routes>
           {/*<LearnerFeedbackCarousel/>temporily added for testing - insert component to the correct position of the dashboard */}
         </div>
