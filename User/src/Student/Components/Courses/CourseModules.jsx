@@ -555,7 +555,7 @@ const CourseModules = () => {
         {/* Modules Section */}
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-            <span className="bg-blue-600 text-white rounded-lg p-2 mr-3">
+            <span className="bg-[#0173d1] text-white rounded-lg p-2 mr-3">
               📚
             </span>
             Course Curriculum
@@ -577,7 +577,7 @@ const CourseModules = () => {
                   className="border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow duration-200"
                 >
                   <div className="flex items-center">
-                    <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mr-4">
+                    <div className="w-10 h-10 bg-blue-100 text-[#0173d1] rounded-full flex items-center justify-center font-bold mr-4">
                       {module.module_order}
                     </div>
                     <div className="flex-1">
