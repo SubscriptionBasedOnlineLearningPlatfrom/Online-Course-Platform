@@ -5,7 +5,7 @@ import './App.css';
 
 import Sidebar from './components/Sidebar';
 import LearnerFeedbackCarousel from './components/LearnerFeedbackCarousel';
-import AddCourse from './components/course/addCourse';
+/* import AddCourse from './components/course/addCourse'; */
 import ViewCreatedCourse from './components/course/ViewCreatedCourse';
 import EnrollmentOverview from './components/Enrollments/EnrollmentOverview';
 
@@ -29,9 +29,9 @@ function App() {
               />
               {/* <Route path="/add-course" element={<AddCourse />} /> */}
               <Route path="/pricing" element={<Pricing />} />
-              <Route path="/ViewCreatedCourse" element={<ViewCreatedCourse />} />
-              <Route path="/add-course" element={<AddCourse />} />
-              <Route path="/EnrollmentOverview" element={<EnrollmentOverview />} />
+              <Route path="/courses" element={<ViewCreatedCourse />} />
+              {/* <Route path="/add-course" element={<AddCourse />} /> */}
+              <Route path="/students" element={<EnrollmentOverview />} />
           </Routes>
           {/*<LearnerFeedbackCarousel/>temporily added for testing - insert component to the correct position of the dashboard */}
         </div>
