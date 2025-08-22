@@ -77,7 +77,7 @@ const CommentsReplies = () => {
   );
 
   return (
-    <div className="min-h-screen from-blue-50 to-indigo-100 p-6">
+    <div className="min-h-screen bg-gradient-to-r from-blue-50 to-indigo-100 p-6">
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-2xl font-bold text-gray-800">Comments & Replies</h3>
         <input

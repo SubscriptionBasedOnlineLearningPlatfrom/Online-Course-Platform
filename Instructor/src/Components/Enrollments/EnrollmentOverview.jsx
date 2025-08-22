@@ -37,7 +37,7 @@ const EnrollmentOverview = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen bg-gradient-to-r from-blue-50 to-indigo-100 p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-2xl font-bold text-gray-800">
