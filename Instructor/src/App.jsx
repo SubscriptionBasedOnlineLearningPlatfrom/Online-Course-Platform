@@ -20,7 +20,7 @@ function App() {
 
       <div>
         <Sidebar />
-        <div className="ml-0 md:ml-30 lg:ml-40 mt-10 p-6">
+        <div className="ml-0 mt-10 p-6">
           <Routes>
               {/* <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/students" element={<Students />} />  */}
