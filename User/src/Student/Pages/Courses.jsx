@@ -195,10 +195,15 @@ const Courses = () => {
       ) : (
         <p className="text-gray-500 mt-6">No courses found.</p>
       )}
+              <Link to={`/progress`}>
+  View My Progress
+</Link>
     </div>
   );
 };
 
 export default Courses;
+
+<Route path="/progress" element={<CourseProgress />} />
  */
 
