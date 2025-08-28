@@ -40,9 +40,9 @@ function App() {
               <Route path="/EnrollmentOverview" element={<EnrollmentOverview />} />
               <Route path="/QuizCreation" element={<QuizCreation />} /> 
               <Route path="/courses" element={<ViewCreatedCourse />} />      
-              <Route path="/CommentsReplies" element={<CommentsReplies />} />      
+              <Route path="/CommentsReplies" element={<CommentsReplies />} />  
+              <Route path="/learner" element={ <LearnerFeedbackCarousel/>} /> {/*temporily added for testing - insert component to the correct position of the dashboard */}    
           </Routes>
-          {/*<LearnerFeedbackCarousel/>temporily added for testing - insert component to the correct position of the dashboard */}
         </main>
       </div>
 
