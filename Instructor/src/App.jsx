@@ -18,9 +18,15 @@ function App() {
 
   return (
 
-      <div>
-        <Sidebar />
-        <div className="ml-0 mt-10 p-6">
+      <div className='flex min-h-screen'>
+        <aside className="w-72 flex-none border-r overflow-y-auto">
+          <div className='w-full h-full'>
+            <Sidebar />
+          </div>
+          
+        </aside>
+        
+        <main className="flex-1 overflow-y-auto p-6">
           <Routes>
               {/* <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/students" element={<Students />} />  */}
@@ -37,7 +43,7 @@ function App() {
               <Route path="/CommentsReplies" element={<CommentsReplies />} />      
           </Routes>
           {/*<LearnerFeedbackCarousel/>temporily added for testing - insert component to the correct position of the dashboard */}
-        </div>
+        </main>
       </div>
 
 
