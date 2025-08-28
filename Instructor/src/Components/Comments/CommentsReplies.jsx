@@ -2,70 +2,67 @@ import React, { useState, useEffect } from "react";
 
 const CommentsReplies = () => {
   const [comments] = useState([
-    {
-      id: 1,
-      student: "Alice Johnson",
-      course: "React for Beginners",
-      comment: "Really helpful course! Loved the explanations.",
-      date: "2025-07-15",
-    },
-    {
-      id: 2,
-      student: "Mark Lee",
-      course: "Node.js Mastery",
-      comment: "Good content but could use more real-world examples.",
-      date: "2025-07-12",
-    },
-    {
-      id: 3,
-      student: "Sophia Davis",
-      course: "AI with Python",
-      comment: "Found some sections difficult to follow.",
-      date: "2025-07-10",
-    },
+    { id: 1, student: "Alice Johnson", course: "React for Beginners", comment: "Really helpful course! Loved the explanations.", date: "2025-07-15" },
+    { id: 2, student: "Mark Lee", course: "Node.js Mastery", comment: "Good content but could use more real-world examples.", date: "2025-07-12" },
+    { id: 3, student: "Sophia Davis", course: "AI with Python", comment: "Found some sections difficult to follow.", date: "2025-07-10" },
   ]);
 
   const [search, setSearch] = useState("");
-  const [activeReply, setActiveReply] = useState(null);
-  const [replies, setReplies] = useState({});
-  const [editingId, setEditingId] = useState(null);
-  const [tempReply, setTempReply] = useState("");
+  const [activeReply, setActiveReply] = useState(null); // which comment is showing the textarea
+  const [replies, setReplies] = useState({});           // { [commentId]: ["reply1", "reply2"] }
+  const [drafts, setDrafts] = useState({});             // { [commentId]: "current typing text" }
+  const [editing, setEditing] = useState(null);         // { id, idx } or null
+  const [editDraft, setEditDraft] = useState("");
 
-  // Load replies from localStorage on mount
+  // Load replies from localStorage
   useEffect(() => {
-    const storedReplies = JSON.parse(localStorage.getItem("replies")) || {};
-    setReplies(storedReplies);
+    const stored = JSON.parse(localStorage.getItem("replies")) || {};
+    setReplies(stored);
   }, []);
 
-  // Save replies to localStorage whenever replies change
+  // Persist replies when they actually change (submit/edit/delete)
   useEffect(() => {
     localStorage.setItem("replies", JSON.stringify(replies));
   }, [replies]);
 
   const handleReplySubmit = (id) => {
-    if (!replies[id] || !replies[id].trim()) return;
+    const text = (drafts[id] || "").trim();
+    if (!text) return;
+    const updated = { ...replies, [id]: [...(replies[id] || []), text] };
+    setReplies(updated);
+    // clear draft & close
+    setDrafts((d) => ({ ...d, [id]: "" }));
     setActiveReply(null);
   };
 
-  const handleEdit = (id) => {
-    setEditingId(id);
-    setTempReply(replies[id]);
+  const handleStartEdit = (id, idx) => {
+    setEditing({ id, idx });
+    setEditDraft(replies[id][idx]);
   };
 
-  const handleSaveEdit = (id) => {
-    if (!tempReply.trim()) return;
-    setReplies({ ...replies, [id]: tempReply });
-    setEditingId(null);
-    setTempReply("");
+  const handleSaveEdit = () => {
+    if (!editing) return;
+    const { id, idx } = editing;
+    const text = editDraft.trim();
+    if (!text) return;
+    const updated = { ...replies };
+    updated[id] = [...updated[id]];
+    updated[id][idx] = text;
+    setReplies(updated);
+    setEditing(null);
+    setEditDraft("");
   };
 
-  const handleDelete = (id) => {
-    const updatedReplies = { ...replies };
-    delete updatedReplies[id];
-    setReplies(updatedReplies);
-    localStorage.setItem("replies", JSON.stringify(updatedReplies));
-
-    if (editingId === id) setEditingId(null);
+  const handleDelete = (id, idx) => {
+    const updated = { ...replies };
+    updated[id] = (updated[id] || []).filter((_, i) => i !== idx);
+    if (updated[id].length === 0) delete updated[id];
+    setReplies(updated);
+    // also close editors if they were open on this reply
+    if (editing && editing.id === id && editing.idx === idx) {
+      setEditing(null);
+      setEditDraft("");
+    }
     if (activeReply === id) setActiveReply(null);
   };
 
@@ -77,146 +74,112 @@ const CommentsReplies = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen bg-gradient-to-r from-blue-50 to-indigo-100 p-6">
+      {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-2xl font-bold text-gray-800">Comments & Replies</h3>
+        <h3 className="text-3xl font-bold text-gray-800">Comments</h3>
         <input
           type="text"
           placeholder="Search comments..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="border border-gray-300 rounded-md px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border border-gray-300 rounded-lg px-4 py-2 w-72 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
         />
       </div>
 
-      <div className="bg-white rounded-lg shadow-md overflow-x-auto">
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="bg-gray-200 text-left text-gray-700 text-sm uppercase">
-              <th className="py-3 px-4">Student Name</th>
-              <th className="py-3 px-4">Course</th>
-              <th className="py-3 px-4">Comment</th>
-              <th className="py-3 px-4">Date</th>
-              <th className="py-3 px-4">Reply</th>
-              <th className="py-3 px-4 text-center">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredComments.map((c, index) => (
-              <tr
-                key={c.id}
-                className={`${
-                  index % 2 === 0 ? "bg-gray-50" : "bg-white"
-                } hover:bg-gray-100 transition`}
-              >
-                <td className="py-3 px-4 font-medium text-gray-800">
-                  {c.student}
-                </td>
-                <td className="py-3 px-4 text-gray-600">{c.course}</td>
-                <td className="py-3 px-4 text-gray-700 max-w-md truncate">
-                  {c.comment}
-                </td>
-                <td className="py-3 px-4 text-gray-500">{c.date}</td>
+      {/* Comments */}
+      <div className="space-y-6">
+        {filteredComments.map((c) => (
+          <div key={c.id} className="bg-white/80 backdrop-blur-sm rounded-xl p-5 shadow-md border border-gray-100">
+            <div className="flex items-start space-x-4">
+              <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-400 rounded-full flex items-center justify-center text-white font-bold">
+                {c.student.charAt(0)}
+              </div>
 
-                {/* Reply Column */}
-                <td className="py-3 px-4 text-gray-700">
-                  {editingId === c.id
-                    ? tempReply
-                    : replies[c.id] || (
-                        <span className="text-gray-400 italic">No reply</span>
+              <div className="flex-1">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <p className="font-semibold text-gray-800">{c.student}</p>
+                    <p className="text-xs text-gray-500">{c.course} • {c.date}</p>
+                  </div>
+                </div>
+
+                <p className="mt-2 text-gray-700">{c.comment}</p>
+
+                
+                <div className="mt-3 pl-2 border-l border-gray-200 space-y-3">
+                  {(replies[c.id] || []).map((reply, idx) => (
+                    <div key={idx} className="bg-gray-50 rounded-md p-3 text-sm text-gray-700">
+                      {/* <div className="flex justify-between">
+                        <p className="font-medium text-gray-800">Instructor Reply {idx + 1}:</p>
+                      </div> */}
+
+                      {editing && editing.id === c.id && editing.idx === idx ? (
+                        <div className="mt-2">
+                          <textarea
+                            rows="2"
+                            className="w-full border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            value={editDraft}
+                            onChange={(e) => setEditDraft(e.target.value)}
+                          />
+                          <div className="mt-2 flex gap-2">
+                            <button onClick={handleSaveEdit} className="px-3 py-1 bg-green-500 text-white rounded-md text-sm hover:bg-green-600">
+                              Save
+                            </button>
+                            <button onClick={() => { setEditing(null); setEditDraft(""); }} className="px-3 py-1 bg-gray-400 text-white rounded-md text-sm hover:bg-gray-500">
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          <p className="ml-2 mt-1">{reply}</p>
+                          <div className="mt-2 flex gap-3">
+                            <button onClick={() => handleStartEdit(c.id, idx)} className="text-yellow-600 text-sm hover:underline">
+                              Edit
+                            </button>
+                            <button onClick={() => handleDelete(c.id, idx)} className="text-red-600 text-sm hover:underline">
+                              Delete
+                            </button>
+                          </div>
+                        </>
                       )}
-                </td>
+                    </div>
+                  ))}
 
-                {/* Action Column */}
-                <td className="py-3 px-4 text-center">
-                  {/* Show textarea if activeReply */}
-                  {activeReply === c.id && editingId !== c.id && (
-                    <div>
+                  
+                  {activeReply === c.id ? (
+                    <div className="mt-2">
                       <textarea
                         rows="2"
-                        placeholder="Type your reply..."
-                        className="w-full border border-gray-300 rounded-md p-1 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-1"
-                        value={replies[c.id] || ""}
-                        onChange={(e) =>
-                          setReplies({ ...replies, [c.id]: e.target.value })
-                        }
+                        className="w-full border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Write a reply..."
+                        value={drafts[c.id] || ""}
+                        onChange={(e) => setDrafts({ ...drafts, [c.id]: e.target.value })}
                       />
-                    </div>
-                  )}
-
-                  {/* Buttons */}
-                  {editingId === c.id ? (
-                    <div className="flex gap-2 justify-center">
-                      <button
-                        onClick={() => handleSaveEdit(c.id)}
-                        className="bg-green-500 text-white px-2 py-1 rounded-md text-xs hover:bg-green-600"
-                      >
-                        Save
-                      </button>
-                      <button
-                        onClick={() => setEditingId(null)}
-                        className="bg-gray-400 text-white px-2 py-1 rounded-md text-xs hover:bg-gray-500"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  ) : replies[c.id] ? (
-                    <div className="flex gap-2 justify-center">
-                      <button
-                        onClick={() => handleEdit(c.id)}
-                        className="bg-yellow-500 text-white px-2 py-1 rounded-md text-xs hover:bg-yellow-600"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(c.id)}
-                        className="bg-red-500 text-white px-2 py-1 rounded-md text-xs hover:bg-red-600"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  ) : (
-                    <div>
-                      {activeReply === c.id && (
-                        <button
-                          className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition mr-2"
-                          onClick={() => setActiveReply(null)}
-                        >
+                      <div className="mt-2 flex gap-2">
+                        <button onClick={() => handleReplySubmit(c.id)} className="px-3 py-1 bg-blue-500 text-white rounded-md text-sm hover:bg-blue-600">
+                          Submit
+                        </button>
+                        <button onClick={() => { setActiveReply(null); setDrafts((d) => ({ ...d, [c.id]: "" })); }} className="px-3 py-1 bg-gray-400 text-white rounded-md text-sm hover:bg-gray-500">
                           Cancel
                         </button>
-                      )}
-                      <button
-                        className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition"
-                        onClick={() =>
-                          setActiveReply(activeReply === c.id ? null : c.id)
-                        }
-                      >
-                        {activeReply === c.id ? "Submit" : "Reply"}
-                      </button>
+                      </div>
                     </div>
-                  )}
+                  ) : null}
 
-                  {/* Submit button for new reply */}
-                  {activeReply === c.id && replies[c.id] && (
-                    <button
-                      onClick={() => handleReplySubmit(c.id)}
-                      className="bg-green-500 text-white px-3 py-1 rounded-md ml-1 text-xs hover:bg-green-600"
-                    >
-                      Submit
-                    </button>
-                  )}
-                </td>
-              </tr>
-            ))}
-            {filteredComments.length === 0 && (
-              <tr>
-                <td colSpan="6" className="py-4 px-4 text-center text-gray-500">
-                  No comments found.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+                  <button onClick={() => setActiveReply(c.id)} className="text-blue-600 text-sm font-medium hover:underline mt-1">
+                    Reply
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {filteredComments.length === 0 && (
+          <div className="text-center py-10 text-gray-500">No comments found.</div>
+        )}
       </div>
     </div>
   );

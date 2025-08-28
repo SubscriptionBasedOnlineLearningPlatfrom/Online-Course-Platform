@@ -50,7 +50,7 @@ export const QuizCreation = ({ quiz }) => {
     const percentage = Math.round((score / maxScore) * 100);
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-500 via-blue-700 to-pink-500 p-4 lg:p-8 flex items-center justify-center">
+      <div className="min-h-screen p-4 lg:p-8 flex items-center justify-center">
         <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full p-8 lg:p-12 transform animate-fade-in-up">
           {/* Results Header */}
           <div className="text-center mb-8">
@@ -60,7 +60,7 @@ export const QuizCreation = ({ quiz }) => {
           
           {/* Score Circle */}
           <div className="flex justify-center mb-8">
-            <div className="w-48 h-48 lg:w-56 lg:h-56 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-xl transform hover:scale-105 transition-transform duration-300">
+            <div className="w-48 h-48 lg:w-56 lg:h-56 rounded-full bg-gradient-to-r from-[#0173d1] to-[#85c1f3] hover:from-[#85c1f3] hover:to-[#0173d1] flex items-center justify-center shadow-xl transform hover:scale-105 transition-transform duration-300">
               <div className="text-center text-white">
                 <div className="text-4xl lg:text-5xl font-bold mb-2">{percentage}%</div>
                 <div className="text-lg uppercase tracking-wider">Score</div>
@@ -71,10 +71,10 @@ export const QuizCreation = ({ quiz }) => {
           {/* Score Details */}
           <div className="text-center mb-8 space-y-3">
             <p className="text-lg text-gray-600">
-              You scored <span className="font-bold text-blue-600">{score}</span> out of <span className="font-bold text-blue-600">{maxScore}</span> points
+              You scored <span className="font-bold text-blue-500">{score}</span> out of <span className="font-bold text-blue-600">{maxScore}</span> points
             </p>
             <p className="text-lg text-gray-600">
-              You answered <span className="font-bold text-green-600">
+              You answered <span className="font-bold text-green-700">
                 {Object.keys(selectedAnswers).filter(key => {
                   const userAnswer = selectedAnswers[key];
                   const correctAnswer = parseInt(quiz.questions[key].correctAnswer);
@@ -88,7 +88,7 @@ export const QuizCreation = ({ quiz }) => {
           <div className="text-center">
             <button 
               onClick={restartQuiz}
-              className="bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center space-x-2 mx-auto"
+              className="bg-gradient-to-r from-[#0173d1] to-[#85c1f3] hover:from-[#85c1f3] hover:to-[#0173d1] text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center space-x-2 mx-auto"
             >
               <span>🔄</span>
               <span>Take Quiz Again</span>
@@ -105,7 +105,7 @@ export const QuizCreation = ({ quiz }) => {
     const isCorrect = userAnswer === correctAnswer;
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-500 via-blue-700 p-4 lg:p-8 flex items-center justify-center">
+      <div className="min-h-screen p-4 lg:p-8 flex items-center justify-center">
         <div className="bg-white rounded-3xl shadow-2xl max-w-lg w-full p-8 lg:p-12 text-center transform animate-scale-in">
           {/* Feedback Icon */}
           <div className={`text-6xl lg:text-8xl mb-6 animate-bounce ${isCorrect ? 'animate-pulse' : ''}`}>
@@ -141,7 +141,7 @@ export const QuizCreation = ({ quiz }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 via-blue-700 p-4 lg:p-8 flex items-center justify-center">
+    <div className="min-h-screen p-4 lg:p-8 flex items-center justify-center">
       <div className="bg-white rounded-3xl shadow-2xl max-w-4xl w-full p-6 lg:p-10 transform animate-fade-in-up">
         {/* Quiz Header */}
         <div className="text-center border-b-2 border-gray-100 pb-8 mb-8">
@@ -153,7 +153,7 @@ export const QuizCreation = ({ quiz }) => {
         <div className="mb-8">
           <div className="bg-gray-200 rounded-full h-3 mb-3 overflow-hidden">
             <div 
-              className="h-full rounded-full transition-all duration-500 ease-out bg-gradient-to-r from-green-400 to-blue-500"
+              className="h-full rounded-full transition-all duration-500 ease-out bg-gradient-to-r from-[#0173d1] to-[#85c1f3]"
               style={{ 
                 width: `${progress}%`,
                 backgroundColor: quiz.progressBarColor || '#4CAF50'
@@ -169,7 +169,7 @@ export const QuizCreation = ({ quiz }) => {
         {/* Question Section */}
         <div className="mb-8">
           <div className="flex items-center mb-6">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-700 text-white rounded-full flex items-center justify-center font-bold text-lg shadow-lg">
+            <div className="w-12 h-12 bg-gradient-to-r from-[#0173d1] to-[#85c1f3] hover:from-[#85c1f3] hover:to-[#0173d1] text-white rounded-full flex items-center justify-center font-bold text-lg shadow-lg">
               Q{currentQuestion + 1}
             </div>
             <div className="ml-4 flex-1">
@@ -201,8 +201,8 @@ export const QuizCreation = ({ quiz }) => {
                 key={index} 
                 className={`border-2 rounded-xl p-4 lg:p-6 cursor-pointer transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg ${
                   isSelected 
-                    ? 'border-blue-500 bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow-xl scale-[1.02]' 
-                    : 'border-gray-200 bg-gray-50 hover:border-blue-300 hover:bg-blue-50'
+                    ? 'bg-gradient-to-r from-[#0173d1] to-[#85c1f3] hover:from-[#85c1f3] hover:to-[#0173d1] text-white shadow-xl scale-[1.02]' 
+                    : 'border-gray-200 bg-gray-50 hover:border-[#0173d1] hover:bg-blue-50'
                 }`}
                 onClick={() => handleAnswerSelect(index)}
               >
@@ -237,7 +237,7 @@ export const QuizCreation = ({ quiz }) => {
                       value={index}
                       checked={isSelected}
                       onChange={() => handleAnswerSelect(index)}
-                      className="w-5 h-5 text-blue-600 cursor-pointer"
+                      className="w-5 h-5 text-[#0173d1] cursor-pointer"
                     />
                   </div>
                 </div>
@@ -252,7 +252,7 @@ export const QuizCreation = ({ quiz }) => {
             className={`px-8 py-4 rounded-full font-semibold text-lg shadow-lg transition-all duration-300 flex items-center space-x-3 mx-auto ${
               !selectedAnswers[currentQuestion]
                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white hover:shadow-xl transform hover:-translate-y-1'
+                : 'bg-gradient-to-r from-[#0173d1] to-[#85c1f3] hover:from-[#85c1f3] hover:to-[#0173d1] text-white hover:shadow-xl transform hover:-translate-y-1'
             }`}
             onClick={nextQuestion}
             disabled={!selectedAnswers[currentQuestion]}
