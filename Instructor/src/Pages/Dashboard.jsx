@@ -2,6 +2,8 @@ import { MetricCard}  from "../Components/Dashboard/MatricCard";
 // import { RecentActivity } from "@/components/Dashboard/RecentActivity";
 import { CourseOverview } from "../Components/Dashboard/CourseOverview";
 import { Users, BookOpen, DollarSign, TrendingUp } from "lucide-react";
+import { ProfileCard } from "../Components/Dashboard/ProfileCard";
+
 
 const Index = () => {
   return (
@@ -14,6 +16,8 @@ const Index = () => {
             <p className="text-muted-foreground">
               Welcome back! Here's what's happening with your courses.
             </p>
+            <ProfileCard />
+
           </div>
 
           {/* Metrics Grid */}
