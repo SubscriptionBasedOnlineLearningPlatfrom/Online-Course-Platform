@@ -38,25 +38,25 @@ export default function ChapterCard({ chapter }) {
       <div className="flex flex-wrap gap-2">
         <button
           onClick={() => handleAddResource("Video")}
-          className="px-3 py-1 bg-purple-600 text-white rounded"
+          className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition cursor-pointer"
         >
           Add Video
         </button>
         <button
           onClick={() => handleAddResource("Notes")}
-          className="px-3 py-1 bg-yellow-600 text-white rounded"
+          className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition cursor-pointer"
         >
           Add Notes
         </button>
         <button
           onClick={() => handleAddResource("Assignment")}
-          className="px-3 py-1 bg-blue-600 text-white rounded"
+          className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition cursor-pointer"
         >
           Add Assignment
         </button>
         <button
           onClick={() => handleAddResource("Quiz")}
-          className="px-3 py-1 bg-green-600 text-white rounded"
+          className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition cursor-pointer"
         >
           Add Quiz
         </button>
@@ -74,7 +74,7 @@ export default function ChapterCard({ chapter }) {
             </span>
             <button
               onClick={() => handleDeleteResource(res.id)}
-              className="text-red-500 hover:underline"
+              className="text-red-500 hover:text-red-700 cursor-pointer"
             >
               Delete
             </button>
