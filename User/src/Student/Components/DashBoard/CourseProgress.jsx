@@ -19,11 +19,14 @@ import {
   AreaChart,
 } from "recharts";
 import { PieChart, Pie, Cell, Legend } from "recharts";
+import jsPDF from "jspdf";
+
 
 const CourseProgress = () => {
   const { courseId } = useParams();
   const studentId = "stu001"; // dummy for now
 
+  //dont get progress directly from content page state. Always fetch from backend to ensure consistency
   // Dummy data
   const courseProgress = {
     courseId,
@@ -31,7 +34,7 @@ const CourseProgress = () => {
     modules: [
       { id: "mod1", name: "Module 1: Intro", completed: true, dateCompleted: "2025-08-01" },
       { id: "mod2", name: "Module 2: Basics", completed: true, dateCompleted: "2025-08-05" },
-      { id: "mod3", name: "Module 3: Advanced", completed: false, dateCompleted: null },
+      { id: "mod3", name: "Module 3: Advanced", completed: true, dateCompleted: null },
     ],
   };
 
@@ -50,6 +53,48 @@ const CourseProgress = () => {
       date: m.dateCompleted,
       completedCount: index + 1,
     }));
+
+  // download certificate  
+  const handleDownload = () => {
+    const doc = new jsPDF("landscape", "pt", "a4");
+
+    const studentName = "John Doe"; // has to replace with real student name 
+    const courseName = "React for Beginners"; 
+    const courseId = courseProgress.courseId;
+
+    doc.setFillColor(240, 240, 240);
+    doc.rect(0, 0, 842, 595, "F");
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(30);
+    doc.setTextColor(0, 70, 150);
+    doc.text("Certificate of Completion", 421, 100, { align: "center" });
+
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(0, 0, 0);
+    doc.text("This certifies that", 421, 160, { align: "center" });
+
+    doc.setFontSize(24);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 80);
+    doc.text(studentName, 421, 200, { align: "center" });
+
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "normal");
+    doc.text(
+      `has successfully completed the course "${courseName}" (Course ID: ${courseId})`,
+      421,
+      240,
+      { align: "center" }
+    );
+
+    const date = new Date().toLocaleDateString();
+    doc.text(`Date: ${date}`, 100, 470);
+
+    doc.save(`Certificate_${studentName}.pdf`);
+  };
+
 
   return (
     <div className="p-6 min-h-[calc(100vh-100px)]">
@@ -71,6 +116,7 @@ const CourseProgress = () => {
             </p>
           </div>
           <button
+            onClick={handleDownload}
             disabled={completedModules !== totalModules}
             className={`mt-4 w-full sm:w-auto px-4 py-2 rounded-lg font-semibold transition 
               ${completedModules === totalModules 
