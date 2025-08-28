@@ -32,7 +32,7 @@ const PaymentCard = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-[100%] mx-auto p-3 bg-white shadow-lg rounded-lg"
+      className="w-[100%] mx-auto p-3 bg-gradient-to-br from-blue-50 to-indigo-100 shadow-lg rounded-lg"
     >
       <div className="space-y-8">
         {/* Payment Type Section */}
@@ -69,7 +69,7 @@ const PaymentCard = () => {
           </div>
 
           {/* Strikeout Price Section */}
-          <div className="space-y-3 p-4 bg-gray-50 rounded-md">
+          <div className="space-y-3 p-4 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-md">
             <div className="flex items-center space-x-2">
               <input
                 type="checkbox"
@@ -82,7 +82,7 @@ const PaymentCard = () => {
 
             {showStrikeout && (
               <>
-                <div className="space-y-2">
+                <div className="space-y-2 ">
                   <label className="block text-sm font-medium text-gray-700">
                     Strikeout Price
                   </label>

@@ -6,7 +6,7 @@ export default function CheckoutPage() {
     // const {pricingData,setPricingData} = useContext(PricingContext);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-center p-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex justify-center items-center p-6">
       <div className="bg-white rounded-xl shadow-lg max-w-5xl w-full flex flex-col md:flex-row overflow-hidden">
         
         {/* Left Side (Product Preview) */}
