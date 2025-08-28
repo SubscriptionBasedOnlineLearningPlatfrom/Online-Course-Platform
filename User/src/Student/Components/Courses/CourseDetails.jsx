@@ -220,14 +220,14 @@ const CourseDetails = () => {
             </div>
 
             {/* Enrollment Card */}
-            <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl shadow-lg p-6 text-white">
+            <div className="bg-gradient-to-r from-[#0173d1] to-[#85c1f3] hover:from-[#85c1f3] hover:to-[#0173d1] rounded-2xl shadow-lg p-6 text-white">
               <h3 className="font-bold text-xl mb-2">
                 Ready to start learning?
               </h3>
               <p className="text-blue-100 mb-4">
                 Join thousands of students already enrolled in this course.
               </p>
-              <button onClick={() => setEnrolled(true)} className={`w-full bg-white text-blue-600 font-semibold py-3 px-4 rounded-xl hover:bg-gray-50 transition-colors duration-200 cursor-pointer ${enrolled ? 'opacity-50 cursor-not-allowed' : ''}`}>
+              <button onClick={() => setEnrolled(true)} className={`w-full bg-white text-[#0173d1] font-semibold py-3 px-4 rounded-xl hover:bg-gray-50 transition-colors duration-200 cursor-pointer ${enrolled ? 'opacity-50 cursor-not-allowed' : ''}`}>
                 Enroll Now - {formatPrice(course.price)}
               </button>
             </div>
