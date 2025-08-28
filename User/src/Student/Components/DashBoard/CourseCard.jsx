@@ -1,4 +1,6 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 const CourseCard = ({ course, type, onContinue, onDownloadCertificate, onReviewCourse }) => {
   const formatDate = (dateString) => {
@@ -15,6 +17,8 @@ const CourseCard = ({ course, type, onContinue, onDownloadCertificate, onReviewC
     }
     return `${hours}h ${Math.round((hours % 1) * 60)}m`;
   };
+  const navigate = useNavigate();
+
 
   const getCategoryIcon = (category) => {
     const icons = {
@@ -189,7 +193,7 @@ const CourseCard = ({ course, type, onContinue, onDownloadCertificate, onReviewC
          <div className="flex space-x-3">
            {course.hasCertificate && (
              <button 
-               onClick={() => onDownloadCertificate(course.id)}
+               onClick={() => navigate(`/certificate/${course.id}`)}
                className="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2"
              >
                <i className="fas fa-download"></i>
