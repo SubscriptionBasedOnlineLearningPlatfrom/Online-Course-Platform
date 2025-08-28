@@ -30,7 +30,10 @@ function App() {
         </aside>
         
         <main className="flex-1 overflow-y-auto p-6">
+
           <Routes>
+          <Route path="/dashboard" element={<Dashboard />} />  
+
               {/* <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/students" element={<Students />} />  */}
               <Route
@@ -43,9 +46,8 @@ function App() {
               <Route path="/EnrollmentOverview" element={<EnrollmentOverview />} />
               <Route path="/QuizCreation" element={<QuizCreation />} /> 
               <Route path="/courses" element={<ViewCreatedCourse />} />    
-              <Route path="/Dashboard" element={<Dashboard />} />  
               <Route path="/CommentsReplies" element={<CommentsReplies />} />   
-              <Route path="/CreateCourse" element={<CreateCourse />} />   
+              <Route path="/create-course" element={<CreateCourse />} />   
           </Routes>
           {/*<LearnerFeedbackCarousel/>temporily added for testing - insert component to the correct position of the dashboard */}
         </main>
