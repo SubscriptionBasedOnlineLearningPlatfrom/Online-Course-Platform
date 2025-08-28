@@ -11,6 +11,8 @@ import CurriculumPage from './pages/Curriculum';
 import Pricing from './Pages/Pricing'
 import QuizCreation from './Components/Quizes/QuizCreation';
 import CommentsReplies from './Components/Comments/CommentsReplies';
+import Dashboard from './Pages/Dashboard';
+import CreateCourse from './Pages/CreateCourse';
 
 
 
@@ -40,8 +42,10 @@ function App() {
               {/* <Route path="/add-course" element={<AddCourse />} /> */}
               <Route path="/EnrollmentOverview" element={<EnrollmentOverview />} />
               <Route path="/QuizCreation" element={<QuizCreation />} /> 
-              <Route path="/courses" element={<ViewCreatedCourse />} />      
-              <Route path="/CommentsReplies" element={<CommentsReplies />} />      
+              <Route path="/courses" element={<ViewCreatedCourse />} />    
+              <Route path="/Dashboard" element={<Dashboard />} />  
+              <Route path="/CommentsReplies" element={<CommentsReplies />} />   
+              <Route path="/CreateCourse" element={<CreateCourse />} />   
           </Routes>
           {/*<LearnerFeedbackCarousel/>temporily added for testing - insert component to the correct position of the dashboard */}
         </main>
