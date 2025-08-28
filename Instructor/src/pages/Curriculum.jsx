@@ -134,7 +134,7 @@ const CurriculumPage = () => {
                 onClick={() =>
                   setOpenModule(openModule === mod.moduleId ? null : mod.moduleId)
                 }
-                className="w-full flex justify-between items-center p-3 sm:p-4 text-left font-semibold text-base sm:text-lg text-blue-800 hover:bg-blue-100 rounded-t-xl"
+                className="w-full flex justify-between items-center p-3 sm:p-4 text-left font-semibold text-base sm:text-lg text-blue-800 hover:bg-blue-100 rounded-t-xl cursor-pointer"
               >
                 {mod.title}
                 <span className="text-sm">
@@ -143,7 +143,7 @@ const CurriculumPage = () => {
               </button>
               <button
                 onClick={() => handleDeleteModule(mod.moduleId)}
-                className="p-2 text-red-500 hover:text-red-700"
+                className="p-2 text-red-500 hover:text-red-700 cursor-pointer"
                 title="Delete Module"
               >
                 <Trash2 size={18} />
@@ -165,7 +165,7 @@ const CurriculumPage = () => {
                     <ChapterCard chapter={ch} />
                     <button
                       onClick={() => handleDeleteChapter(mod.moduleId, ch.chapterId)}
-                      className="p-2 text-red-500 hover:text-red-700"
+                      className="p-2 text-red-500 hover:text-red-700 cursor-pointer"
                       title="Delete Chapter"
                     >
                       <Trash2 size={16} />
@@ -189,7 +189,7 @@ const CurriculumPage = () => {
                   />
                   <button
                     onClick={() => handleAddChapter(mod.moduleId)}
-                    className="px-3 py-2 sm:px-4 sm:py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm sm:text-base"
+                    className="px-3 py-2 sm:px-4 sm:py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm sm:text-base cursor-pointer"
                   >
                     Add Chapter
                   </button>
@@ -211,7 +211,7 @@ const CurriculumPage = () => {
         />
         <button
           onClick={handleAddModule}
-          className="px-3 py-2 sm:px-4 sm:py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm sm:text-base"
+          className="px-3 py-2 sm:px-4 sm:py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm sm:text-base cursor-pointer"
         >
           Add Module
         </button>
