@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",
+    "jspdf": "^3.0.1",
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {

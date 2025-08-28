@@ -204,6 +204,5 @@ const Courses = () => {
 
 export default Courses;
 
-<Route path="/progress" element={<CourseProgress />} />
  */
 
