@@ -88,7 +88,7 @@ const Sidebar = () => {
 
           {/* Student Management */}
           <Link
-            to="/students"
+            to="/EnrollmentOverview"
             className="block mt-4 py-2 px-3 rounded hover:bg-blue-200 cursor-pointer transition text-left"
           >
             Show Enrolled Students
@@ -99,6 +99,18 @@ const Sidebar = () => {
             className="block mt-4 py-2 px-3 rounded hover:bg-blue-200 cursor-pointer transition text-left"
           >
             Pricing
+          </Link>
+          {/* <Link
+            to="/pricing"
+            className="block mt-4 py-2 px-3 rounded hover:bg-blue-200 cursor-pointer transition text-left"
+          >
+            Pricing
+          </Link> */}
+          <Link
+            to="/CommentsReplies"
+            className="block mt-4 py-2 px-3 rounded hover:bg-blue-200 cursor-pointer transition text-left"
+          >
+            Comments & Replies
           </Link>
         </nav>
       </div>
