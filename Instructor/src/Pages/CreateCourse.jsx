@@ -259,6 +259,7 @@ const CreateCourse = () => {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
+                    onClick={() => navigate("/ViewCreatedCourse")}
                     className="px-10 py-3 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold shadow-lg hover:opacity-90 transition animate-pulse"
                   >
                     {isSubmitting ? "Creating..." : "🚀 Launch Course"}

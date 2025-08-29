@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaEdit } from 'react-icons/fa';
 import { AiFillDelete } from 'react-icons/ai';
+import { useNavigate } from "react-router-dom";
 
 const ViewCreatedCourse = () => {
   // ----- data (now mutable) -----
@@ -11,6 +12,7 @@ const ViewCreatedCourse = () => {
   ]);
 
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
   // ----- edit modal state -----
   const [editingId, setEditingId] = useState(null);
@@ -99,7 +101,7 @@ const ViewCreatedCourse = () => {
 
             <tbody className="divide-y divide-gray-100">
               {filteredCourses.map((course) => (
-                <tr key={course.id} className="hover:bg-blue-50/50 transition-all duration-200 group">
+                <tr onClick={() => navigate("/courses/c1/curriculum")} key={course.id} className="hover:bg-blue-50/50 transition-all duration-200 group">
                   <td className="py-5 px-6">
                     <div className="flex items-center">
                       <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-[#0173d1] to-[#85c1f3] rounded-lg flex items-center justify-center text-white font-bold text-sm shadow-lg">
