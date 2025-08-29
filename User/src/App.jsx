@@ -16,7 +16,7 @@ import Navbar from "./Student/Components/Navbar";
 import Footer from "./Student/Components/Footer";
 import DisplayCourse from "./Student/Pages/DisplayCourse";
 import DashBoard from "./Student/Pages/DashBoard";
-import CourseProgress from "./Student/Components/Courses/CourseProgress";
+import CourseProgress from "./Student/Components/DashBoard/CourseProgress";
 import CertificatePage from "./Student/Pages/Certificate";
 import { QuizComponent } from '../../User/src/Student/Components/Quizes/Quiz';
 import CourseContentPage from "./Student/Components/DashBoard/CourseContentPage";
