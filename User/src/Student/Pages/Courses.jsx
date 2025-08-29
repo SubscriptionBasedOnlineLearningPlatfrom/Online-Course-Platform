@@ -204,12 +204,4 @@ const Courses = () => {
     </div>
   );
 };
-
-<<<<<<< HEAD
-export default Courses;*/
-=======
-export default Courses;
-
  */
-
->>>>>>> e49b5d189a857cba3119a6cf656558d328a1a67e
