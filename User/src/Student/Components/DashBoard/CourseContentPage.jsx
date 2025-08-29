@@ -1,34 +1,66 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { QuizComponent } from "../Quizes/Quiz";
 
 const dummyCourse = {
-  id: "react101",  // id taken from useParams and used
+  id: "react101", // id taken from useParams and used
   name: "React for Beginners",
   modules: [
     {
       id: "mod1",
       title: "Module 1: Introduction",
       chapters: [
-        { id: "ch1", title: "Welcome Video", type: "video", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
-        { id: "ch2", title: "Notes PDF", type: "pdf", url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" },
+        {
+          id: "ch1",
+          title: "Welcome Video",
+          type: "video",
+          url: "https://www.w3schools.com/html/mov_bbb.mp4",
+        },
+        {
+          id: "ch2",
+          title: "Notes PDF",
+          type: "pdf",
+          url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        },
       ],
+      quizes: <QuizComponent />,
     },
     {
       id: "mod2",
       title: "Module 2: Basics",
       chapters: [
-        { id: "ch3", title: "JSX Explained", type: "video", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
-        { id: "ch4", title: "Assignment 1", type: "pdf", url: "https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf" },
+        {
+          id: "ch3",
+          title: "JSX Explained",
+          type: "video",
+          url: "https://www.w3schools.com/html/mov_bbb.mp4",
+        },
+        {
+          id: "ch4",
+          title: "Assignment 1",
+          type: "pdf",
+          url: "https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf",
+        },
       ],
     },
     {
       id: "mod3",
       title: "Module 3: Next Step",
       chapters: [
-        { id: "ch5", title: "JSX Explained More", type: "video", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
-        { id: "ch6", title: "Assignment 2", type: "pdf", url: "https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf" },
+        {
+          id: "ch5",
+          title: "JSX Explained More",
+          type: "video",
+          url: "https://www.w3schools.com/html/mov_bbb.mp4",
+        },
+        {
+          id: "ch6",
+          title: "Assignment 2",
+          type: "pdf",
+          url: "https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf",
+        },
       ],
-    }
+    },
   ],
 };
 
@@ -39,6 +71,8 @@ const CourseContentPage = () => {
   const [openModule, setOpenModule] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const navigate = useNavigate();
 
   // Track window resize
   useEffect(() => {
@@ -67,13 +101,13 @@ const CourseContentPage = () => {
   };
 
   // Determine video height based on screen width
-    const getVideoHeight = () => {
-        if (windowWidth >= 2560) return "600px"; 
-        if (windowWidth >= 1440) return "400px";       
-        if (windowWidth >= 1024) return "350px";       
-        if (windowWidth >= 768) return "260px";        
-        return "250px";                               
-    };
+  const getVideoHeight = () => {
+    if (windowWidth >= 2560) return "600px";
+    if (windowWidth >= 1440) return "400px";
+    if (windowWidth >= 1024) return "350px";
+    if (windowWidth >= 768) return "260px";
+    return "250px";
+  };
 
   return (
     <div className="flex flex-col lg:flex-row h-screen bg-gray-50">
@@ -89,7 +123,11 @@ const CourseContentPage = () => {
       </div>
 
       {/* Sidebar */}
-      <div className={`bg-white shadow-lg border-r overflow-y-auto fixed lg:static z-20 top-0 left-0 h-full transition-transform transform lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} w-3/4 lg:w-1/4`}>
+      <div
+        className={`bg-white shadow-lg border-r overflow-y-auto fixed lg:static z-20 top-0 left-0 h-full transition-transform transform lg:translate-x-0 ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } w-3/4 lg:w-1/4`}
+      >
         {/* Course title always visible */}
         <div className="p-4 border-b bg-gradient-to-r from-blue-500 to-blue-700 text-white flex justify-between items-center">
           <div>
@@ -104,7 +142,10 @@ const CourseContentPage = () => {
           </button>
         </div>
 
-        <div className="p-4 space-y-4" style={{ maxHeight: "calc(100vh - 120px)", overflowY: "auto" }}>
+        <div
+          className="p-4 space-y-4"
+          style={{ maxHeight: "calc(100vh - 120px)", overflowY: "auto" }}
+        >
           {dummyCourse.modules.map((module) => (
             <div key={module.id} className="border rounded-lg">
               <button
@@ -126,13 +167,23 @@ const CourseContentPage = () => {
               {openModule === module.id && (
                 <ul className="pl-5 mt-2 space-y-2 text-black pb-3">
                   {module.chapters.map((chapter) => (
-                    <li
-                      key={chapter.id}
-                      className="cursor-pointer hover:text-blue-600"
-                      onClick={() => handleResourceClick(chapter)}
-                    >
-                      {chapter.title} ({chapter.type})
-                    </li>
+                    <>
+                      <li
+                        key={chapter.id}
+                        className="cursor-pointer hover:text-blue-600"
+                        onClick={() => handleResourceClick(chapter)}
+                      >
+                        {chapter.title} ({chapter.type})
+                      </li>
+                      <li
+                        key={chapter.id}
+                        className="cursor-pointer hover:text-blue-600"
+                        onClick={() => navigate("/QuizComponent")}
+                      >
+                        quizes
+                      </li>
+                      
+                    </>
                   ))}
                 </ul>
               )}
