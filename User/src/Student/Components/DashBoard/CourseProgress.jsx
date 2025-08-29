@@ -8,7 +8,7 @@ Get the total number of modules from Module table of the course, because can not
 */
 
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   XAxis,
   YAxis,
@@ -24,6 +24,7 @@ import jsPDF from "jspdf";
 
 const CourseProgress = () => {
   const { courseId } = useParams();
+  const navigate = useNavigate();
   const studentId = "stu001"; // dummy for now
 
   //dont get progress directly from content page state. Always fetch from backend to ensure consistency
@@ -46,6 +47,7 @@ const CourseProgress = () => {
     { name: "Not Completed", value: totalModules - completedModules },
   ];
   const COLORS = ["#0088FE", "#FF8042"];
+
 
   const lineData = courseProgress.modules
     .filter(m => m.completed)
@@ -116,7 +118,7 @@ const CourseProgress = () => {
             </p>
           </div>
           <button
-            onClick={handleDownload}
+            onClick={() => navigate("/certificate/101")}     ///certificate/${user.id}
             disabled={completedModules !== totalModules}
             className={`mt-4 w-full sm:w-auto px-4 py-2 rounded-lg font-semibold transition 
               ${completedModules === totalModules 

@@ -13,6 +13,7 @@ import CourseProgress from "./Student/Components/DashBoard/CourseProgress";
 import CertificatePage from "./Student/Pages/Certificate";
 import { QuizComponent } from "../../User/src/Student/Components/Quizes/Quiz";
 import CourseContentPage from "./Student/Components/DashBoard/CourseContentPage";
+import Subscription from "./Student/Pages/Subscription";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -44,6 +45,7 @@ function App() {
         <Route path="/displayCourses" element={<DisplayCourse />} />{" "}
         {/* this is a page to display all courses which are visible to public users who are not logged in */}
         <Route path="/QuizComponent" element={<QuizComponent />} />
+        <Route path="/subscription" element={<Subscription />} />
       </Routes>
       <Footer />
     </>
