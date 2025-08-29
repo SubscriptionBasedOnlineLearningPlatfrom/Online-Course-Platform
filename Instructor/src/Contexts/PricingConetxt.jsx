@@ -9,7 +9,12 @@ export const PricingProvider = ({ children }) => {
         price:0,
         strikeoutPrice:0,
         title:'',
-        description:''
+        description:'',
+        planName:'',
+        expiryDays:'',
+        additionalInfo:'',
+        showStrikeout:false
+
     })
 
     return (

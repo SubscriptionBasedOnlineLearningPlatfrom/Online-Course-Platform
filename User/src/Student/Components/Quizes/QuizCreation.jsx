@@ -1,11 +1,13 @@
 // SimpleQuiz.jsx
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const QuizCreation = ({ quiz }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
+  const navigate = useNavigate();
 
   const handleAnswerSelect = (answerIndex) => {
     setSelectedAnswers({
@@ -88,10 +90,17 @@ export const QuizCreation = ({ quiz }) => {
           <div className="text-center">
             <button 
               onClick={restartQuiz}
-              className="bg-gradient-to-r from-[#0173d1] to-[#85c1f3] hover:from-[#85c1f3] hover:to-[#0173d1] text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center space-x-2 mx-auto"
+              className="bg-[#0173d1] mb-5 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center space-x-2 mx-auto"
             >
               <span>🔄</span>
               <span>Take Quiz Again</span>
+            </button>
+            <button 
+              onClick={() => navigate("/courses/2/content")}
+              className="bg-[#0173d1] text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center space-x-2 mx-auto"
+            >
+              <span>🔄</span>
+              <span>Go to Content Page</span>
             </button>
           </div>
         </div>

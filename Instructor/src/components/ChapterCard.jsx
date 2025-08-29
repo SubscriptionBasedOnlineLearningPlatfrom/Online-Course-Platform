@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ChapterCard({ chapter }) {
   // Initialize state with existing files
   const [resources, setResources] = useState(chapter.files || []);
+  const navigate = useNavigate();
 
   // Handle file upload
   const handleAddResource = (type) => {
@@ -55,7 +57,7 @@ export default function ChapterCard({ chapter }) {
           Add Assignment
         </button>
         <button
-          onClick={() => handleAddResource("Quiz")}
+          onClick={() => navigate('/QuizCreation')}
           className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition cursor-pointer"
         >
           Add Quiz

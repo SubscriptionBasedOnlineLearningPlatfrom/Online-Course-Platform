@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // each course routes to course/:id
+import { Link, useNavigate } from "react-router-dom"; // each course routes to course/:id
 import course1 from "../assets/course1.jpg";
 import course2 from "../assets/course2.jpg";
 import course3 from "../assets/course3.jpg";
@@ -13,6 +13,8 @@ const courses = [
   { id: 4, name: "OOP Concepts", description: "Dive into OOP Concepts.", image: course4, level: "Advanced" },
 ];
 
+
+
 const Courses = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -20,6 +22,7 @@ const Courses = () => {
 
   // toggle dropdown
   const toggleDropdown = () => setIsOpen(!isOpen);
+  const navigate = useNavigate();
 
   // handle level change
   const handleLevel = (selectedLevel) => {
@@ -36,7 +39,7 @@ const Courses = () => {
   );
 
   return (
-    <div className="px-6 py-10">
+    <div className="px-6 py-10" >
       <div className="flex flex-col sm:flex-row gap-4 sm:items-center mb-6 justify-between">
 
         {/* Dropdown */}
@@ -89,7 +92,7 @@ const Courses = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredCourses.map((course) => (
             <Link
-              to={`/course/${course.id}`}
+              to={`/displayCourses`}  ///course/${course.id} -- main part for testing purpose change code 
               key={course.id}
               className="block bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col hover:shadow-xl transition duration-300"
             >

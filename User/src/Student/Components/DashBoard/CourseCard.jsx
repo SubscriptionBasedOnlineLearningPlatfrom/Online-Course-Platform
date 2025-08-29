@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const CourseCard = ({ course, type, onContinue, onDownloadCertificate, onReviewCourse }) => {
+
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -95,7 +96,8 @@ const CourseCard = ({ course, type, onContinue, onDownloadCertificate, onReviewC
           
           {/* Continue Button */}
           <button 
-            onClick={() => onContinue(course.id)}
+            // onClick={() => onContinue(course.id)}
+            onClick={() => navigate("/courses/2/content")}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2"
           >
             <i className="fas fa-play"></i>

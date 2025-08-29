@@ -71,7 +71,7 @@ const Sidebar = () => {
             {courseOpen && (
               <div className="pl-6 mt-2 space-y-1 text-left">
                 <Link
-                  to="/courses/add"
+                  to="/create-course"
                   className="block py-1 px-3 rounded hover:bg-blue-200 cursor-pointer transition"
                 >
                   Add Course
