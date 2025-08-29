@@ -16,7 +16,7 @@ const Navbar = () => {
             <img
               src={logo}
               alt="Logo"
-              className="h-30 w-30 mr-3 rounded-full border border-gray-300"
+              className="h-20 w-20 mr-3 rounded-full border border-gray-300"
             />
             <span
                 className="hidden lg:inline-block text-4xl font-extrabold"
@@ -46,11 +46,17 @@ const Navbar = () => {
             >
               Login
             </Link>
-            <Link
+            {/* <Link
               to="/signup"
               className="hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600 transition duration-200"
             >
               Sign Up
+            </Link> */}
+            <Link
+              to="/dashboard"
+              className="hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600 transition duration-200"
+            >
+              Dashboard
             </Link>
           </div>
 
