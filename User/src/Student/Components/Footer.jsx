@@ -12,8 +12,8 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-6">
 
-              <div className="w-10 h-10 bg-gradient-to-br rounded-lg flex items-center justify-center">
-                <img src={assets.ProLearnX} alt="ProLearnX" />
+              <div>
+                <img src={assets.ProLearnX} alt="ProLearnX" className="h-18 w-18 mr-3 rounded-full border border-gray-300"/>
               </div>
               <h2 className="text-2xl font-bold text-white">ProLearnX</h2>
             </div>
