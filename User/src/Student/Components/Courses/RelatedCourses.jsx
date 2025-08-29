@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const RelatedCourses = () => {
   // Dummy related courses data
@@ -100,6 +101,8 @@ const RelatedCourses = () => {
       is_bestseller: false
     }
   ];
+
+  const navigate = useNavigate();
 
   // Function to format price
   const formatPrice = (price) => {
@@ -269,7 +272,7 @@ const RelatedCourses = () => {
                     )}
                   </div>
                   
-                  <button className="bg-gradient-to-r from-[#0173d1] to-[#85c1f3] hover:from-[#85c1f3] hover:to-[#0173d1] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-200">
+                  <button onclick = {() => navigate("/displayCourses")} className="bg-gradient-to-r from-[#0173d1] to-[#85c1f3] hover:from-[#85c1f3] hover:to-[#0173d1] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-200">
                     View Course
                   </button>
                 </div>

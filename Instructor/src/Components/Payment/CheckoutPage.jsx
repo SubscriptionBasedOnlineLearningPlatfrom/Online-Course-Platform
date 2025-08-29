@@ -1,14 +1,22 @@
 import React, { useContext, useState } from "react";
-// import { PricingContext } from "../../Context/PricingContext";
+import { PricingContext } from "../../Contexts/PricingConetxt";
+import { Toaster, toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 export default function CheckoutPage() {
+  const { pricingData, setPricingData } = useContext(PricingContext);
+  const navigate = useNavigate();
 
-    // const {pricingData,setPricingData} = useContext(PricingContext);
+  const discount = pricingData.strikeoutPrice - pricingData.price;
+
+  const handleSubmit = () => {
+    toast.success("Add a plan Successfully");
+    navigate("/dashboard");
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex justify-center items-center p-6">
       <div className="bg-white rounded-xl shadow-lg max-w-5xl w-full flex flex-col md:flex-row overflow-hidden">
-        
         {/* Left Side (Product Preview) */}
         <div className="md:w-1/2 p-6 flex flex-col items-center justify-center text-center">
           <img
@@ -16,34 +24,44 @@ export default function CheckoutPage() {
             alt="Product"
             className="w-64 h-64 object-cover rounded-lg shadow-md"
           />
-          <h2 className="mt-4 text-xl font-semibold">AICre</h2>
-          <p className="text-gray-500">AI related</p>
+          <h2 className="mt-4 text-xl font-semibold">{pricingData.title}</h2>
+          <p className="text-gray-500">{pricingData.description}</p>
         </div>
 
         {/* Right Side (Checkout Form + Summary) */}
         <div className="md:w-1/2 bg-gray-50 p-8 flex flex-col justify-between space-y-6">
-          
           {/* Price & Summary */}
           <div>
             <h3 className="text-2xl font-bold text-green-600">
-              LKR 400
-              <span className="text-gray-500 line-through text-lg ml-2">
-                LKR 500
-              </span>
+              {pricingData.price}
+              {pricingData.showStrikeout && (
+                <>
+                  <span className="text-gray-500 line-through text-lg ml-2">
+                    {pricingData.strikeoutPrice}
+                  </span>
+                </>
+              )}
             </h3>
 
             <div className="mt-4 space-y-2 text-gray-600">
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span className="font-medium">LKR 500</span>
+                <span className="font-medium">
+                  {pricingData.strikeoutPrice}
+                </span>
               </div>
-              <div className="flex justify-between">
-                <span>Discount</span>
-                <span className="text-red-500">- LKR 100</span>
-              </div>
+              {pricingData.showStrikeout && (
+                <>
+                  <div className="flex justify-between">
+                    <span>Discount</span>
+                    <span className="text-red-500">- {discount}</span>
+                  </div>
+                </>
+              )}
+
               <div className="flex justify-between border-t pt-2 font-semibold">
                 <span>Total</span>
-                <span>LKR 400</span>
+                <span>{pricingData.price}</span>
               </div>
             </div>
 
@@ -80,9 +98,10 @@ export default function CheckoutPage() {
 
             <button
               type="submit"
+              onClick={handleSubmit}
               className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
             >
-              Pay LKR 440
+              Add a Plan
             </button>
           </form>
         </div>
