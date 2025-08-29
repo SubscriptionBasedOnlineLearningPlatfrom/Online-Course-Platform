@@ -5,13 +5,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/Com
 import { Badge } from "@/Components/Home/ui/badge";
 import { Input } from "@/Components/Home/ui/input";
 import { BookOpen, Users, Award, Star, Search, Play, Clock, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // import Header from "@/components/Header";
 // import Footer from "@/components/Footer";
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
 
   const featuredCourses = [
     {
@@ -177,7 +178,7 @@ const Home = () => {
                   
                   <div className="flex items-center justify-between">
                     <span className="text-2xl font-bold text-[#0173d1]">{course.price}</span>
-                    <Button className="bg-gradient-to-r from-[#0173d1] to-[#85c1f3] hover:from-[#85c1f3] hover:to-[#0173d1]">
+                    <Button onClick={() => navigate("/displayCourses")} className="bg-gradient-to-r from-[#0173d1] to-[#85c1f3] hover:from-[#85c1f3] hover:to-[#0173d1]">
                       Enroll Now
                     </Button>
                   </div>

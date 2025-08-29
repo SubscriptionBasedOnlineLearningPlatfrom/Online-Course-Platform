@@ -9,25 +9,25 @@ const Navbar = () => {
   return (
     <nav className="bg-white border-b shadow-md">
       <div className="max-w-15xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-35 items-center">
+        <div className="flex justify-between h-25 items-center">
           
           {/* Logo and Name */}
           <div className="flex items-center">
             <img
               src={logo}
               alt="Logo"
-              className="h-30 w-30 mr-3 rounded-full border border-gray-300"
+              className="h-18 w-18 mr-3 rounded-full border border-gray-300"
             />
             <span
                 className="hidden lg:inline-block text-4xl font-extrabold"
                 style={{ fontFamily: "'Montserrat', sans-serif", color: "#615f5fff" }} 
             >
-                PROLEARNX
+                ProLearnX
             </span>
           </div>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex space-x-8 text-2xl font-semibold text-gray-700">
+          <div className="hidden md:flex space-x-8 text-xl font-semibold text-gray-700">
             <Link
               to="/"
               className="hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600 transition duration-200"
@@ -46,11 +46,17 @@ const Navbar = () => {
             >
               Login
             </Link>
-            <Link
+            {/* <Link
               to="/signup"
               className="hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600 transition duration-200"
             >
               Sign Up
+            </Link> */}
+            <Link
+              to="/dashboard"
+              className="hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600 transition duration-200"
+            >
+              Dashboard
             </Link>
           </div>
 

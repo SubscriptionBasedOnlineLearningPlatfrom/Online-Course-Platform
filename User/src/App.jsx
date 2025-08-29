@@ -18,9 +18,11 @@ import DisplayCourse from "./Student/Pages/DisplayCourse";
 import DashBoard from "./Student/Pages/DashBoard";
 import CourseProgress from "./Student/Components/DashBoard/CourseProgress";
 import CertificatePage from "./Student/Pages/Certificate";
+
 import { QuizComponent } from '../../User/src/Student/Components/Quizes/Quiz';
 import CourseContentPage from "./Student/Components/DashBoard/CourseContentPage";
 import Courses from "./Student/Pages/Courses";
+import Subscription from "./Student/Pages/Subscription";
 
 
 
@@ -33,8 +35,9 @@ function App() {
   return (
     <>
 
+
       <Navbar />
-      <Toaster richColors position="top-center" /> {/* Add the Toaster component here */}
+      <Toaster richColors position="top-center" /> {" "}
       
 
     <Routes>
@@ -51,10 +54,13 @@ function App() {
       <Route path="/courses/:courseId/content" element={<CourseContentPage />} /> {/* student progress of the logged in student */}
       <Route path="/displayCourses" element={<DisplayCourse />} /> {/* this is a page to display all courses which are visible to public users who are not logged in */}
       <Route path="/QuizComponent" element={<QuizComponent />} />
+      <Route path="/subscription" element={<Subscription />} />
+
     </Routes>
     <Footer />
   </>
 );
+
 }
 
 export default App;

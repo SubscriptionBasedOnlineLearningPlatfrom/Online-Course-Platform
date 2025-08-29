@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
@@ -17,9 +18,10 @@ import CreateCourse from './Pages/CreateCourse';
 
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
+
 
       <div className='flex min-h-screen'>
         <aside className="w-72 flex-none border-r overflow-y-auto">
@@ -47,7 +49,9 @@ function App() {
               <Route path="/QuizCreation" element={<QuizCreation />} /> 
               <Route path="/courses" element={<ViewCreatedCourse />} />    
               <Route path="/CommentsReplies" element={<CommentsReplies />} />   
-              <Route path="/create-course" element={<CreateCourse />} />   
+              <Route path="/create-course" element={<CreateCourse />} /> 
+              <Route path="/learner" element={<LearnerFeedbackCarousel />} />{" "}
+
           </Routes>
           {/*<LearnerFeedbackCarousel/>temporily added for testing - insert component to the correct position of the dashboard */}
         </main>
@@ -57,6 +61,7 @@ function App() {
 
 
   )
+
 }
 
-export default App
+export default App;
