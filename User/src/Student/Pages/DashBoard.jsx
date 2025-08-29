@@ -1,6 +1,6 @@
-
 import React from "react";
 import EnrolledCourses from "../Components/DashBoard/EnrolledCourses";
+import { useNavigate } from "react-router-dom";
 
 const ProgressBar = ({ value }) => (
   <div className="w-full h-2 bg-gray-200 rounded-full">
@@ -14,6 +14,8 @@ const ProgressBar = ({ value }) => (
     />
   </div>
 );
+
+
 
 const KPI = ({ label, value, sub }) => (
   <div className="bg-white rounded-2xl shadow p-5">
@@ -35,6 +37,9 @@ const ListItem = ({ title, right, sub }) => (
 
 const DashBoard = () => {
   // ---- Mock data (replace with API) ----
+
+  const navigate = useNavigate();
+
   const kpis = [
     { label: "Enrolled Courses", value: 6 },
     { label: "In Progress", value: 3, sub: "Keep it up!" },
@@ -43,24 +48,67 @@ const DashBoard = () => {
   ];
 
   const continueLearning = [
-    { id: 1, title: "React for Beginners", lesson: "Lesson 5: Props & State", progress: 62 },
-    { id: 2, title: "Node.js Mastery", lesson: "Section 3: REST APIs", progress: 41 },
-    { id: 3, title: "AI with Python", lesson: "Module 2: Numpy Basics", progress: 78 },
+    {
+      id: 1,
+      title: "React for Beginners",
+      lesson: "Lesson 5: Props & State",
+      progress: 62,
+    },
+    {
+      id: 2,
+      title: "Node.js Mastery",
+      lesson: "Section 3: REST APIs",
+      progress: 41,
+    },
+    {
+      id: 3,
+      title: "AI with Python",
+      lesson: "Module 2: Numpy Basics",
+      progress: 78,
+    },
   ];
 
   const upcoming = [
-    { id: 1, title: "Live Q&A – React", time: "Aug 30, 6:00 PM", sub: "Instructor: Sarah P." },
-    { id: 2, title: "Workshop – APIs with Express", time: "Sep 02, 7:30 PM", sub: "Zoom link in course" },
+    {
+      id: 1,
+      title: "Live Q&A – React",
+      time: "Aug 30, 6:00 PM",
+      sub: "Instructor: Sarah P.",
+    },
+    {
+      id: 2,
+      title: "Workshop – APIs with Express",
+      time: "Sep 02, 7:30 PM",
+      sub: "Zoom link in course",
+    },
   ];
 
   const deadlines = [
-    { id: 1, title: "Quiz 2 – React Basics", due: "Due Aug 29, 11:59 PM", sub: "Minimum pass 70%" },
-    { id: 2, title: "Assignment – Build Todo API", due: "Due Sep 03, 11:59 PM", sub: "Node.js Mastery" },
+    {
+      id: 1,
+      title: "Quiz 2 – React Basics",
+      due: "Due Aug 29, 11:59 PM",
+      sub: "Minimum pass 70%",
+    },
+    {
+      id: 2,
+      title: "Assignment – Build Todo API",
+      due: "Due Sep 03, 11:59 PM",
+      sub: "Node.js Mastery",
+    },
   ];
 
   const recommendations = [
-    { id: 1, title: "TypeScript Essentials", sub: "Because you’re learning React" },
-    { id: 2, title: "Git & GitHub Crash Course", sub: "Improve your project workflow" },
+    {
+      id: 1,
+      title: "TypeScript Essentials",
+      sub: "Because you’re learning React",
+    },
+    {
+      id: 2,
+      title: "Git & GitHub Crash Course",
+      sub: "Improve your project workflow",
+    },
   ];
 
   const recent = [
@@ -75,9 +123,11 @@ const DashBoard = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Welcome back 👋</h1>
-          <p className="text-sm text-gray-600 mt-1">Here’s a quick look at your learning progress.</p>
+          <p className="text-sm text-gray-600 mt-1">
+            Here’s a quick look at your learning progress.
+          </p>
         </div>
-        <button className="px-4 py-2 text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700">
+        <button onClick={() => navigate("/courses/2/content")} className="px-4 py-2 text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700">
           Continue Learning
         </button>
       </div>
@@ -89,14 +139,11 @@ const DashBoard = () => {
         ))}
       </div>
 
-      
       <div>
         <EnrolledCourses />
       </div>
-
-      
     </div>
   );
-}
+};
 
 export default DashBoard;
