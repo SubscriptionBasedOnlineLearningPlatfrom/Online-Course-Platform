@@ -31,7 +31,7 @@ const Subscription = () => {
             </div>
 
             <div className="mb-4">
-              <span className="text-4xl font-extrabold text-gray-900">$9</span>
+              <span className="text-4xl font-extrabold text-gray-900">lkr 9</span>
               <span className="ml-1 text-sm text-gray-500">/mo</span>
             </div>
 
@@ -79,7 +79,7 @@ const Subscription = () => {
             </div>
 
             <div className="mb-4">
-              <span className="text-4xl font-extrabold text-gray-900">$19</span>
+              <span className="text-4xl font-extrabold text-gray-900">lkr 19</span>
               <span className="ml-1 text-sm text-gray-500">/mo</span>
             </div>
 
