@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import 'dotenv/config';
 import cookieParser from "cookie-parser";
+import { supabase } from "./Database/SupabaseClient.js";
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -17,4 +18,12 @@ app.get("/", (req, res) => {
 // Start the server
 app.listen(port, () => {
   console.log(`Server started on PORT: ${port}`);
+});
+
+
+// Supabase setup
+app.get("/users", async (req, res) => {
+  const { data, error } = await supabase.from("users").select("*");
+  if (error) return res.status(500).json({ error: error.message });
+  res.json(data);
 });
