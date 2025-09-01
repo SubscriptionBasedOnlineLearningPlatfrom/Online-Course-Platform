@@ -1,5 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+/* Hide the Spline watermark */
+iframe + div[style*="spline.design"] {
+  display: none !important;
+}
+
 
 @custom-variant dark (&:is(.dark *));
 
