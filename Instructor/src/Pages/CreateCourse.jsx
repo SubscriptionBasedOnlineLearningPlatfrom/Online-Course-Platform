@@ -53,12 +53,12 @@ const CreateCourse = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-100 via-blue-50 to-sky-200 p-8 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-sky-100 via-blue-50 bg-blue-100 p-8 relative overflow-hidden">
       {/* Animated floating gradient blobs */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 left-10 w-40 h-40 bg-sky-300 opacity-30 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute top-40 right-24 w-32 h-32 bg-cyan-400 opacity-20 rounded-full blur-2xl animate-float-slow"></div>
-        <div className="absolute bottom-28 left-1/3 w-44 h-44 bg-blue-400 opacity-20 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute top-20 left-10 w-40 h-40 bg-blue-100 opacity-30 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-40 right-24 w-32 h-32 bg-blue-100 opacity-20 rounded-full blur-2xl animate-float-slow"></div>
+        <div className="absolute bottom-28 left-1/3 w-44 h-44 bg-blue-100 opacity-20 rounded-full blur-3xl animate-float"></div>
       </div>
 
       <main className="w-full max-w-6xl mx-auto relative z-10">
@@ -67,13 +67,13 @@ const CreateCourse = () => {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => navigate("/")}
-            className="text-sky-700 hover:text-sky-600 transition transform hover:scale-110"
+            onClick={() => navigate("/dashboard")}
+            className="bg-blue-100 hover:text-sky-100 transition transform hover:scale-110"
           >
             <ArrowLeft className="h-6 w-6" />
           </Button>
           <div className="flex-1">
-            <h1 className="text-5xl font-extrabold bg-gradient-to-r from-sky-600 via-cyan-500 to-blue-600 bg-clip-text text-transparent drop-shadow-lg">
+            <h1 className="text-5xl font-extrabold bg-gradient-to-r bg-blue-400 bg-clip-text text-transparent drop-shadow-lg">
               Create New Course
             </h1>
             <p className="text-lg text-sky-800 opacity-80">
@@ -84,7 +84,7 @@ const CreateCourse = () => {
 
         {/* Card */}
         <Card className="bg-white/40 backdrop-blur-xl border border-sky-200 shadow-2xl rounded-2xl overflow-hidden animate-fade-in">
-          <CardHeader className="bg-gradient-to-r from-sky-600 to-cyan-500 text-white p-10 shadow-md">
+          <CardHeader className="bg-gradient-to-r bg-blue-400 text-white p-10 shadow-md">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-white/20 rounded-xl backdrop-blur">
                 <BookOpen className="h-8 w-8 text-white" />
@@ -189,7 +189,7 @@ const CreateCourse = () => {
                     )}
                   />
 
-                  <FormField
+                  {/* <FormField
                     control={form.control}
                     name="price"
                     render={({ field }) => (
@@ -206,7 +206,7 @@ const CreateCourse = () => {
                         </FormControl>
                       </FormItem>
                     )}
-                  />
+                  /> */}
 
                   <FormField
                     control={form.control}
@@ -260,7 +260,7 @@ const CreateCourse = () => {
                     type="submit"
                     disabled={isSubmitting}
                     onClick={() => navigate("/ViewCreatedCourse")}
-                    className="px-10 py-3 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold shadow-lg hover:opacity-90 transition animate-pulse"
+                    className="px-10 py-3 rounded-xl bg-gradient-to-r bg-blue-400 text-white font-semibold shadow-lg hover:opacity-90 transition animate-pulse"
                   >
                     {isSubmitting ? "Creating..." : "🚀 Launch Course"}
                   </Button>
