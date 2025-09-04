@@ -213,12 +213,9 @@ const CertificatePage = () => {
           </div>
 
           {/* Preview Section */}
-          <div className="lg:col-span-3 bg-white p-6 rounded-lg shadow-md">
-            <div className="flex items-center mb-4">
-              <Sparkles className="h-6 w-6 text-blue-600 mr-3" />
-              <h2 className="text-xl font-semibold text-gray-800">Live Preview</h2>
-            </div>
-            <div className="aspect-[1.414] w-full overflow-hidden rounded-md border border-gray-200">
+          <div className="lg:col-span-3 bg-white  rounded-lg shadow-md">
+            
+            <div className="aspect-[1.3] w-full overflow-hidden rounded-md border border-gray-200">
               {/* A4 aspect ratio */}
               <CertificatePreview data={certificateData} />
             </div>

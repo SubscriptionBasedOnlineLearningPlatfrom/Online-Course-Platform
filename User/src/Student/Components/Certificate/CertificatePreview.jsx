@@ -202,11 +202,11 @@ import schoolLogo from "../../assets/logo.jpeg"; // Adjust the path as necessary
 // };
 
 export const CertificatePreview = ({ data }) => {
-  // Destructure with default values to prevent errors and show placeholders
+  // Destructure with default values to prevent errors and placeholders
   const {
     studentName = "Your Name Here",
     courseName = "Course Title",
-    issueDate = new Date().toISOString()
+    issueDate = new Date().toISOString(),
   } = data || {};
 
   const formatDate = (dateString) => {
@@ -223,66 +223,61 @@ export const CertificatePreview = ({ data }) => {
   };
 
   return (
-    <div className="relative w-full h-full p-10 shadow-lg bg-white border-8 border-blue-900 flex flex-col justify-between items-center text-center font-serif">
+    <div className="relative w-full h-full min-h-[550px] shadow-lg bg-white border-8 border-blue-900 flex flex-col justify-between items-center text-center font-serif">
 
       {/* Decorative corners */}
-      <div className="absolute top-6 left-6 w-12 h-12 border-l-4 border-t-4 border-yellow-500"></div>
-      <div className="absolute top-6 right-6 w-12 h-12 border-r-4 border-t-4 border-yellow-500"></div>
-      <div className="absolute bottom-6 left-6 w-12 h-12 border-l-4 border-b-4 border-yellow-500"></div>
-      <div className="absolute bottom-6 right-6 w-12 h-12 border-r-4 border-b-4 border-yellow-500"></div>
+      <div className="absolute top-1 left-1 w-12 h-12 border-l-4 border-t-4 border-yellow-500"></div>
+      <div className="absolute top-1 right-1 w-12 h-12 border-r-4 border-t-4 border-yellow-500"></div>
+      <div className="absolute bottom-1 left-1 w-12 h-12 border-l-4 border-b-4 border-yellow-500"></div>
+      <div className="absolute bottom-1 right-1 w-12 h-12 border-r-4 border-b-4 border-yellow-500"></div>
 
       {/* Company Branding */}
-      <div className="flex flex-col items-center mb-6">
-        <div >
-          <img
-            src={schoolLogo}
-            alt="Company Logo"
-            className="w-16 h-16 object-contain"
-          />
-        </div>
-        <h2 className="mt-3 text-2xl font-bold text-blue-900 tracking-widest">
-          PROLEARNX
+      <div className="flex flex-col items-center pt-8 mb-4">
+        <img
+          src={schoolLogo}
+          alt="Company Logo"
+          className="w-16 h-16 object-contain"
+        />
+        <h2 className="mt-1 text-3xl font-bold text-blue-900 tracking-widest">
+          ProLearnx
         </h2>
-        <p className="text-sm text-gray-600 tracking-wider uppercase">
+        <p className="text-sm text-gray-500 tracking-wider uppercase">
           Learn Smart. Grow Fast
         </p>
       </div>
 
       {/* Certificate Title */}
       <header className="w-full">
-        <h1 className="text-4xl md:text-5xl font-bold text-blue-900 tracking-wider">
+        <h1 className="text-6xl md:text-4xl font-bold text-blue-900 tracking-wider mt-1">
           Certificate of Completion
         </h1>
-        <div className="w-48 h-1 bg-yellow-500 mx-auto mt-4"></div>
+        <div className="w-48 h-1 bg-yellow-500 mx-auto mt-0"></div>
       </header>
 
       {/* Student Info */}
-      <main className="flex flex-col items-center justify-center space-y-4 my-8">
-        <p className="text-lg md:text-xl text-gray-700">This is to certify that</p>
-        <h2 className="text-3xl md:text-4xl font-extrabold text-blue-800 tracking-wide break-words px-4">
+      <main className="flex flex-col items-center justify-center space-y-4 my-8 flex-1">
+        <p className="text-lg md:text-0.5xl text-gray-700">This is to certify that</p>
+        <h2 className="text-3xl md:text-2xl font-extrabold text-blue-800 tracking-wide break-words px-4">
           {studentName}
         </h2>
-        <p className="text-lg md:text-xl text-gray-700">has successfully completed the course</p>
-        <h3 className="text-2xl md:text-3xl font-semibold text-gray-800 break-words px-4">
+        <p className="text-lg md:text-0.5xl text-gray-700">has successfully completed the course</p>
+        <h3 className="text-3xl md:text-2xl font-semibold text-gray-800 break-words px-4">
           {courseName}
         </h3>
       </main>
 
-      {/* Footer Section */}
-      <footer className="w-full flex justify-between items-end">
+      {/* Footer Section (always at bottom) */}
+      <footer className="w-full flex justify-between items-end px-10 pb-6">
         <div className="text-left">
-          <p className="text-base md:text-lg font-semibold border-t-2 border-gray-700 pt-1">Date of Issue</p>
+          <p className="text-base md:text-lg font-semibold  pt-1">Date of Issue</p>
           <p className="text-sm md:text-md text-gray-600">{formatDate(issueDate)}</p>
         </div>
         <div className="text-right">
-          {/* Signature name */}
-          <p className="font-[cursive] text-3xl text-gray-800 mb-2 italic">
+          <p className="font-[cursive] text-xl text-gray-800 mb-1 italic">
             s. sivapriya
           </p>
-
-          {/* Divideƒr + Label */}
           <div className="border-t-2 border-gray-700 pt-1">
-            <p className="text-base md:text-lg font-semibold text-gray-900">
+            <p className="text-xl md:text-lg font-semibold text-gray-900">
               Authorized Signature
             </p>
             <p className="text-sm md:text-md text-gray-600">
@@ -290,7 +285,6 @@ export const CertificatePreview = ({ data }) => {
             </p>
           </div>
         </div>
-
       </footer>
     </div>
   );

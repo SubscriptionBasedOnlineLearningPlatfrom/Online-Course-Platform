@@ -14,6 +14,8 @@ import QuizCreation from './Components/Quizes/QuizCreation';
 import CommentsReplies from './Components/Comments/CommentsReplies';
 import Dashboard from './Pages/Dashboard';
 import CreateCourse from './Pages/CreateCourse';
+import Signup_Login from './pages/Signup_Login'; // Assuming this is the correct path
+
 
 
 
@@ -34,6 +36,8 @@ function App() {
         <main className="flex-1 overflow-y-auto p-6">
 
           <Routes>
+          <Route path="/" element={<Signup_Login />} />
+
           <Route path="/dashboard" element={<Dashboard />} />  
 
               {/* <Route path="/dashboard" element={<Dashboard />} />
