@@ -1,10 +1,10 @@
-import z from "zod"
+import {z} from "zod"
 import { supabase } from "../../Database/SupabaseClient.js";
 
 const QuizSchema = z.object({
     lesson_id: z.uuid(),
     quiz_title: z.string().min(1),
-    questions: z.array({
+    questions: z.array(z.object({
         question: z.string(
             z.object({
                 question: z.string().min(1),
@@ -12,12 +12,14 @@ const QuizSchema = z.object({
                 correctAnswer: z.number().int().nullable()
             })
         ).min(1)
-    })
+    }))
 })
 
 export const quizCreation = async (req, res) => {
     try {
         const parsed = QuizSchema.safeParse(req.body);
+
+        console.log(parsed)
 
         if (!parsed.success) {
             return res.status(400).json({ error: parsed.error });
@@ -25,19 +27,21 @@ export const quizCreation = async (req, res) => {
 
         const { lesson_id, quiz_title, questions } = parsed.data;
 
-        const { data, error } = await supabase.rpc('create_quiz_with_Q_A', {
+        const { data, error } = await supabase.rpc('create_quiz_with_q_a', {
             lesson_id: lesson_id,
             quiz_title: quiz_title,
             questions: questions
         })
 
         if (error) {
+            console.log(error);
 
             return res.status(500).json({ error: error.message });
         }
 
         return res.status(201).json({ quiz_id: data })
     } catch (error) {
+        console.log(error);
         return res.status(500).json({error:"Internal Server Error : ",details:error.message});
     }
 }
@@ -63,7 +67,7 @@ export const loadQuiz = async (req,res) => {
 
         console.log(questions)
         if(questionsError){
-            console.log(questionsError);
+            // console.log(questionsError);
             return res.status(500).json({ error: questionsError.message });
         }
 
