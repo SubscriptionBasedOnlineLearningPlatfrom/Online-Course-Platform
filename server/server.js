@@ -6,6 +6,7 @@ import { supabase } from "./Database/SupabaseClient.js";
 import OverviewRouter from "./Routers/Instructor/OverviewRouter.js";
 import commentRouter from "./Routers/Instructor/CommentsRouter.js";
 import QuizRouter from "./Routers/Instructor/QuizRouter.js";
+import courseRouter from "./Routers/Student/CourseRouter.js";
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -16,10 +17,14 @@ app.use(cookieParser());
 
 app.use(cors({credentials: true}));
 
-// Routes
-app.use("/api/overview", OverviewRouter);
-app.use("/api/comments", commentRouter);
-app.use("/api/quizzes", QuizRouter);
+// Routes 
+// instructors
+app.use("/instructor/overview", OverviewRouter);
+app.use("/instructor/comments", commentRouter);
+app.use("/instructor/quizzes", QuizRouter);
+
+// students
+app.use("/student/courses", courseRouter);
 
 
 
