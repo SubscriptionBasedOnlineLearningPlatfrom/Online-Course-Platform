@@ -1,7 +1,7 @@
 import express from "express";
 import passport from "passport";
 import bcrypt from "bcryptjs";
-import { supabase } from "../Database/SupabaseClient.js";
+import {supabase} from "../Database/SupabaseClient.js";
 import { generateToken } from "./tokenUtils.js";
 
 const router = express.Router();
