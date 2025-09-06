@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import { supabase } from "./Database/SupabaseClient.js";
 import OverviewRouter from "./Routers/Instructor/OverviewRouter.js";
 import commentRouter from "./Routers/Instructor/CommentsRouter.js";
+import QuizRouter from "./Routers/Instructor/QuizRouter.js";
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -18,6 +19,7 @@ app.use(cors({credentials: true}));
 // Routes
 app.use("/api/overview", OverviewRouter);
 app.use("/api/comments", commentRouter);
+app.use("/api/quizzes", QuizRouter);
 
 
 
