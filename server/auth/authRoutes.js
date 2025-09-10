@@ -1,19 +1,32 @@
 import express from "express";
 import passport from "passport";
 import bcrypt from "bcryptjs";
-import {supabase} from "../Database/SupabaseClient.js";
+import { supabase } from "../Database/SupabaseClient.js";
 import { generateToken } from "./tokenUtils.js";
+import { getAvailableUsername } from "../utils/userUtils.js";
 
 const router = express.Router();
 
-// Register (frontend expects /auth/register)
+// Register
 router.post("/register", async (req, res) => {
-  const { name, email, password } = req.body;
+  // 1. Rename 'username' from form to 'fullName' for clarity
+  const { username: fullName, email, password } = req.body;
   try {
+    // 2. Generate a unique username from the fullName
+    const username = await getAvailableUsername(fullName);
     const hashedPassword = await bcrypt.hash(password, 10);
+
     const { data, error } = await supabase
       .from("instructors")
-      .insert([{ full_name: name, email, password: hashedPassword }])
+      .insert([
+        {
+          // 3. Save fullName and the generated username to the correct columns
+          full_name: fullName,
+          email,
+          password: hashedPassword,
+          username: username,
+        },
+      ])
       .select()
       .single();
 
@@ -43,12 +56,17 @@ router.post("/login", (req, res, next) => {
 // Google Login
 router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
+// Google Callback - Improved for SPAs
 router.get(
   "/google/callback",
-  passport.authenticate("google", { failureRedirect: "/login" }),
+  passport.authenticate("google", {
+    failureRedirect: `${process.env.CLIENT_URL}/login?error=auth_failed`, // Redirect to frontend login on failure
+    session: false, // We are using JWT, not sessions
+  }),
   (req, res) => {
-    // For SPAs, consider redirecting with a token, or set a cookie in production
-    res.redirect("/dashboard");
+    // On success, generate a token and redirect to frontend with the token
+    const token = generateToken(req.user);
+    res.redirect(`${process.env.CLIENT_URL}/auth-success?token=${token}`);
   }
 );
 

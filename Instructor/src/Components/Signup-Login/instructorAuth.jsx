@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../Signup-Login2/ui/ta
 import { Separator } from "../Signup-Login2/ui/separator.jsx";
 import { Mail, Lock, User, BookOpen } from "lucide-react";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:4000";
+const API_BASE = "http://localhost:5000";
 
 export const InstructorAuth = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,7 +21,7 @@ export const InstructorAuth = () => {
     const formData = new FormData(e.target);
     const email = formData.get("email");
     const password = formData.get("password");
-    const name = formData.get("name");
+    const username = formData.get("username");
     const confirmPassword = formData.get("confirmPassword");
 
     if (mode === "signup" && password !== confirmPassword) {
@@ -31,8 +31,9 @@ export const InstructorAuth = () => {
     }
 
     try {
-      const endpoint = mode === "login" ? "/auth/login" : "/auth/register";
-      const payload = mode === "login" ? { email, password } : { email, password, name };
+      // --- FIX IS HERE ---
+      const endpoint = mode === "login" ? "/login" : "/register";
+      const payload = mode === "login" ? { email, password } : { email, password, username };
       const res = await fetch(`${API_BASE}${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

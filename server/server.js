@@ -16,11 +16,8 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: true, // reflect request origin dynamically
+    origin: "http://localhost:5173", // Explicitly allow your frontend's origin
     credentials: true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    optionsSuccessStatus: 204,
   })
 );
 // Preflight requests are handled by the global cors() middleware above (Express 5)
@@ -43,7 +40,7 @@ app.use("/auth", authRoutes);
 app.use("/instructor", instructorRoutes);
 
 // Health check
-app.get("/health", (_req, res) => res.json({ status: "ok" }));
+// app.get("/health", (_req, res) => res.json({ status: "ok" }));
 
 // Error handler for diagnostics
 app.use((err, _req, res, _next) => {
@@ -51,7 +48,7 @@ app.use((err, _req, res, _next) => {
   res.status(err.status || 500).json({ error: err.message || "Internal server error" });
 });
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
