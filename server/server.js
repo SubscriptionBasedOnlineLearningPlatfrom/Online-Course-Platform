@@ -3,7 +3,13 @@ import session from "express-session";
 import passport from "passport";
 import dotenv from "dotenv";
 import cors from "cors";
-
+import 'dotenv/config';
+import cookieParser from "cookie-parser";
+import { supabase } from "./Database/SupabaseClient.js";
+import OverviewRouter from "./Routers/Instructor/OverviewRouter.js";
+import commentRouter from "./Routers/Instructor/CommentsRouter.js";
+import QuizRouter from "./Routers/Instructor/QuizRouter.js";
+import courseRouter from "./Routers/Student/CourseRouter.js";
 import authRoutes from "./auth/authRoutes.js";
 import instructorRoutes from "./Routers/instructorRoutes.js";
 import passportConfig from "./auth/passportConfig.js";
@@ -37,6 +43,14 @@ app.use(passport.session());
 // Passport strategies
 passportConfig(passport);
 
+// Routes 
+// instructors
+app.use("/instructor/overview", OverviewRouter);
+app.use("/instructor/comments", commentRouter);
+app.use("/instructor/quizzes", QuizRouter);
+
+// students
+app.use("/student/courses", courseRouter);
 // Routes
 app.get("/", (_req, res) => res.json({ message: "API running", routes: ["/auth", "/instructor"] }));
 app.use("/auth", authRoutes);
