@@ -3,9 +3,9 @@ import React from 'react';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import Sidebar from './components/Sidebar';
+import Sidebar from './Components/Sidebar';
 
-import LearnerFeedbackCarousel from './components/LearnerFeedbackCarousel';
+import LearnerFeedbackCarousel from './Components/LearnerFeedbackCarousel';
 import ViewCreatedCourse from './Components/Course/ViewCreatedCourse';
 import EnrollmentOverview from './Components/Enrollments/EnrollmentOverview';
 import CurriculumPage from './pages/Curriculum';
