@@ -1,54 +1,42 @@
 import express from "express";
-import session from "express-session";
 import passport from "passport";
-import dotenv from "dotenv";
 import cors from "cors";
 
-import authRoutes from "./auth/authRoutes.js";
-import instructorRoutes from "./Routers/instructorRoutes.js";
-import passportConfig from "./auth/passportConfig.js";
+// import session from "express-session"; // optional if you use sessions, not needed for JWT only
+import dotenv from "dotenv";
+import authRoutes from "./routes/auth.js"; // the file I gave you earlier
 
 dotenv.config();
 
 const app = express();
-
-// Middleware
 app.use(express.json());
-app.use(
-  cors({
-    origin: "http://localhost:5173", // Explicitly allow your frontend's origin
-    credentials: true,
-  })
-);
-// Preflight requests are handled by the global cors() middleware above (Express 5)
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "change_me",
-    resave: false,
-    saveUninitialized: false,
-  })
-);
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true,
+}));
+
+// -------------------- MIDDLEWARE --------------------
+app.use(express.json()); // parse JSON bodies
+app.use(express.urlencoded({ extended: true })); // parse form data
+
+// Initialize Passport
 app.use(passport.initialize());
-app.use(passport.session());
 
-// Passport strategies
-passportConfig(passport);
-
-// Routes
-app.get("/", (_req, res) => res.json({ message: "API running", routes: ["/auth", "/instructor"] }));
-app.use("/auth", authRoutes);
-app.use("/instructor", instructorRoutes);
-
-// Health check
-// app.get("/health", (_req, res) => res.json({ status: "ok" }));
-
-// Error handler for diagnostics
-app.use((err, _req, res, _next) => {
-  console.error("Error:", err);
-  res.status(err.status || 500).json({ error: err.message || "Internal server error" });
+// -------------------- ROUTES --------------------
+app.get("/", (req, res) => {
+  res.send("✅ Server running. Go to /signup or /login");
 });
 
-const PORT = process.env.PORT || 5000;
+app.use("/auth", authRoutes); // signup, login, dashboard
+
+// -------------------- ERROR HANDLER --------------------
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: "Something went wrong!" });
+});
+
+// -------------------- START SERVER --------------------
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });

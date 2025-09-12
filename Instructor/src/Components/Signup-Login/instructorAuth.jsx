@@ -7,22 +7,25 @@ import { Label } from "../Signup-Login2/ui/label.jsx";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../Signup-Login2/ui/card.jsx";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../Signup-Login2/ui/tabs.jsx";
 import { Separator } from "../Signup-Login2/ui/separator.jsx";
-import { Mail, Lock, User, BookOpen } from "lucide-react";
+import { Lock, User, BookOpen, Mail } from "lucide-react";
+import axios from "axios";
 
-const API_BASE = "http://localhost:5000";
+axios.defaults.withCredentials = true;
+const API_BASE = "http://localhost:4000";
 
 export const InstructorAuth = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e, mode) => {
     e.preventDefault();
+    if (isLoading) return;
     setIsLoading(true);
 
     const formData = new FormData(e.target);
     const email = formData.get("email");
     const password = formData.get("password");
-    const username = formData.get("username");
     const confirmPassword = formData.get("confirmPassword");
+    const username = mode === "signup" ? formData.get("username") : undefined;
 
     if (mode === "signup" && password !== confirmPassword) {
       setIsLoading(false);
@@ -31,49 +34,53 @@ export const InstructorAuth = () => {
     }
 
     try {
-      // --- FIX IS HERE ---
-      const endpoint = mode === "login" ? "/login" : "/register";
-      const payload = mode === "login" ? { email, password } : { email, password, username };
-      const res = await fetch(`${API_BASE}${endpoint}`, {
-        method: "POST",
+      const endpoint = mode === "login" ? "/auth/login" : "/auth/register";
+      const payload =
+        mode === "login"
+          ? { email, password }
+          : { username, email, password };
+
+      const res = await axios.post(`${API_BASE}${endpoint}`, payload, {
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        withCredentials: true,
       });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || data.message || "Auth failed");
-
-      // Save token
-      localStorage.setItem("token", data.token);
+      const data = res.data;
+      if (data?.token) {
+        localStorage.setItem("token", data.token);
+      }
       alert(`✅ ${mode === "login" ? "Logged in" : "Registered"} successfully!`);
-      // redirect to dashboard if needed
       window.location.href = "/dashboard";
-
     } catch (err) {
-      alert(`❌ ${err.message}`);
+      const message =
+        err?.response?.data?.error ||
+        err?.response?.data?.message ||
+        err?.message ||
+        "Something went wrong";
+      alert(`❌ ${message}`);
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleGoogleLogin = () => {
-    // Redirect user to backend Google OAuth
     window.location.href = `${API_BASE}/auth/google`;
   };
 
   const AuthForm = ({ mode }) => (
     <form onSubmit={(e) => handleSubmit(e, mode)} className="space-y-4">
+      {/* Username field (only for signup) */}
       {mode === "signup" && (
         <div className="space-y-2">
           <Label htmlFor="username" className="text-sm font-medium">
-            Full Name
+            Username
           </Label>
           <div className="relative">
             <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
             <Input
               id="username"
               name="username"
-              placeholder="Dr. John Smith"
+              placeholder="your_username"
               className="pl-10 bg-secondary/50 border-border/50 focus:border-primary"
               required
             />
@@ -81,6 +88,7 @@ export const InstructorAuth = () => {
         </div>
       )}
 
+      {/* Email field */}
       <div className="space-y-2">
         <Label htmlFor="email" className="text-sm font-medium">
           Email Address
@@ -91,13 +99,14 @@ export const InstructorAuth = () => {
             id="email"
             name="email"
             type="email"
-            placeholder="instructor@university.edu"
+            placeholder="your@email.com"
             className="pl-10 bg-secondary/50 border-border/50 focus:border-primary"
             required
           />
         </div>
       </div>
 
+      {/* Password field */}
       <div className="space-y-2">
         <Label htmlFor="password" className="text-sm font-medium">
           Password
@@ -115,6 +124,7 @@ export const InstructorAuth = () => {
         </div>
       </div>
 
+      {/* Confirm Password field (only for signup) */}
       {mode === "signup" && (
         <div className="space-y-2">
           <Label htmlFor="confirm-password" className="text-sm font-medium">
@@ -155,26 +165,8 @@ export const InstructorAuth = () => {
         <div className="relative flex justify-center text-xs uppercase">
           <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
         </div>
-
         <Button variant="outline" className="w-full mt-4" type="button" onClick={handleGoogleLogin}>
-          <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
-            <path
-              fill="#4285F4"
-              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-            />
-            <path
-              fill="#34A853"
-              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-            />
-            <path
-              fill="#FBBC05"
-              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-            />
-            <path
-              fill="#EA4335"
-              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-            />
-          </svg>
+          {/* Google SVG here */}
           Continue with Google
         </Button>
       </div>
@@ -190,7 +182,6 @@ export const InstructorAuth = () => {
           className="w-full h-full"
         />
       </div>
-
       {/* Foreground content */}
       <div className="w-full max-w-md space-y-6 relative z-10">
         {/* Header */}
@@ -208,7 +199,6 @@ export const InstructorAuth = () => {
             </h1>
           </div>
         </div>
-
         {/* Auth Card */}
         <Card className="border-border/50 shadow-2xl bg-card/95 backdrop-blur-sm">
           <CardHeader className="space-y-1 pb-4">
@@ -236,11 +226,9 @@ export const InstructorAuth = () => {
                   Sign Up
                 </TabsTrigger>
               </TabsList>
-
               <TabsContent value="login" className="space-y-4">
                 <AuthForm mode="login" />
               </TabsContent>
-
               <TabsContent value="signup" className="space-y-4">
                 <AuthForm mode="signup" />
               </TabsContent>
