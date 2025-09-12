@@ -30,6 +30,14 @@ app.use(cors({
 app.use(express.json()); // parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // parse form data
 
+import session from "express-session";
+app.use(session({
+  secret: process.env.SESSION_SECRET || "supersecret",
+  resave: false,
+  saveUninitialized: false,
+}));
+
+
 
 // Initialize Passport
 app.use(passport.initialize());
