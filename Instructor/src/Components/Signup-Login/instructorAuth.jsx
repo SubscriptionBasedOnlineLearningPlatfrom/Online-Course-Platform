@@ -161,15 +161,24 @@ export const InstructorAuth = () => {
 
       {/* Google Login */}
       <div className="relative my-6">
-        <Separator />
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
-        </div>
-        <Button variant="outline" className="w-full mt-4" type="button" onClick={handleGoogleLogin}>
-          {/* Google SVG here */}
-          Continue with Google
-        </Button>
-      </div>
+  <Separator />
+  <div className="relative flex justify-center text-xs uppercase">
+    <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+  </div>
+  <Button variant="outline" className="w-full mt-4 flex items-center justify-center gap-2" type="button" onClick={handleGoogleLogin}>
+    {/* Google SVG */}
+    <svg width="20" height="20" viewBox="0 0 48 48" fill="none">
+      <g>
+        <path fill="#4285F4" d="M24 9.5c3.54 0 6.72 1.23 9.22 3.25l6.9-6.9C35.62 2.36 30.13 0 24 0 14.64 0 6.4 5.48 2.44 13.44l8.06 6.27C12.52 13.13 17.81 9.5 24 9.5z"/>
+        <path fill="#34A853" d="M46.09 24.55c0-1.64-.15-3.22-.43-4.75H24v9.02h12.44c-.54 2.91-2.17 5.38-4.62 7.03l7.19 5.59C43.98 37.77 46.09 31.86 46.09 24.55z"/>
+        <path fill="#FBBC05" d="M10.5 28.73c-1.02-2.98-1.02-6.18 0-9.16l-8.06-6.27C.81 17.41 0 20.61 0 24c0 3.39.81 6.59 2.44 9.44l8.06-6.27z"/>
+        <path fill="#EA4335" d="M24 48c6.13 0 11.62-2.02 15.81-5.5l-7.19-5.59c-2.01 1.35-4.58 2.13-8.62 2.13-6.19 0-11.48-3.63-13.5-8.71l-8.06 6.27C6.4 42.52 14.64 48 24 48z"/>
+        <path fill="none" d="M0 0h48v48H0z"/>
+      </g>
+    </svg>
+    Continue with Google
+  </Button>
+</div>
     </form>
   );
 
