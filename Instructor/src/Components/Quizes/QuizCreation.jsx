@@ -130,7 +130,7 @@ const QuizCreation = () => {
           {quiz.length > 0 && (
             <div className="mt-4 p-3 bg-green-100 border border-green-300 rounded-lg inline-block">
               <p className="text-green-800 text-sm">
-                ✅ Your quiz is automatically saved and will persist after refresh
+                 Your quiz is automatically saved and will persist after refresh
               </p>
             </div>
           )}
