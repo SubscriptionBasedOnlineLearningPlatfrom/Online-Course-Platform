@@ -1,3 +1,16 @@
+import { createClient } from '@supabase/supabase-js';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+// For backend use (full access) → use service role key
+ const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+);
+
+export { supabase };
+
 // import express from "express";
 // import bcrypt from "bcrypt";
 // import jwt from "jsonwebtoken";

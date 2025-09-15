@@ -1,4 +1,5 @@
-import { InstructorAuth }from "../Components/Signup-Login/instructorAuth";
+import { InstructorAuth } from "../Components/Signup-Login/InstructorAuth";
+
 
 
 const Index = () => {
