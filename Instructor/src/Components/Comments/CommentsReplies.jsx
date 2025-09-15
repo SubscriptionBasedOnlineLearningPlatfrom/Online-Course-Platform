@@ -1,24 +1,49 @@
-import React, { useState, useEffect } from "react";
+import { APIContext } from "@/Contexts/APIContext";
+import React, { useState, useEffect, useContext, use } from "react";
+import axios from "axios";
+import { set } from "zod";
 
 const CommentsReplies = () => {
-  const [comments] = useState([
-    { id: 1, student: "Alice Johnson", course: "React for Beginners", comment: "Really helpful course! Loved the explanations.", date: "2025-07-15" },
-    { id: 2, student: "Mark Lee", course: "Node.js Mastery", comment: "Good content but could use more real-world examples.", date: "2025-07-12" },
-    { id: 3, student: "Sophia Davis", course: "AI with Python", comment: "Found some sections difficult to follow.", date: "2025-07-10" },
-  ]);
+  const {BackendAPI} = useContext(APIContext);
 
+  // const [comments] = useState([
+  //   { id: 1, username: "Alice Johnson", course_title: "React for Beginners", comment: "Really helpful course_title! Loved the explanations.", date: "2025-07-15" },
+  //   { id: 2, username: "Mark Lee", course_title: "Node.js Mastery", comment: "Good content but could use more real-world examples.", date: "2025-07-12" },
+  //   { id: 3, username: "Sophia Davis", course_title: "AI with Python", comment: "Found some sections difficult to follow.", date: "2025-07-10" },
+  // ]);
+
+  const [comments, setComments] = useState([]);
   const [search, setSearch] = useState("");
   const [activeReply, setActiveReply] = useState(null); // which comment is showing the textarea
-  const [replies, setReplies] = useState({});           // { [commentId]: ["reply1", "reply2"] }
+  const [replies, setReplies] = useState([]);           // { [commentId]: ["reply1", "reply2"] }
   const [drafts, setDrafts] = useState({});             // { [commentId]: "current typing text" }
   const [editing, setEditing] = useState(null);         // { id, idx } or null
   const [editDraft, setEditDraft] = useState("");
 
   // Load replies from localStorage
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("replies")) || {};
-    setReplies(stored);
-  }, []);
+    const token = localStorage.getItem("token");
+    const fetchReplies = async () => {
+      try {
+        const response = await axios.get(`${BackendAPI}/comments/comments`, {
+          headers: { 
+            Authorization: `Bearer ${token}` 
+          }
+        });
+
+        if(response.status === 200) {
+          setComments(Object.values(response.data));
+          setReplies(Object.values(response.data));
+          console.log(Object.values(response.data));
+          console.log(comments);
+        }
+      } catch (error) {
+        console.error("Failed to fetch replies:", error);
+      }
+    }
+    fetchReplies();
+  },[BackendAPI]
+  )
 
   // Persist replies when they actually change (submit/edit/delete)
   useEffect(() => {
@@ -68,9 +93,9 @@ const CommentsReplies = () => {
 
   const filteredComments = comments.filter(
     (c) =>
-      c.student.toLowerCase().includes(search.toLowerCase()) ||
-      c.course.toLowerCase().includes(search.toLowerCase()) ||
-      c.comment.toLowerCase().includes(search.toLowerCase())
+      c.username.toLowerCase().includes(search.toLowerCase()) ||
+      c.course_title_title.toLowerCase().includes(search.toLowerCase()) ||
+      c.comment_text.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -90,31 +115,31 @@ const CommentsReplies = () => {
       {/* Comments */}
       <div className="space-y-6">
         {filteredComments.map((c) => (
-          <div key={c.id} className="bg-white/80 backdrop-blur-sm rounded-xl p-5 shadow-md border border-gray-100">
+          <div key={c.comment_id} className="bg-white/80 backdrop-blur-sm rounded-xl p-5 shadow-md border border-gray-100">
             <div className="flex items-start space-x-4">
               <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-400 rounded-full flex items-center justify-center text-white font-bold">
-                {c.student.charAt(0)}
+                {c.username.charAt(0)}
               </div>
 
               <div className="flex-1">
                 <div className="flex justify-between items-center">
                   <div>
-                    <p className="font-semibold text-gray-800">{c.student}</p>
-                    <p className="text-xs text-gray-500">{c.course} • {c.date}</p>
+                    <p className="font-semibold text-gray-800">{c.username}</p>
+                    <p className="text-xs text-gray-500">{c.course_title} • {new Date(c.comment_date).toISOString().slice(0, 10)}</p>
                   </div>
                 </div>
 
-                <p className="mt-2 text-gray-700">{c.comment}</p>
+                <p className="mt-2 text-gray-700">{c.comment_text}</p>
 
                 
                 <div className="mt-3 pl-2 border-l border-gray-200 space-y-3">
-                  {(replies[c.id] || []).map((reply, idx) => (
+                  {(c.replies || []).map((reply, idx) => (
                     <div key={idx} className="bg-gray-50 rounded-md p-3 text-sm text-gray-700">
                       {/* <div className="flex justify-between">
                         <p className="font-medium text-gray-800">Instructor Reply {idx + 1}:</p>
                       </div> */}
 
-                      {editing && editing.id === c.id && editing.idx === idx ? (
+                      {editing && editing.id === c.comment_id && editing.idx === idx ? (
                         <div className="mt-2">
                           <textarea
                             rows="2"
@@ -133,12 +158,12 @@ const CommentsReplies = () => {
                         </div>
                       ) : (
                         <>
-                          <p className="ml-2 mt-1">{reply}</p>
+                          <p className="ml-2 mt-1">{reply.reply_text}</p>
                           <div className="mt-2 flex gap-3">
-                            <button onClick={() => handleStartEdit(c.id, idx)} className="text-yellow-600 text-sm hover:underline">
+                            <button onClick={() => handleStartEdit(c.comment_id, idx)} className="text-yellow-600 text-sm hover:underline">
                               Edit
                             </button>
-                            <button onClick={() => handleDelete(c.id, idx)} className="text-red-600 text-sm hover:underline">
+                            <button onClick={() => handleDelete(c.comment_id, idx)} className="text-red-600 text-sm hover:underline">
                               Delete
                             </button>
                           </div>
@@ -148,14 +173,14 @@ const CommentsReplies = () => {
                   ))}
 
                   
-                  {activeReply === c.id ? (
+                  {activeReply === c.comment_id ? (
                     <div className="mt-2">
                       <textarea
                         rows="2"
                         className="w-full border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Write a reply..."
-                        value={drafts[c.id] || ""}
-                        onChange={(e) => setDrafts({ ...drafts, [c.id]: e.target.value })}
+                        value={drafts[c.comment_id] || ""}
+                        onChange={(e) => setDrafts({ ...drafts, [c.comment_id]: e.target.value })}
                       />
                       <div className="mt-2 flex gap-2">
                         <button onClick={() => handleReplySubmit(c.id)} className="px-3 py-1 bg-blue-500 text-white rounded-md text-sm hover:bg-blue-600">

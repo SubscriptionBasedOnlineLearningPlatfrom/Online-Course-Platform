@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken"
 
 export const Instructor = async (req,res,next) => {
     const header = req.headers.authorization || '';
-    // const header = "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5Y2E3YzYxMC0zYmM5LTQ0OGQtYjk5MC02ZTMxNzQ3ODQ3YjciLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJleHAiOjE3MDA5MjM1MDB9._Fak3_S1gn4tur3_KeY_F0r_ExAmplE"
+    // const header = "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU4NmIyMjI3LTQ3ODItNDE4MS05YWM5LTA3MjlmMTlhZTFjYSIsInVzZXJuYW1lIjoiU2l2YWthcmFuIiwiZW1haWwiOiJwaXJhbnVzaXZhNjA5QGdtYWlsLmNvbSIsImlhdCI6MTc1Nzk0NDI2NSwiZXhwIjoxNzU3OTQ3ODY1fQ.eTaSMHI1vE-oH-lGC20qYScJP8KKl1__RpAMQL_Hyuk"
     const token = header.split(' ')[1];
     config();
 
@@ -13,7 +13,7 @@ export const Instructor = async (req,res,next) => {
 
     // const payload = jwt.verify(token, process.env.SUPABASE_JWT_SECRET);
     const payload = jwt.decode(token);
-    const instructorId = payload.sub;
+    req.instructorId = payload.id;
     next();
 
 }

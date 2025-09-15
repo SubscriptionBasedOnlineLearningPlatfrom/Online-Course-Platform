@@ -5,6 +5,7 @@ const router = express.Router();
 
 // Protected by JWT token
 router.get("/", verifyToken, (req, res) => {
+  console.log(verifyToken);
   res.json({ message: `Welcome ${req.user.full_name}`, user: req.user });
 });
 

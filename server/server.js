@@ -12,9 +12,9 @@ import OverviewRouter from "./Routers/Instructor/OverviewRouter.js";
 import commentRouter from "./Routers/Instructor/CommentsRouter.js";
 import QuizRouter from "./Routers/Instructor/QuizRouter.js";
 import courseRouter from "./Routers/Student/CourseRouter.js";
-import authRoutes from "./auth/authRoutes.js";
-import instructorRoutes from "./Routers/instructorRoutes.js";
-import passportConfig from "./auth/passportConfig.js";
+import authRoutes from "./routes/auth.js";
+// import instructorRoutes from "./Routers/instructorRoutes.js";
+// import passportConfig from "./auth/passportConfig.js";
 
 
 dotenv.config();
