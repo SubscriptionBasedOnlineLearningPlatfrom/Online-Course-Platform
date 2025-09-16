@@ -1,3 +1,5 @@
+// Redundant- can be used instead of APIcontext
+
 import axios from "axios";
 
 export const api = axios.create({
