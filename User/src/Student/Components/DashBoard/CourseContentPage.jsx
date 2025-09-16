@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { QuizComponent } from "../Quizes/Quiz";
 
 const dummyCourse = {
-  id: "react101", // id taken from useParams and used
+  id: "react101",
   name: "React for Beginners",
   modules: [
     {
@@ -12,34 +12,50 @@ const dummyCourse = {
       chapters: [
         {
           id: "ch1",
-          title: "Welcome Video",
-          type: "video",
-          url: "https://www.w3schools.com/html/mov_bbb.mp4",
-        },
-        {
-          id: "ch2",
-          title: "Notes PDF",
-          type: "pdf",
-          url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+          title: "Chapter 1: Getting Started",
+          resources: [
+            {
+              id: "r1",
+              title: "Welcome Video",
+              type: "video",
+              url: "https://www.w3schools.com/html/mov_bbb.mp4",
+            },
+            {
+              id: "r2",
+              title: "Notes PDF",
+              type: "pdf",
+              url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+            },
+            {
+              id: "r3",
+              title: "Quick Quiz",
+              type: "quiz",
+            },
+          ],
         },
       ],
-      quizes: <QuizComponent />,
     },
     {
       id: "mod2",
       title: "Module 2: Basics",
       chapters: [
         {
-          id: "ch3",
-          title: "JSX Explained",
-          type: "video",
-          url: "https://www.w3schools.com/html/mov_bbb.mp4",
-        },
-        {
-          id: "ch4",
-          title: "Assignment 1",
-          type: "pdf",
-          url: "https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf",
+          id: "ch2",
+          title: "Chapter 2: JSX Basics",
+          resources: [
+            {
+              id: "r4",
+              title: "JSX Video",
+              type: "video",
+              url: "https://www.w3schools.com/html/mov_bbb.mp4",
+            },
+            {
+              id: "r5",
+              title: "Assignment 1 PDF",
+              type: "pdf",
+              url: "https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf",
+            },
+          ],
         },
       ],
     },
@@ -48,16 +64,22 @@ const dummyCourse = {
       title: "Module 3: Next Step",
       chapters: [
         {
-          id: "ch5",
-          title: "JSX Explained More",
-          type: "video",
-          url: "https://www.w3schools.com/html/mov_bbb.mp4",
-        },
-        {
-          id: "ch6",
-          title: "Assignment 2",
-          type: "pdf",
-          url: "https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf",
+          id: "ch3",
+          title: "Chapter 3: Deeper JSX",
+          resources: [
+            {
+              id: "r6",
+              title: "JSX Explained More",
+              type: "video",
+              url: "https://www.w3schools.com/html/mov_bbb.mp4",
+            },
+            {
+              id: "r7",
+              title: "Assignment 2 PDF",
+              type: "pdf",
+              url: "https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf",
+            },
+          ],
         },
       ],
     },
@@ -81,11 +103,13 @@ const CourseContentPage = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const handleResourceClick = (chapter) => {
-    if (chapter.type === "video") {
-      setCurrentVideo(chapter.url);
-    } else {
-      window.open(chapter.url, "_blank", "noopener,noreferrer");
+  const handleResourceClick = (res) => {
+    if (res.type === "video") {
+      setCurrentVideo(res.url);
+    } else if (res.type === "pdf") {
+      window.open(res.url, "_blank", "noopener,noreferrer");
+    } else if (res.type === "quiz") {
+      navigate("/QuizComponent");
     }
   };
 
@@ -165,27 +189,24 @@ const CourseContentPage = () => {
               </button>
 
               {openModule === module.id && (
-                <ul className="pl-5 mt-2 space-y-2 text-black pb-3">
+                <div className="pl-5 mt-2 space-y-2 text-black pb-3">
                   {module.chapters.map((chapter) => (
-                    <>
-                      <li
-                        key={chapter.id}
-                        className="cursor-pointer hover:text-blue-600"
-                        onClick={() => handleResourceClick(chapter)}
-                      >
-                        {chapter.title} ({chapter.type})
-                      </li>
-                      <li
-                        key={chapter.id}
-                        className="cursor-pointer hover:text-blue-600"
-                        onClick={() => navigate("/QuizComponent")}
-                      >
-                        quizes
-                      </li>
-                      
-                    </>
+                    <div key={chapter.id} className="mb-2">
+                      <p className="font-semibold">{chapter.title}</p>
+                      <ul className="pl-4 mt-1 space-y-1">
+                        {chapter.resources.map((res) => (
+                          <li
+                            key={res.id}
+                            className="cursor-pointer hover:text-blue-600"
+                            onClick={() => handleResourceClick(res)}
+                          >
+                            {res.title} ({res.type})
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   ))}
-                </ul>
+                </div>
               )}
             </div>
           ))}
