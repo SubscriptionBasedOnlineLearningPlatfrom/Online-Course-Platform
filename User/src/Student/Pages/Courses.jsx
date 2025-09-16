@@ -1,34 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom"; // each course routes to course/:id
+import { getAllCourses } from "../utils/api"; 
 import course1 from "../assets/course1.jpg";
-import course2 from "../assets/course2.jpg";
-import course3 from "../assets/course3.jpg";
-import course4 from "../assets/course4.jpg";
-
-// course data with levels
-const courses = [
-  { id: 1, name: "Web Development", description: "Learn HTML, CSS, JavaScript and more.", image: course1, level: "Beginner" },
-  { id: 2, name: "Data Science", description: "Master data analysis and machine learning.", image: course2, level: "Beginner" },
-  { id: 3, name: "AI Fundamentals", description: "Dive into AI and neural networks.", image: course3, level: "Intermediate" },
-  { id: 4, name: "OOP Concepts", description: "Dive into OOP Concepts.", image: course4, level: "Advanced" },
-];
-
-
 
 const Courses = () => {
+  const [courses, setCourses] = useState([]); 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const [searchQuery, setSearchQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [level, setLevel] = useState("Beginner");
 
+  const navigate = useNavigate();
+
   // toggle dropdown
   const toggleDropdown = () => setIsOpen(!isOpen);
-  const navigate = useNavigate();
 
   // handle level change
   const handleLevel = (selectedLevel) => {
     setLevel(selectedLevel);
     setIsOpen(false);
   };
+
+  // fetch courses from backend on mount
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const data = await getAllCourses();
+
+        // map backend fields to frontend
+        const mappedCourses = data.map((course) => ({
+          id: course.course_id,
+          name: course.course_title,
+          description: course.course_description || "No description available",
+          image: course.image || course1, // use placeholder if no image
+          level: course.level,
+        }));
+
+        setCourses(mappedCourses);
+      } catch (err) {
+        setError(err.message); // backend error
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);
 
   // filter based on search + level
   const filteredCourses = courses.filter(
@@ -38,8 +57,22 @@ const Courses = () => {
       course.level.toLowerCase() === level.toLowerCase()
   );
 
+  if (loading)
+    return (
+      <div className="px-6 py-20 text-center">
+        <p className="text-xl text-gray-700">Loading courses...</p>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="px-6 py-20 text-center">
+        <p className="text-red-500 text-xl">Error: {error}</p>
+      </div>
+    );
+
   return (
-    <div className="px-6 py-10" >
+    <div className="px-6 py-10">
       <div className="flex flex-col sm:flex-row gap-4 sm:items-center mb-6 justify-between">
 
         {/* Dropdown */}
@@ -111,97 +144,12 @@ const Courses = () => {
           ))}
         </div>
       ) : (
-        <p className="text-gray-500 mt-6">No courses found at this level.</p>
+        <div className="py-20 text-center">
+          <p className="text-xl text-gray-500">No courses found at this level.</p>
+        </div>
       )}
     </div>
   );
 };
 
 export default Courses;
-
-
-
-/* 
- ===== CODE before modification =====
-
-import React, { useState } from 'react';
-import course1 from '../assets/course1.jpg';
-import course2 from '../assets/course2.jpg';
-import course3 from '../assets/course3.jpg';
-import course4 from '../assets/course4.jpg';
-// temporarily added images
-
-const courses = [
-  {
-    id: 1,
-    name: 'Web Development',
-    description: 'Learn HTML, CSS, JavaScript and more.',
-    image: course1,
-  },
-  {
-    id: 2,
-    name: 'Data Science',
-    description: 'Master data analysis and machine learning.',
-    image: course2,
-  },
-  {
-    id: 3,
-    name: 'AI Fundamentals',
-    description: 'Dive into AI and neural networks.',
-    image: course3,
-  },
-  {
-    id: 4,
-    name: 'OOP Concepts',
-    description: 'Dive into OOP Concepts.',
-    image: course4,
-  },
-];
-
-const Courses = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-
-  // Filtered courses based on search query
-  const filteredCourses = courses.filter(course =>
-    course.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    course.description.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  return (
-    <div className="px-6 py-10">
-      <div className="flex justify-between items-center mb-6 flex-wrap gap-4">
-        <h1 className="text-3xl font-semibold">Explore Courses</h1>
-        <input
-          type="text"
-          placeholder="Search courses..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-      </div>
-
-      {filteredCourses.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredCourses.map((course) => (
-            <div
-              key={course.id}
-              className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition duration-300"
-            >
-              <img src={course.image} alt={course.name} className="w-full h-48 object-cover" />
-              <div className="p-4">
-                <h2 className="text-xl font-bold text-gray-800">{course.name}</h2>
-                <p className="text-gray-600 mt-2">{course.description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p className="text-gray-500 mt-6">No courses found.</p>
-      )}
-              <Link to={`/progress`}>
-  View My Progress
-</Link>
-    </div>
-  );
-};
-*/
