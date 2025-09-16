@@ -1,22 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaEdit } from 'react-icons/fa';
 import { AiFillDelete } from 'react-icons/ai';
 import { useNavigate } from "react-router-dom";
 
 const ViewCreatedCourse = () => {
   // ----- data (now mutable) -----
-  const [courses, setCourses] = useState([
-    { id: 1, name: "React for Beginners", description: "Learn the basics of React.js", price: "$49", created: "2025-07-01", updated: "2025-07-10" },
-    { id: 2, name: "Node.js Mastery", description: "Backend development with Node.js", price: "$79", created: "2025-06-20", updated: "2025-07-05" },
-    { id: 3, name: "AI with Python", description: "Introduction to AI concepts", price: "$99", created: "2025-05-15", updated: "2025-06-10" },
-  ]);
-
+  const [courses, setCourses] = useState([]);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
-
-  // ----- edit modal state -----
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState({ name: "", description: "", price: "" });
+
+  // fetch course details
+  // useEffect(() => {
+  //   const fetchCourses = async () => {
+  //     try {
+  //       const response = await axios.get()
+  //     } catch (error) {
+        
+  //     }
+
 
   // filter by search
   const filteredCourses = courses.filter(
@@ -90,12 +93,12 @@ const ViewCreatedCourse = () => {
           <table className="w-full">
             <thead>
               <tr className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200">
-                <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">📚 Course Name</th>
-                <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">📝 Description</th>
-                <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">💰 Price</th>
-                <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">📅 Created Date</th>
-                <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">🔄 Updated Date</th>
-                <th className="py-4 px-6 text-center text-sm font-semibold text-gray-700 uppercase tracking-wider">⚡ Actions</th>
+                <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Course Name</th>
+                <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Description</th>
+                <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Price</th>
+                <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Created Date</th>
+                <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Updated Date</th>
+                <th className="py-4 px-6 text-center text-sm font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
 
