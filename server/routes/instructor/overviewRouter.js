@@ -1,5 +1,5 @@
 import express from 'express';
-import { EnrollementOverview, viewCreatedCourses } from '../../Controllers/Instructor/OverviewController.js';
+import { EnrollementOverview, viewCreatedCourses } from '../../controllers/instructor/overviewController.js';
 
 const OverviewRouter = express.Router();
 

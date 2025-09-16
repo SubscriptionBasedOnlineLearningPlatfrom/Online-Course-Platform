@@ -1,4 +1,4 @@
-import { supabase } from "../../Database/SupabaseClient.js";
+import { supabase } from "../../database/SupabaseClient.js";
 import { z } from 'zod';
 
 export const viewStudentsComments = async (req, res) => {
@@ -37,7 +37,7 @@ export const viewStudentsComments = async (req, res) => {
             return acc;
 
         }, {})
-        console.log(JSON.stringify(withReplies, null, 2));
+        // console.log(JSON.stringify(withReplies, null, 2));
         return res.status(200).json(withReplies);
 
 
@@ -59,7 +59,7 @@ export const createReplyForComment = async (req, res) => {
     try {
         const parsed = createReplySchema.safeParse({
             comment_id: req.params.commentId,
-            instructor_id: req.body.instructor_id,
+            instructor_id: req.instructorId,
             reply_text: req.body.reply_text
         })
 

@@ -1,5 +1,5 @@
 import express from 'express';
-import { loadQuiz, quizCreation } from '../../Controllers/Instructor/QuizController.js';
+import { loadQuiz, quizCreation } from '../../controllers/instructor/quizController.js';
 
 const QuizRouter = express.Router();
 
