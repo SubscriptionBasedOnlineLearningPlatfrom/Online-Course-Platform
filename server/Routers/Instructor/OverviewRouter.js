@@ -5,7 +5,7 @@ import { Instructor } from '../../Middleware/authInstructor.js';
 const OverviewRouter = express.Router();
 
 OverviewRouter.get("/enrollment",Instructor, EnrollementOverview);
-OverviewRouter.get("/created-courses", viewCreatedCourses);
+OverviewRouter.get("/created-courses",Instructor, viewCreatedCourses);
 
 
 export default OverviewRouter;

@@ -5,8 +5,7 @@ export const EnrollementOverview = async (req,res) => {
 
     try {
         const instructorId = req.instructorId;
-        // const {instructorId} = req.body;
-        console.log(instructorId);
+        
         const {data,error} = await supabase
                                     .from('v_enrollment_overview')
                                     .select('*')
@@ -28,8 +27,7 @@ export const EnrollementOverview = async (req,res) => {
 // view created courses
 export const viewCreatedCourses = async (req,res,next) => {
     try {
-        // const instructorId = req.instructorId;
-        const {instructorId} = req.body;
+        const instructorId = req.instructorId;
 
         const {data,error} = await supabase
                                     .from('v_created_courses')

@@ -1,28 +1,49 @@
-import React, { useState } from "react";
+import React, { use, useContext, useEffect, useState } from "react";
+import axios from "axios";
 import { FaEdit } from 'react-icons/fa';
 import { AiFillDelete } from 'react-icons/ai';
 import { useNavigate } from "react-router-dom";
+import { APIContext } from "@/Contexts/APIContext";
 
 const ViewCreatedCourse = () => {
-  // ----- data (now mutable) -----
-  const [courses, setCourses] = useState([
-    { id: 1, name: "React for Beginners", description: "Learn the basics of React.js", price: "$49", created: "2025-07-01", updated: "2025-07-10" },
-    { id: 2, name: "Node.js Mastery", description: "Backend development with Node.js", price: "$79", created: "2025-06-20", updated: "2025-07-05" },
-    { id: 3, name: "AI with Python", description: "Introduction to AI concepts", price: "$99", created: "2025-05-15", updated: "2025-06-10" },
-  ]);
-
+  const {BackendAPI} = useContext(APIContext);
+  const [courses, setCourses] = useState([]);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
-
-  // ----- edit modal state -----
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState({ name: "", description: "", price: "" });
+
+  useEffect(() => {
+      const fetchCourses = async () => {
+        try {
+          const response = await axios.get(`${BackendAPI}/overview/created-courses`, 
+            {headers: 
+              {
+                Authorization : `Bearer ${localStorage.getItem("token")}`
+              }
+            }
+          )
+
+          if(response.status === 200){
+            setCourses(Object.values(response.data));
+          }
+
+          console.log(response.data);
+
+        } catch (error) {
+          console.error("Error fetching courses:", error);
+        }
+
+      }
+      fetchCourses();
+    }, []
+  )
 
   // filter by search
   const filteredCourses = courses.filter(
     (course) =>
-      course.name.toLowerCase().includes(search.toLowerCase()) ||
-      course.description.toLowerCase().includes(search.toLowerCase())
+      course.course_title.toLowerCase().includes(search.toLowerCase()) ||
+      course.course_description.toLowerCase().includes(search.toLowerCase())
   );
 
   // --------- handlers ----------
@@ -42,13 +63,13 @@ const ViewCreatedCourse = () => {
   };
 
   const saveEdit = () => {
-    const { name, description, price } = form;
-    if (!name.trim() || !description.trim() || !price.trim()) return;
+    const { course_title, course_description } = form;
+    if (!course_title.trim() || !course_description.trim()) return;
 
     const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
     setCourses((prev) =>
       prev.map((c) =>
-        c.id === editingId ? { ...c, name, description, price, updated: today } : c
+        c.id === editingId ? { ...c, course_title, course_description, price, updated: today } : c
       )
     );
     cancelEdit();
@@ -90,12 +111,12 @@ const ViewCreatedCourse = () => {
           <table className="w-full">
             <thead>
               <tr className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200">
-                <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">📚 Course Name</th>
-                <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">📝 Description</th>
-                <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">💰 Price</th>
-                <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">📅 Created Date</th>
-                <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">🔄 Updated Date</th>
-                <th className="py-4 px-6 text-center text-sm font-semibold text-gray-700 uppercase tracking-wider">⚡ Actions</th>
+                <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Course Name</th>
+                <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Description</th>
+                <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Category</th>
+                <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Created Date</th>
+                <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Updated Date</th>
+                <th className="py-4 px-6 text-center text-sm font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
 
@@ -105,28 +126,26 @@ const ViewCreatedCourse = () => {
                   <td className="py-5 px-6">
                     <div className="flex items-center">
                       <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-[#0173d1] to-[#85c1f3] rounded-lg flex items-center justify-center text-white font-bold text-sm shadow-lg">
-                        {course.name.charAt(0)}
+                        {course.course_title.charAt(0).toUpperCase()}
                       </div>
                       <div className="ml-4">
                         <div className="text-sm font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
-                          {course.name}
+                          {course.course_title}
                         </div>
                       </div>
                     </div>
                   </td>
 
                   <td className="py-5 px-6">
-                    <div className="text-sm text-gray-600 max-w-xs">{course.description}</div>
+                    <div className="text-sm text-gray-600 max-w-xs">{course.course_description}</div>
                   </td>
 
                   <td className="py-5 px-6">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 border border-green-200">
-                      {course.price}
-                    </span>
+                    <div className="text-sm text-gray-600 max-w-xs">{course.category}</div>
                   </td>
 
-                  <td className="py-5 px-6"><div className="text-sm text-gray-600">{course.created}</div></td>
-                  <td className="py-5 px-6"><div className="text-sm text-gray-600">{course.updated}</div></td>
+                  <td className="py-5 px-6"><div className="text-sm text-gray-600">{new Date(course.created_at).toISOString().slice(0,10)}</div></td>
+                  <td className="py-5 px-6"><div className="text-sm text-gray-600">{new Date(course.updated_at).toISOString().slice(0,10)}</div></td>
 
                   <td className="py-5 px-6">
                     <div className="flex items-center justify-center space-x-3">
