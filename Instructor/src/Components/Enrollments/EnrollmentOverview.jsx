@@ -3,34 +3,6 @@ import axios from "axios";
 import { APIContext } from "@/Contexts/APIContext";
 
 const EnrollmentOverview = () => {
-  // Sample student overview data (unchanged)
-  // const [students] = useState([
-  //   {
-  //     id: 1,
-  //     name: "Alice Johnson",
-  //     totalEnrollments: 3,
-  //     watchTime: "12h 30m",
-  //     completionRate: "85%",
-  //     certificates: 2,
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Mark Lee",
-  //     totalEnrollments: 5,
-  //     watchTime: "25h 10m",
-  //     completionRate: "92%",
-  //     certificates: 4,
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Sophia Davis",
-  //     totalEnrollments: 2,
-  //     watchTime: "8h 15m",
-  //     completionRate: "60%",
-  //     certificates: 1,
-  //   },
-  // ]);
-
   const {BackendAPI} = useContext(APIContext);
   const [students, setStudents] = useState([]);
   const [search, setSearch] = useState("");
@@ -176,8 +148,6 @@ const EnrollmentOverview = () => {
                       </span>
                     </td>
 
-                    
-
                     {/* Completion Rate (badge color like ViewCourse price pill) */}
                     <td className="py-5 px-6 text-center">
                       <span
@@ -194,7 +164,6 @@ const EnrollmentOverview = () => {
                       </span>
                     </td>
 
-                    
                   </tr>
                 );
               })}
