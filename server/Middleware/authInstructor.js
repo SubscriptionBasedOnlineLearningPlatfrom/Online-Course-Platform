@@ -13,7 +13,7 @@ export const Instructor = async (req,res,next) => {
 
     // const payload = jwt.verify(token, process.env.SUPABASE_JWT_SECRET);
     const payload = jwt.decode(token);
-    req.instructorId = payload.sub;
+    req.instructorId = payload.id;
     next();
 
 }

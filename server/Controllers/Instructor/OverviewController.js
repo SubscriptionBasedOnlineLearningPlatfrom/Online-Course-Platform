@@ -1,4 +1,4 @@
-import { supabase } from "../../Database/SupabaseClient.js";
+import { supabase } from "../../config/supabaseClient.js";
 
 // Enrollement Overview
 export const EnrollementOverview = async (req,res) => {

@@ -1,5 +1,5 @@
 import {z} from "zod"
-import { supabase } from "../../Database/SupabaseClient.js";
+import { supabase } from "../../config/supabaseClient.js";
 
 const QuizSchema = z.object({
     lesson_id: z.uuid(),

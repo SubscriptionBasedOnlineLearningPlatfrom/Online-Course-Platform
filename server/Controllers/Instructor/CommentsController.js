@@ -1,4 +1,4 @@
-import { supabase } from "../../Database/SupabaseClient.js";
+import { supabase } from "../../config/supabaseClient.js";
 import { z } from 'zod';
 
 export const viewStudentsComments = async (req, res) => {
@@ -14,6 +14,7 @@ export const viewStudentsComments = async (req, res) => {
             return res.status().json({ error: error.message })
         }
 
+        console.log(comments);
         const { data: replies, repliesError } = await supabase
             .from('instructor_replies_for_comments')
             .select('*')
