@@ -4,8 +4,8 @@ import { supabase } from "../../config/supabaseClient.js";
 export const EnrollementOverview = async (req,res) => {
 
     try {
-        // const instructorId = req.instructorId;
-        const {instructorId} = req.body;
+        const instructorId = req.instructorId;
+        // const {instructorId} = req.body;
         console.log(instructorId);
         const {data,error} = await supabase
                                     .from('v_enrollment_overview')

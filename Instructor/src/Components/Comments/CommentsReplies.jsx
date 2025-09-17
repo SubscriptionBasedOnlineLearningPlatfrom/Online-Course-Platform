@@ -208,7 +208,7 @@ const CommentsReplies = () => {
           >
             <div className="flex items-start space-x-4">
               <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-400 rounded-full flex items-center justify-center text-white font-bold">
-                {c.username.charAt(0)}
+                {c.username.charAt(0).toUpperCase()}
               </div>
 
               <div className="flex-1">
