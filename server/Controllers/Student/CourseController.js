@@ -1,4 +1,4 @@
-import { supabase } from "../../Database/SupabaseClient.js";
+import { supabase } from "../../config/supabaseClient.js";
 import { z } from 'zod';
 
 export const courseDetails = async (req, res) => {

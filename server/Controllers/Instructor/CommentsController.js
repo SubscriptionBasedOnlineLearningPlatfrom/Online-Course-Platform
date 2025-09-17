@@ -1,10 +1,9 @@
-import { supabase } from "../../Database/SupabaseClient.js";
+import { supabase } from "../../config/supabaseClient.js";
 import { z } from 'zod';
 
 export const viewStudentsComments = async (req, res) => {
     try {
-        // const instructor_id = req.instructorId;
-        const { instructor_id } = req.body;
+        const instructor_id = req.instructorId;
 
         const { data: comments, commentError } = await supabase
             .from('students_comments_for_instructor')
@@ -15,7 +14,7 @@ export const viewStudentsComments = async (req, res) => {
             return res.status().json({ error: error.message })
         }
 
-
+        console.log(comments);
         const { data: replies, repliesError } = await supabase
             .from('instructor_replies_for_comments')
             .select('*')
@@ -25,13 +24,11 @@ export const viewStudentsComments = async (req, res) => {
         if (repliesError) {
             return res.status(500).json({ error: error.message })
         }
-        // console.log(replies);
+        
         const repliesByComment = (replies || []).reduce((acc, reply) => {
             (acc[reply.comment_id] ||= []).push(reply);
             return acc;
         }, {})
-
-        // console.log(repliesByComment)
 
         const withReplies = (comments || []).reduce((acc, comment) => {
             acc[comment.comment_id] = {
@@ -41,7 +38,7 @@ export const viewStudentsComments = async (req, res) => {
             return acc;
 
         }, {})
-        console.log(JSON.stringify(withReplies, null, 2));
+        // console.log(JSON.stringify(withReplies, null, 2));
         return res.status(200).json(withReplies);
 
 
@@ -63,7 +60,7 @@ export const createReplyForComment = async (req, res) => {
     try {
         const parsed = createReplySchema.safeParse({
             comment_id: req.params.commentId,
-            instructor_id: req.body.instructor_id,
+            instructor_id: req.instructorId,
             reply_text: req.body.reply_text
         })
 
@@ -90,7 +87,6 @@ export const createReplyForComment = async (req, res) => {
 }
 
 // update a reply
-
 const updateReplySchema = z.object({
     reply_text: z.string().min(1).max(5000)
 })

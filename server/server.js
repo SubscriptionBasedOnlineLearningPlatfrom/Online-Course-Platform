@@ -7,12 +7,11 @@ import cors from "cors";
 import dotenv from "dotenv";
 import 'dotenv/config';
 import cookieParser from "cookie-parser";
-import { supabase } from "./Database/SupabaseClient.js";
 import OverviewRouter from "./Routers/Instructor/OverviewRouter.js";
 import commentRouter from "./Routers/Instructor/CommentsRouter.js";
 import QuizRouter from "./Routers/Instructor/QuizRouter.js";
 import courseRouter from "./Routers/Student/CourseRouter.js";
-import authRoutes from "./auth/authRoutes.js";
+import authRoutes from "./routes/auth.js";
 /* import instructorRoutes from "./Routers/instructorRoutes.js"; */
 /* import passportConfig from "./auth/passportConfig.js"; */
 
