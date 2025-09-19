@@ -4,10 +4,10 @@ import { FaEdit } from "react-icons/fa";
 import { AiFillDelete } from "react-icons/ai";
 import { MdDoubleArrow } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { APIContext } from "@/Contexts/APIContext";
+import { useApi } from "../../Contexts/ApiContext";
 
 const ViewCreatedCourse = () => {
-  const { BackendAPI } = useContext(APIContext);
+  const { BackendAPI } = useApi();
   const [courses, setCourses] = useState([]);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
