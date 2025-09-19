@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../Components/CreateCourse/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../Components/CreateCourse/ui/card";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../Components/CreateCourse/ui/form";
-import { Input } from "../Components/CreateCourse/ui/input";
-import { Textarea } from "../Components/CreateCourse/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../Components/CreateCourse/ui/select";
+import { Button } from "../components/CreateCourse/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/CreateCourse/ui/card";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../components/CreateCourse/ui/form";
+import { Input } from "../components/CreateCourse/ui/input";
+import { Textarea } from "../components/CreateCourse/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/CreateCourse/ui/select";
 import { ArrowLeft, Plus, BookOpen, Trophy, Clock, DollarSign } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";

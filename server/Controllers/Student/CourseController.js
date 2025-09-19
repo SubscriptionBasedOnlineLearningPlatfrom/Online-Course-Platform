@@ -1,4 +1,5 @@
 import { supabase } from "../../config/supabaseClient.js";
+import { courseDetailsByCourseId } from "../../models/courseModel.js";
 import { z } from 'zod';
 
 export const courseDetails = async (req, res) => {
@@ -6,25 +7,7 @@ export const courseDetails = async (req, res) => {
     try {
         const courseId = req.params.courseId;
 
-        const { data: course, error: courseError } = await supabase
-            .from("course_details")
-            .select("*")
-            .eq("course_id", courseId)
-            .single();
-
-        if (courseError) {
-            return res.status(500).json({ error: courseError });
-        }
-
-        const { data: modules, error: modulesError } = await supabase
-            .from("modules_lessons")
-            .select('*')
-            .eq("course_id", courseId)
-            .order("module_order", { ascending: true })
-
-        if (modulesError) {
-            return res.status(500).json({ error: modulesError });
-        }
+        const { course, modules } = await courseDetailsByCourseId(courseId);
 
         return res.json({ course, modules })
 

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { useApi } from "../../Contexts/ApiContext";
+import { useApi } from "../../contexts/APIContext";
 
 const EnrollmentOverview = () => {
   const { BackendAPI } = useApi();

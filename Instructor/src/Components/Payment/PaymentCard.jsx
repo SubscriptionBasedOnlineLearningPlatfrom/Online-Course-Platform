@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { PricingContext } from "../../Contexts/PricingConetxt";
+import { PricingContext } from "../../contexts/PricingConetxt";
 
 const PaymentCard = () => {
   // const [planName, setPlanName] = useState("");

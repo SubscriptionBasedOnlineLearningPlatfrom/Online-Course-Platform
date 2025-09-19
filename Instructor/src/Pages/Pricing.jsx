@@ -1,6 +1,6 @@
 import React from "react";
-import PaymentCard from "../Components/Payment/PaymentCard";
-import CheckoutPage from "../Components/Payment/CheckoutPage";
+import PaymentCard from "../components/Payment/PaymentCard";
+import CheckoutPage from "../components/Payment/CheckoutPage";
 
 const Pricing = () => {
   return (

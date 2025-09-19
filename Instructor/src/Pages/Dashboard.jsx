@@ -1,9 +1,9 @@
-import { MetricCard}  from "../Components/Dashboard/MatricCard";
+import { MetricCard}  from "../components/Dashboard/MatricCard";
 // import { RecentActivity } from "@/components/Dashboard/RecentActivity";
-import { CourseOverview } from "../Components/Dashboard/CourseOverview";
+import { CourseOverview } from "../components/Dashboard/CourseOverview";
 import { Users, BookOpen, DollarSign, TrendingUp } from "lucide-react";
-import { ProfileCard } from "../Components/Dashboard/ProfileCard";
-import  HorizontalFeedbackCarousel  from "../Components/LearnerFeedbackCarousel";
+import { ProfileCard } from "../components/Dashboard/ProfileCard";
+import  HorizontalFeedbackCarousel  from "../components/LearnerFeedbackCarousel";
 
 
 const Index = () => {

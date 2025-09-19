@@ -3,19 +3,19 @@ import React from 'react';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import Sidebar from './Components/Sidebar';
+import Sidebar from './components/Sidebar';
 
-import LearnerFeedbackCarousel from './Components/LearnerFeedbackCarousel';
-import ViewCreatedCourse from './Components/Course/ViewCreatedCourse';
-import EnrollmentOverview from './Components/Enrollments/EnrollmentOverview';
-import CurriculumPage from './Pages/Curriculum';
-import Pricing from './Pages/Pricing'
-import QuizCreation from './Components/Quizes/QuizCreation';
-import CommentsReplies from './Components/Comments/CommentsReplies';
-import Dashboard from './Pages/Dashboard';
-import CreateCourse from './Pages/CreateCourse';
-import Signup_Login from './Pages/Signup_Login'; // Assuming this is the correct path
-import UpdatePassword from "./Pages/UpdatePassword";
+import LearnerFeedbackCarousel from './components/LearnerFeedbackCarousel';
+import ViewCreatedCourse from './components/course/ViewCreatedCourse';
+import EnrollmentOverview from './components/Enrollments/EnrollmentOverview';
+import CurriculumPage from './pages/Curriculum';
+import Pricing from './pages/Pricing'
+import QuizCreation from './components/Quizes/QuizCreation';
+import CommentsReplies from './components/comments/CommentsReplies';
+import Dashboard from './pages/Dashboard';
+import CreateCourse from './pages/CreateCourse';
+import Signup_Login from './pages/Signup_Login'; // Assuming this is the correct path
+import UpdatePassword from "./pages/UpdatePassword";
 
 
 

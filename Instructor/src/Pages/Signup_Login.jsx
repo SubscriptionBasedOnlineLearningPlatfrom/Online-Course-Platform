@@ -1,4 +1,4 @@
-import { InstructorAuth } from "../Components/Signup-Login/InstructorAuth";
+import { InstructorAuth } from "../components/Signup-Login/instructorAuth";
 
 
 

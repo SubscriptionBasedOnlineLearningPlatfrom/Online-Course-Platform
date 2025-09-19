@@ -4,7 +4,7 @@ import { FaSave } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useContext } from "react";
-import { useApi } from "../../Contexts/ApiContext";
+import { useApi } from "../../contexts/APIContext";
 
 const QuizCreation = () => {
   const [question, setQuestion] = useState("");
