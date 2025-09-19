@@ -126,7 +126,7 @@ const Courses = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredCourses.map((course) => (
             <Link
-              to={`/displayCourses`}  ///course/${course.id} -- main part for testing purpose change code 
+              to={`/displayCourses/${course.id}`}  ///course/${course.id} -- main part for testing purpose change code 
               key={course.id}
               className="block bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col hover:shadow-xl transition duration-300"
             >

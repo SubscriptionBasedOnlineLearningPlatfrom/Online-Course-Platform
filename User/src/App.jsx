@@ -50,9 +50,9 @@ function App() {
       <Route path="/courses/:courseId/progress" element={<CourseProgress />} /> {/* student progress of the logged in student */}
       <Route path="/certificate/:courseId" element={<CertificatePage />} />
 
-      <Route path="/displayCourses" element={<DisplayCourse />} />
+      <Route path="/displayCourses/:courseId" element={<DisplayCourse />} />
       <Route path="/courses/:courseId/content" element={<CourseContentPage />} /> {/* student progress of the logged in student */}
-      <Route path="/displayCourses" element={<DisplayCourse />} /> {/* this is a page to display all courses which are visible to public users who are not logged in */}
+      <Route path="/displayCourses/:courseId" element={<DisplayCourse />} /> {/* this is a page to display all courses which are visible to public users who are not logged in */}
       <Route path="/QuizComponent" element={<QuizComponent />} />
       <Route path="/subscription" element={<Subscription />} />
 
