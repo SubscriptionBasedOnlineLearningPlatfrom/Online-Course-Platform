@@ -1,12 +1,13 @@
-// Redundant- can be used instead of APIcontext
-
+import React, { createContext, useContext } from "react";
 import axios from "axios";
 
-export const api = axios.create({
+// =======================
+// PRIVATE API
+// =======================
+const api = axios.create({
   baseURL: "http://localhost:4000",
 });
 
-// attach token automatically
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
@@ -16,7 +17,6 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// global response error formatter for api
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -25,12 +25,15 @@ api.interceptors.response.use(
   }
 );
 
-// Axios instance for public requests (no token)
-export const publicApi = axios.create({
+// =======================
+// PUBLIC API
+// =======================
+
+
+const publicApi = axios.create({
   baseURL: "http://localhost:4000",
 });
 
-// global response error formatter for publicApi
 publicApi.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -40,11 +43,31 @@ publicApi.interceptors.response.use(
 );
 
 // =======================
-// COURSES APIs
+// API FUNCTIONS
 // =======================
 
-// public endpoint
-export const getAllCourses = async () => {
+const getAllCourses = async () => {
   const response = await publicApi.get("/student/courses");
   return response.data;
 };
+
+
+
+
+const ApiContext = createContext({});
+
+export const ApiProvider = ({ children }) => {
+  return (
+    <ApiContext.Provider
+      value={{
+        api,
+        publicApi,
+        getAllCourses, // as a function to children
+      }}
+    >
+      {children}
+    </ApiContext.Provider>
+  );
+};
+
+export const useApi = () => useContext(ApiContext);

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom"; // each course routes to course/:id
-import { getAllCourses } from "../utils/api"; 
+import { useApi } from "../Contexts/ApiContext.jsx";
 import course1 from "../assets/course1.jpg";
 
 const Courses = () => {
+  const { getAllCourses } = useApi(); 
   const [courses, setCourses] = useState([]); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

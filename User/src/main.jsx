@@ -11,8 +11,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <CourseProvider>
       <APIProvider>
         <App />
-      </APIProvider>
-      
+      </APIProvider>  
     </CourseProvider>
   </BrowserRouter>
 );
