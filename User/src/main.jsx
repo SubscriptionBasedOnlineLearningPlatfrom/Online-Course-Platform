@@ -4,14 +4,14 @@ import App from "./App.jsx";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { CourseProvider } from "./Student/Contexts/CourseContext.jsx";
-import { APIProvider } from "./Student/Contexts/APIContext.jsx";
+import { ApiProvider } from "./Student/Contexts/ApiContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <CourseProvider>
-      <APIProvider>
+      <ApiProvider>
         <App />
-      </APIProvider>  
+      </ApiProvider>  
     </CourseProvider>
   </BrowserRouter>
 );

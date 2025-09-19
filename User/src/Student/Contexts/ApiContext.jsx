@@ -2,7 +2,7 @@ import React, { createContext, useContext } from "react";
 import axios from "axios";
 
 // =======================
-// PRIVATE API
+// PRIVATE API (with token)
 // =======================
 const api = axios.create({
   baseURL: "http://localhost:4000",
@@ -26,10 +26,8 @@ api.interceptors.response.use(
 );
 
 // =======================
-// PUBLIC API
+// PUBLIC API (no token)
 // =======================
-
-
 const publicApi = axios.create({
   baseURL: "http://localhost:4000",
 });
@@ -45,24 +43,26 @@ publicApi.interceptors.response.use(
 // =======================
 // API FUNCTIONS
 // =======================
-
 const getAllCourses = async () => {
   const response = await publicApi.get("/student/courses");
   return response.data;
 };
 
-
-
-
+// =======================
+// CONTEXT
+// =======================
 const ApiContext = createContext({});
 
 export const ApiProvider = ({ children }) => {
+  const BackendAPI = "http://localhost:4000/student";
+
   return (
     <ApiContext.Provider
       value={{
-        api,
-        publicApi,
-        getAllCourses, // as a function to children
+        api,         // private API instance
+        publicApi,   // public API instance
+        BackendAPI,  // base URL for students
+        getAllCourses,
       }}
     >
       {children}
@@ -70,4 +70,5 @@ export const ApiProvider = ({ children }) => {
   );
 };
 
+// Hook for easy access
 export const useApi = () => useContext(ApiContext);
