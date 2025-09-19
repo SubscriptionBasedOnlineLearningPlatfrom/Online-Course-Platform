@@ -3,13 +3,11 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import {ChevronRight} from 'lucide-react'
 import { CourseContext } from "../../Contexts/CourseContext";
-import { APIContext } from "../../Contexts/APIContext";
+
 
 const CourseModules = () => {
     const { courseId } = '637468ac-0476-4db8-bc1a-e03b1d822a46' //useParams();
     const [loading, setLoading] = useState(true);
-
-    const {BackendAPI} = useContext(APIContext);
     const {modules, setModules} = useContext(CourseContext)
 
     useEffect(() => {
