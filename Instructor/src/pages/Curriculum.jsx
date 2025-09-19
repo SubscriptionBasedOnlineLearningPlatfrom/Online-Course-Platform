@@ -6,32 +6,38 @@ import { useApi } from "../Contexts/ApiContext";
 
 const CurriculumPage = () => {
   const { courseId } = useParams();
-  const { getAllModules, addModule: apiAddModule, deleteModule: apiDeleteModule } = useApi();
+  const {
+    getAllModules,
+    addModule: apiAddModule,
+    deleteModule: apiDeleteModule,
+    addChapter: apiAddChapter,
+    deleteChapter: apiDeleteChapter,
+  } = useApi();
 
   const [modules, setModules] = useState([]);
   const [newModuleTitle, setNewModuleTitle] = useState("");
   const [newChapterTitle, setNewChapterTitle] = useState({});
   const [openModule, setOpenModule] = useState(null);
 
-  // fetch modules from backend
   useEffect(() => {
     const fetchModules = async () => {
       try {
         const data = await getAllModules(courseId);
-        setModules(data.modules); //  backend sends { modules: [...] }
+        setModules(data.modules); // backend returns { modules: [...] }
       } catch (err) {
         console.error(err);
       }
     };
     if (courseId) fetchModules();
-  }, [courseId]);
+  }, [courseId, getAllModules]);
 
+  
   const handleAddModule = async () => {
     if (!newModuleTitle.trim()) return;
 
     try {
       const data = await apiAddModule(courseId, newModuleTitle);
-      setModules([...modules, data.module]); // add the module returned by backend
+      setModules([...modules, data.module]); // backend should return { module: {...} }
       setNewModuleTitle("");
     } catch (err) {
       console.error(err);
@@ -49,43 +55,47 @@ const CurriculumPage = () => {
     }
   };
 
-  const handleAddChapter = (moduleId) => {
+  const handleAddChapter = async (moduleId) => {
     const title = newChapterTitle[moduleId];
     if (!title?.trim()) return;
-    setModules((prev) =>
-      prev.map((mod) =>
-        mod.module_id === moduleId
-          ? {
-              ...mod,
-              chapters: [
-                ...(mod.chapters || []),
-                { chapterId: `ch${Date.now()}`, title, files: [] },
-              ],
-            }
-          : mod
-      )
-    );
-    setNewChapterTitle((prev) => ({ ...prev, [moduleId]: "" }));
+
+    try {
+      const data = await apiAddChapter(moduleId, title);
+      // backend should return { chapter: { lesson_id, lesson_title, ... } }
+      setModules((prev) =>
+        prev.map((mod) =>
+          mod.module_id === moduleId
+            ? { ...mod, chapters: [...(mod.chapters || []), data.chapter] }
+            : mod
+        )
+      );
+      setNewChapterTitle((prev) => ({ ...prev, [moduleId]: "" }));
+    } catch (err) {
+      console.error("Failed to add chapter:", err);
+    }
   };
 
-  const handleDeleteChapter = (moduleId, chapterId) => {
+  const handleDeleteChapter = async (moduleId, lessonId) => {
     if (!window.confirm("Are you sure you want to delete this chapter?")) return;
-    setModules((prev) =>
-      prev.map((mod) =>
-        mod.module_id === moduleId
-          ? {
-              ...mod,
-              chapters: mod.chapters.filter((ch) => ch.chapterId !== chapterId),
-            }
-          : mod
-      )
-    );
+
+    try {
+      await apiDeleteChapter(lessonId);
+      setModules((prev) =>
+        prev.map((mod) =>
+          mod.module_id === moduleId
+            ? { ...mod, chapters: mod.chapters.filter((ch) => ch.lesson_id !== lessonId) }
+            : mod
+        )
+      );
+    } catch (err) {
+      console.error("Failed to delete chapter:", err);
+    }
   };
 
   return (
     <div className="mt-10 p-4 sm:p-6 max-w-7xl mx-auto space-y-6 bg-blue-50 rounded-xl shadow-sm">
       <h1 className="text-2xl sm:text-3xl font-bold text-blue-900 mb-4 text-center sm:text-left">
-        Course Curriculum 
+        Course Curriculum
       </h1>
 
       {modules.length === 0 ? (
@@ -94,15 +104,22 @@ const CurriculumPage = () => {
         </p>
       ) : (
         modules.map((mod) => (
-          <div key={mod.module_id} className="border border-blue-200 rounded-xl bg-white shadow-sm">
+          <div
+            key={mod.module_id}
+            className="border border-blue-200 rounded-xl bg-white shadow-sm"
+          >
             {/* Module Header */}
             <div className="flex justify-between items-center">
               <button
-                onClick={() => setOpenModule(openModule === mod.module_id ? null : mod.module_id)}
+                onClick={() =>
+                  setOpenModule(openModule === mod.module_id ? null : mod.module_id)
+                }
                 className="w-full flex justify-between items-center p-3 sm:p-4 text-left font-semibold text-base sm:text-lg text-blue-800 hover:bg-blue-100 rounded-t-xl cursor-pointer"
               >
                 {mod.module_title || mod.title}
-                <span className="text-sm">{openModule === mod.module_id ? "▲" : "▼"}</span>
+                <span className="text-sm">
+                  {openModule === mod.module_id ? "▲" : "▼"}
+                </span>
               </button>
               <button
                 onClick={() => handleDeleteModule(mod.module_id)}
@@ -117,14 +134,19 @@ const CurriculumPage = () => {
             {openModule === mod.module_id && (
               <div className="p-3 sm:p-4 space-y-3 border-t border-blue-100">
                 {(!mod.chapters || mod.chapters.length === 0) && (
-                  <p className="text-gray-500">No chapters yet. Add chapters below.</p>
+                  <p className="text-gray-500">
+                    No chapters yet. Add chapters below.
+                  </p>
                 )}
 
                 {mod.chapters?.map((ch) => (
-                  <div key={ch.chapterId} className="flex items-center gap-2 border border-blue-100 rounded-lg p-2 bg-gray-50">
+                  <div
+                    key={ch.lesson_id}
+                    className="flex items-center gap-2 border border-blue-100 rounded-lg p-2 bg-gray-50"
+                  >
                     <ChapterCard chapter={ch} />
                     <button
-                      onClick={() => handleDeleteChapter(mod.module_id, ch.chapterId)}
+                      onClick={() => handleDeleteChapter(mod.module_id, ch.lesson_id)}
                       className="p-2 text-red-500 hover:text-red-700 cursor-pointer"
                       title="Delete Chapter"
                     >

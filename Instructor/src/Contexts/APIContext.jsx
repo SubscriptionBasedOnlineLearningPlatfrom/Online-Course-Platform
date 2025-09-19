@@ -44,6 +44,17 @@ const deleteModule = async (moduleId) => {
   return response.data;
 };
 
+const addChapter = async (moduleId, title) => {
+  const response = await api.post(`/instructor/chapters/${moduleId}`, { lesson_title: title });
+  return response.data;
+};
+
+const deleteChapter = async (lessonId) => {
+  const response = await api.delete(`/instructor/chapters/${lessonId}`);
+  return response.data;
+};
+
+
 
 // =======================
 // CONTEXT
@@ -61,6 +72,8 @@ export const ApiProvider = ({ children }) => {
         getAllModules,
         addModule,
         deleteModule,
+        addChapter,
+        deleteChapter,
       }}
     >
       {children}
