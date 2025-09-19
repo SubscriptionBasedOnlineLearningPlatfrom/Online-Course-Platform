@@ -1,4 +1,4 @@
-import { createModule, getModulesByCourse } from '../../models/moduleModel.js';
+import { createModule, getModulesByCourse, removeModule } from '../../models/moduleModel.js';
 
 export const addModule = async (req, res) => {
   try {
@@ -23,5 +23,21 @@ export const listModules = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Failed to fetch modules', error: err.message });
+  }
+};
+
+export const deleteModule = async (req, res) => {
+  try {
+    const { moduleId } = req.params;
+
+    const deleted = await removeModule(moduleId);
+    if (!deleted) {
+      return res.status(404).json({ message: 'Module not found or could not be deleted' });
+    }
+
+    res.status(200).json({ message: 'Module deleted successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to delete module', error: err.message });
   }
 };
