@@ -25,12 +25,56 @@ export const createModule = async (courseId, title) => {
 };
 
 export const getModulesByCourse = async (courseId) => {
+  // Fetch modules with lessons nested
   const { data, error } = await supabase
     .from('modules')
-    .select('*')
+    .select(`
+      module_id,
+      module_title,
+      module_order,
+      lessons(
+        lesson_id,
+        lesson_title,
+        video_url,
+        assignment_url,
+        note_url
+      )
+    `)
     .eq('course_id', courseId)
     .order('module_order', { ascending: true });
 
   if (error) throw error;
-  return data;
+
+  // Make sure lessons is always an array
+  const modules = data.map((mod) => ({
+    ...mod,
+    chapters: mod.lessons || [],
+    lessons: undefined, // remove lessons key if want
+  }));
+
+  return modules;
 };
+
+
+export const removeModule = async (moduleId) => {
+  // delete lessons first (if any)
+  const { error: lessonError } = await supabase
+    .from('lessons')
+    .delete()
+    .eq('module_id', moduleId);
+
+  if (lessonError) throw new Error(lessonError.message);
+
+  // delete module
+  const { data, error } = await supabase
+    .from('modules')
+    .delete()
+    .eq('module_id', moduleId)
+    .select();
+
+  if (error) throw new Error(error.message);
+
+  // check safely
+  return data && data.length > 0;
+};
+
