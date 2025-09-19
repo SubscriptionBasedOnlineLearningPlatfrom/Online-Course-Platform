@@ -12,6 +12,7 @@ import commentRouter from "./Routers/Instructor/CommentsRouter.js";
 import QuizRouter from "./Routers/Instructor/QuizRouter.js";
 import courseRouter from "./Routers/Student/CourseRouter.js";
 import moduleRoutes from './Routers/Instructor/moduleRoutes.js';
+import chapterRoutes from './Routers/Instructor/chapterRoutes.js';
 import authRoutes from "./routes/auth.js";
 /* import instructorRoutes from "./Routers/instructorRoutes.js"; */
 /* import passportConfig from "./auth/passportConfig.js"; */
@@ -52,6 +53,7 @@ app.use("/instructor/overview", OverviewRouter);
 app.use("/instructor/comments", commentRouter);
 app.use("/instructor/quizzes", QuizRouter);
 app.use("/instructor/modules", moduleRoutes);
+app.use("/instructor/chapters", chapterRoutes);
 
 // students
 app.use("/student/courses", courseRouter);
