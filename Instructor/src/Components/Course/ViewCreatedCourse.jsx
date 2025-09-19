@@ -4,7 +4,7 @@ import { FaEdit } from "react-icons/fa";
 import { AiFillDelete } from "react-icons/ai";
 import { MdDoubleArrow } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { useApi } from "../../Contexts/ApiContext";
+import { useApi } from "../../contexts/APIContext";
 
 const ViewCreatedCourse = () => {
   const { BackendAPI } = useApi();

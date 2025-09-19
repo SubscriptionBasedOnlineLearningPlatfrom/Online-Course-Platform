@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { set } from "zod";
-import { useApi } from "../../Contexts/ApiContext";
+import { useApi } from "../../contexts/APIContext";
 
 const CommentsReplies = () => {
   const { BackendAPI } = useApi();

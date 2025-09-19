@@ -11,3 +11,28 @@ export const getAllCourses = async () => {
 
 // Create a new course
 
+//get course details by courseId
+export const courseDetailsByCourseId = async (courseId) => {
+    const { data: course, error: courseError } = await supabase
+        .from("course_details")
+        .select("*")
+        .eq("course_id", courseId)
+        .single();
+
+    if (courseError) {
+        return res.status(500).json({ error: courseError });
+    }
+
+    const { data: modules, error: modulesError } = await supabase
+        .from("modules_lessons")
+        .select('*')
+        .eq("course_id", courseId)
+        .order("module_order", { ascending: true })
+
+    if (modulesError) {
+        return res.status(500).json({ error: modulesError });
+    }
+    return { course, modules };
+}
+
+
