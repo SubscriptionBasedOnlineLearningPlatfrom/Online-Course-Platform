@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Trash2 } from "lucide-react";
 import ChapterCard from "../components/ChapterCard";
-import { useApi } from "../contexts/ApiContext";
+import { useApi } from "../Contexts/ApiContext";
 
 const CurriculumPage = () => {
   const { courseId } = useParams();
