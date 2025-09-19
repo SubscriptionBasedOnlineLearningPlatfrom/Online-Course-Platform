@@ -5,15 +5,15 @@ import {BrowserRouter} from 'react-router-dom'
 import App from './App.jsx';
 import './index.css';
 import { PricingProvider } from "./Contexts/PricingConetxt.jsx";
-import { APIProvider } from './Contexts/APIContext.jsx';
+import { ApiProvider } from './Contexts/ApiContext.jsx';
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <PricingProvider>
-      <APIProvider>
+      <ApiProvider>
         <App />
-      </APIProvider>
+      </ApiProvider>
     </PricingProvider>
   </BrowserRouter>
 );

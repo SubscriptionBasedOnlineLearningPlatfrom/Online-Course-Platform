@@ -3,6 +3,7 @@ import { MetricCard}  from "../Components/Dashboard/MatricCard";
 import { CourseOverview } from "../Components/Dashboard/CourseOverview";
 import { Users, BookOpen, DollarSign, TrendingUp } from "lucide-react";
 import { ProfileCard } from "../Components/Dashboard/ProfileCard";
+import  HorizontalFeedbackCarousel  from "../Components/LearnerFeedbackCarousel";
 
 
 const Index = () => {
@@ -58,6 +59,7 @@ const Index = () => {
             {/* <RecentAct,ivity /> */}
           </div>
         </div>
+        <HorizontalFeedbackCarousel/>
       </div>
     </div>
   );

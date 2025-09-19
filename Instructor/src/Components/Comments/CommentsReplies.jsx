@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { set } from "zod";
-import { APIContext } from "@/Contexts/APIContext";
+import { useApi } from "../../Contexts/ApiContext";
 
 const CommentsReplies = () => {
-  const { BackendAPI } = useContext(APIContext);
+  const { BackendAPI } = useApi();
 
   // const [comments] = useState([
   //   { id: 1, username: "Alice Johnson", course_title: "React for Beginners", comment: "Really helpful course_title! Loved the explanations.", date: "2025-07-15" },
