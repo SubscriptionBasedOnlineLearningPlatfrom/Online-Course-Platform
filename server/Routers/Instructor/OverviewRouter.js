@@ -1,11 +1,11 @@
 import express from 'express';
 import { editCreatedCourse, EnrollementOverview, viewCreatedCourses } from '../../Controllers/Instructor/OverviewController.js';
-import { Instructor } from '../../Middleware/authInstructor.js';
+import { auth } from '../../Middleware/authMiddleware.js';
 
 const OverviewRouter = express.Router();
 
-OverviewRouter.get("/enrollment",Instructor, EnrollementOverview);
-OverviewRouter.get("/created-courses",Instructor, viewCreatedCourses);
+OverviewRouter.get("/enrollment",auth, EnrollementOverview);
+OverviewRouter.get("/created-courses",auth, viewCreatedCourses);
 OverviewRouter.put("/edit-course-details/:courseId", editCreatedCourse);
 
 

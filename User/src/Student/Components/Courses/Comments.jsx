@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { useApi } from '../../Contexts/ApiContext';
 
 const Comments = () => {
-  const { courseId } = useParams();
+  const courseId  = '637468ac-0476-4db8-bc1a-e03b1d822a46'// useParams();
+  const {BackendAPI} = useApi();
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newComment, setNewComment] = useState('');
@@ -14,114 +17,22 @@ const Comments = () => {
   const [showReplyForm, setShowReplyForm] = useState(null);
   const [replyText, setReplyText] = useState('');
 
-  // Dummy comments data
-  const dummyComments = [
-    {
-      comment_id: "1",
-      user_name: "Sarah Johnson",
-      user_avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b47c?fit=crop&w=150&q=80",
-      rating: 5,
-      comment_text: "This course is absolutely fantastic! The instructor explains complex concepts in a very clear and understandable way. I've learned so much and feel confident about building web applications now.",
-      created_at: "2024-08-05T10:30:00Z",
-      updated_at: null,
-      is_verified_purchase: true,
-      helpful_count: 24,
-      course_progress: 95,
-      replies: [
-        {
-          reply_id: "r1",
-          user_name: "Course Instructor",
-          user_avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=150&q=80",
-          reply_text: "Thank you so much for the kind words, Sarah! I'm thrilled to hear about your progress. Keep up the great work!",
-          created_at: "2024-08-05T15:20:00Z",
-          is_instructor: true
-        }
-      ]
-    },
-    {
-      comment_id: "2",
-      user_name: "Mike Chen",
-      user_avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?fit=crop&w=150&q=80",
-      rating: 4,
-      comment_text: "Great course overall! The content is well-structured and the projects are practical. My only suggestion would be to include more advanced topics in the later modules. But definitely worth the investment!",
-      created_at: "2024-08-03T14:45:00Z",
-      updated_at: "2024-08-03T16:20:00Z",
-      is_verified_purchase: true,
-      helpful_count: 18,
-      course_progress: 78,
-      replies: []
-    },
-    {
-      comment_id: "3",
-      user_name: "Emily Rodriguez",
-      user_avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?fit=crop&w=150&q=80",
-      rating: 5,
-      comment_text: "I'm a complete beginner and this course made everything so accessible. The step-by-step approach and hands-on projects really helped me grasp the concepts. Highly recommended for anyone starting their coding journey!",
-      created_at: "2024-08-01T09:15:00Z",
-      updated_at: null,
-      is_verified_purchase: true,
-      helpful_count: 31,
-      course_progress: 100,
-      replies: [
-        {
-          reply_id: "r2",
-          user_name: "David Kim",
-          user_avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=150&q=80",
-          reply_text: "I totally agree! This course is perfect for beginners. The pacing is just right.",
-          created_at: "2024-08-01T12:30:00Z",
-          is_instructor: false
-        }
-      ]
-    },
-    {
-      comment_id: "4",
-      user_name: "Alex Thompson",
-      user_avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?fit=crop&w=150&q=80",
-      rating: 4,
-      comment_text: "Solid course with good production quality. The instructor is knowledgeable and the examples are relevant. I would have liked to see more real-world deployment scenarios covered.",
-      created_at: "2024-07-28T16:20:00Z",
-      updated_at: null,
-      is_verified_purchase: true,
-      helpful_count: 12,
-      course_progress: 85,
-      replies: []
-    },
-    {
-      comment_id: "5",
-      user_name: "Lisa Wang",
-      user_avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b47c?fit=crop&w=150&q=80",
-      rating: 3,
-      comment_text: "The course content is good but I felt some sections were too rushed. Would benefit from more detailed explanations in the advanced topics. Still learning a lot though!",
-      created_at: "2024-07-25T11:10:00Z",
-      updated_at: null,
-      is_verified_purchase: true,
-      helpful_count: 8,
-      course_progress: 60,
-      replies: []
-    },
-    {
-      comment_id: "6",
-      user_name: "James Wilson",
-      user_avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?fit=crop&w=150&q=80",
-      rating: 5,
-      comment_text: "Exceeded my expectations! The course is comprehensive, well-organized, and the instructor's teaching style is engaging. I've already started applying what I learned in my job. Money well spent!",
-      created_at: "2024-07-22T13:45:00Z",
-      updated_at: null,
-      is_verified_purchase: true,
-      helpful_count: 27,
-      course_progress: 100,
-      replies: []
-    }
-  ];
-
-  // Simulate loading and set dummy data
+  // Fetch comments when component mounts or courseId changes
   useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setComments(dummyComments);
-      setLoading(false);
-    }, 1000);
-  }, [courseId]);
+    try {
+      if (!courseId) return;
+      const fetchComments = async () => {
+        const response = await axios.get(`${BackendAPI}/courses/comments-with-replies/${courseId}`);
+        if (response.status === 200) {
+          setComments(response.data.comments || []);
+          setLoading(false);
+        } 
+      };
+      fetchComments();
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+    }
+  },[courseId, BackendAPI]);
 
   // Calculate average rating
   const averageRating = comments.length > 0 
@@ -264,9 +175,6 @@ const Comments = () => {
       {/* Section Header */}
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-2xl font-bold text-gray-900 flex items-center">
-          <span className="bg-blue-600 text-white rounded-lg p-2 mr-3">
-            💬
-          </span>
           Student Reviews ({comments.length})
         </h2>
       </div>
@@ -375,16 +283,21 @@ const Comments = () => {
             <div key={comment.comment_id} className="border-b border-gray-200 pb-6 last:border-b-0">
               <div className="flex items-start space-x-4">
                 {/* User Avatar */}
-                <img
+                {/* <img
                   src={comment.user_avatar}
                   alt={comment.user_name}
                   className="w-12 h-12 rounded-full object-cover flex-shrink-0"
-                />
+                /> */}
+
+                <span className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                  {comment.student_name?.charAt(0).toUpperCase() || 'U'}
+                </span>
+                
 
                 <div className="flex-1">
                   {/* User Info and Rating */}
                   <div className="flex items-center justify-between mb-2">
-                    
+                    <h5 className="font-medium text-gray-900 text-sm">{comment.student_name}</h5>
                     <div className="flex items-center space-x-2">
                       <div className="flex text-yellow-400 text-sm">
                         {renderStars(comment.rating)}
@@ -393,35 +306,15 @@ const Comments = () => {
                     </div>
                   </div>
 
-                  {/* Progress Indicator */}
-                  <div className="flex items-center mb-3">
-                    <div className="flex items-center text-xs text-gray-500">
-                      <div className="w-16 bg-gray-200 rounded-full h-1.5 mr-2">
-                        <div
-                          className="bg-blue-500 h-1.5 rounded-full"
-                          style={{ width: `${comment.course_progress}%` }}
-                        ></div>
-                      </div>
-                      <span>{comment.course_progress}% complete</span>
-                    </div>
-                  </div>
-
                   {/* Comment Text */}
                   <p className="text-gray-700 leading-relaxed mb-4">{comment.comment_text}</p>
-
-                  {/* Updated indicator */}
-                  {comment.updated_at && (
-                    <p className="text-xs text-gray-500 italic mb-3">
-                      Updated on {formatDate(comment.updated_at)}
-                    </p>
-                  )}
 
                   {/* Comment Actions */}
                   <div className="flex items-center space-x-6 text-sm">
 
                     <button 
                       onClick={() => setShowReplyForm(showReplyForm === comment.comment_id ? null : comment.comment_id)}
-                      className="text-gray-600 hover:text-blue-600 transition-colors"
+                      className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer"
                     >
                       Reply
                     </button> 
@@ -464,15 +357,18 @@ const Comments = () => {
                       {comment.replies.map((reply) => (
                         <div key={reply.reply_id} className="bg-gray-50 rounded-lg p-4 ml-4">
                           <div className="flex items-start space-x-3">
-                            <img
+                            {/* <img
                               src={reply.user_avatar}
                               alt={reply.user_name}
                               className="w-8 h-8 rounded-full object-cover"
-                            />
+                            /> */}
+                            <span className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                              {reply.student_name?.charAt(0).toUpperCase() || reply.instructor_name?.charAt(0).toUpperCase() || 'U'}
+                            </span>
                             <div className="flex-1">
                               <div className="flex items-center space-x-2 mb-2">
-                                <h5 className="font-medium text-gray-900 text-sm">{reply.user_name}</h5>
-                                {reply.is_instructor && (
+                                <h5 className="font-medium text-gray-900 text-sm">{reply.student_name || reply.instructor_name}</h5>
+                                {reply.instructor_id && (
                                   <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-medium">
                                     Instructor
                                   </span>

@@ -1,96 +1,29 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect, useContext} from "react";
 import CourseCard from "./CourseCard";
+import { CourseContext } from "../../Contexts/CourseContext";
 
 const EnrolledCourses = () => {
   // Tabs: enrolled or completed
   const [activeTab, setActiveTab] = useState("enrolled");
-
-  // ---------------- Enrolled Courses Data ----------------
-  const enrolledCoursesData = [
-    {
-      id: 1,
-      title: "Advanced JavaScript Programming",
-      instructor: "Sarah Johnson",
-      category: "Development",
-      progress: 65,
-      remainingTime: 8.5,
-      totalDuration: 20,
-      lastAccessed: "2025-01-10",
-      description: "Master advanced JavaScript concepts and patterns",
-    },
-    {
-      id: 2,
-      title: "UI/UX Design Fundamentals",
-      instructor: "Mike Chen",
-      category: "Design",
-      progress: 40,
-      remainingTime: 6.25,
-      totalDuration: 15,
-      lastAccessed: "2025-01-09",
-      description:
-        "Learn the principles of user interface and experience design",
-    },
-    // ... other enrolled courses
-  ];
-
-  // ---------------- Completed Courses Data ----------------
-  const completedCoursesData = [
-    {
-      id: 101,
-      title: "React.js Complete Guide",
-      instructor: "John Smith",
-      category: "Development",
-      completedDate: "2025-01-15",
-      score: 95,
-      duration: 24,
-      hasCertificate: true,
-      skills: ["React", "JSX", "Hooks", "Redux", "Context API"],
-      description:
-        "Complete guide to building modern web applications with React",
-    },
-    {
-      id: 102,
-      title: "Figma for Beginners",
-      instructor: "Lisa Wong",
-      category: "Design",
-      completedDate: "2025-01-08",
-      score: 88,
-      duration: 8,
-      hasCertificate: true,
-      skills: ["Figma", "Prototyping", "Design Systems", "UI Design"],
-      description: "Learn the fundamentals of UI design using Figma",
-    },
-    // ... other completed courses
-  ];
-
-  // ---------------- Shared States ----------------
   const [courses, setCourses] = useState([]);
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("recent");
   const [filterStatus, setFilterStatus] = useState("all"); // For enrolled
   const [selectedCategory, setSelectedCategory] = useState("all"); // For completed
-
+  const {enrolledCourses,completedCourses} = useContext(CourseContext);
   
 
-  // Load initial data when tab changes
-  useEffect(() => {
-    if (activeTab === "enrolled") {
-      setCourses(enrolledCoursesData);
-    } else {
-      setCourses(completedCoursesData);
-    }
-  }, [activeTab]);
 
   // Apply filters and sorting
   useEffect(() => {
     let filtered = [];
 
     if (activeTab === "enrolled") {
-      filtered = courses.filter((course) => {
+      filtered = enrolledCourses?.filter((course) => {
         const matchesSearch =
-          course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          course.instructor.toLowerCase().includes(searchTerm.toLowerCase());
+          course.course_title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          course.instructor_name.toLowerCase().includes(searchTerm.toLowerCase());
 
         const matchesFilter =
           filterStatus === "all" ||
@@ -104,25 +37,23 @@ const EnrolledCourses = () => {
       });
 
       // Sorting for enrolled
-      filtered.sort((a, b) => {
+      filtered?.sort((a, b) => {
         switch (sortBy) {
           case "recent":
             return new Date(b.lastAccessed) - new Date(a.lastAccessed);
           case "progress":
             return b.progress - a.progress;
           case "title":
-            return a.title.localeCompare(b.title);
-          case "duration":
-            return a.remainingTime - b.remainingTime;
+            return a.course_title.localeCompare(b.title);
           default:
             return 0;
         }
       });
     } else {
-      filtered = courses.filter((course) => {
+      filtered = enrolledCourses.filter((course) => {
         const matchesSearch =
-          course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          course.instructor.toLowerCase().includes(searchTerm.toLowerCase());
+          course.course_title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          course.instructor_name.toLowerCase().includes(searchTerm.toLowerCase());
 
         const matchesCategory =
           selectedCategory === "all" ||
@@ -135,11 +66,11 @@ const EnrolledCourses = () => {
       filtered.sort((a, b) => {
         switch (sortBy) {
           case "recent":
-            return new Date(b.completedDate) - new Date(a.completedDate);
+            return new Date(b.completion_date) - new Date(a.completion_date);
           case "score":
             return b.score - a.score;
           case "title":
-            return a.title.localeCompare(b.title);
+            return a.course_title.localeCompare(b.course_title);
           case "duration":
             return b.duration - a.duration;
           default:
@@ -149,33 +80,39 @@ const EnrolledCourses = () => {
     }
 
     setFilteredCourses(filtered);
-  }, [courses, searchTerm, sortBy, filterStatus, selectedCategory, activeTab]);
+  }, [enrolledCourses, searchTerm, sortBy, filterStatus, selectedCategory, activeTab]);
 
   // Filter buttons for enrolled courses
   const filterOptions = [
-    { key: "all", label: "All Courses", count: enrolledCoursesData.length },
+    { key: "all", label: "All Courses", count: enrolledCourses?.length },
     {
       key: "in-progress",
       label: "In Progress",
-      count: enrolledCoursesData.filter(
+      count: enrolledCourses?.filter(
         (c) => c.progress > 0 && c.progress < 100
       ).length,
     },
     {
       key: "not-started",
       label: "Not Started",
-      count: enrolledCoursesData.filter((c) => c.progress === 0).length,
+      count: enrolledCourses?.filter((c) => c.progress === 0).length,
     },
     {
       key: "almost-done",
       label: "Almost Done",
-      count: enrolledCoursesData.filter((c) => c.progress >= 80).length,
+      count: enrolledCourses?.filter((c) => c.progress >= 80).length,
     },
   ];
 
   const getUniqueCategories = () => {
-    return [...new Set(completedCoursesData.map((c) => c.category))];
+    
+    return  [...new Set(completedCourses.map((c) => c.category))] ;
   };
+
+  const listToShow = activeTab === "enrolled"
+  ? (Array.isArray(filteredCourses) ? filteredCourses : [])
+  : (Array.isArray(completedCourses) ? completedCourses : []);
+
 
   return (
     <div className="space-y-6">
@@ -288,14 +225,14 @@ const EnrolledCourses = () => {
       {/* Courses Grid */}
       {filteredCourses.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {filteredCourses.map((course) => (
+          {listToShow.map((course) => (
             <CourseCard
-              key={course.id}
+              key={course.course_id}
               course={course}
               type={activeTab}
-              onContinue={(id) => console.log(`Continue ${id}`)}
-              onDownloadCertificate={(id) =>
-                console.log(`Download certificate for ${id}`)
+              onContinue={(course_id) => console.log(`Continue ${course_id}`)}
+              onDownloadCertificate={(course_id) =>
+                console.log(`Download certificate for ${course_id}`)
               }
               onReviewCourse={(id) => console.log(`Review course ${id}`)}
             />

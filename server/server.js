@@ -1,16 +1,13 @@
 import express from "express";
 import passport from "passport";
 import cors from "cors";
-
-
 // import session from "express-session"; // optional if you use sessions, not needed for JWT only
 import dotenv from "dotenv";
 import 'dotenv/config';
 import cookieParser from "cookie-parser";
-
+import session from "express-session";
 // import cookieParser from "cookie-parser";
 // import { supabase } from "./Database/SupabaseClient.js";
-
 import OverviewRouter from "./Routers/Instructor/OverviewRouter.js";
 import commentRouter from "./Routers/Instructor/CommentsRouter.js";
 import QuizRouter from "./Routers/Instructor/QuizRouter.js";
@@ -18,6 +15,7 @@ import courseRouter from "./Routers/Student/CourseRouter.js";
 import moduleRoutes from './Routers/Instructor/moduleRoutes.js';
 import chapterRoutes from './Routers/Instructor/chapterRoutes.js';
 import authRoutes from "./routes/auth.js";
+import dashboardRouter from "./Routers/Student/dashboardRouter.js";
 /* import instructorRoutes from "./Routers/instructorRoutes.js"; */
 /* import passportConfig from "./auth/passportConfig.js"; */
 
@@ -36,7 +34,6 @@ app.use(cors({
 app.use(express.json()); // parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // parse form data
 
-import session from "express-session";
 app.use(session({
   secret: process.env.SESSION_SECRET || "supersecret",
   resave: false,
@@ -61,9 +58,9 @@ app.use("/instructor/chapters", chapterRoutes);
 
 // students
 app.use("/student/courses", courseRouter);
+app.use('/student/dashboard', dashboardRouter);
 // Routes
 app.use("/auth", authRoutes);
-
 
 // app.use("/auth", authRoutes); // signup, login, dashboard
 

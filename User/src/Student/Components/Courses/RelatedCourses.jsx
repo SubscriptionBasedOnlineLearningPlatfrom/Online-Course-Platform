@@ -151,7 +151,7 @@ const RelatedCourses = () => {
                 <div className="flex items-center justify-between text-xs text-gray-500 mt-2">
                   <span className="flex items-center gap-1">
                       Updated{" "}
-                    {new Date(course.last_updated).toLocaleDateString()}
+                    {new Date(course.updated_at).toLocaleDateString()}
                   </span>
                   <button
                     onClick={() => navigate("/displayCourses")}
