@@ -15,6 +15,8 @@ const API_BASE = "http://localhost:4000";
 
 export const InstructorAuth = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [showResetForm, setShowResetForm] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
 
   const handleSubmit = async (e, mode) => {
     e.preventDefault();
@@ -35,10 +37,7 @@ export const InstructorAuth = () => {
 
     try {
       const endpoint = mode === "login" ? "/auth/login" : "/auth/register";
-      const payload =
-        mode === "login"
-          ? { email, password }
-          : { username, email, password };
+      const payload = mode === "login" ? { email, password } : { username, email, password };
 
       const res = await axios.post(`${API_BASE}${endpoint}`, payload, {
         headers: { "Content-Type": "application/json" },
@@ -46,9 +45,8 @@ export const InstructorAuth = () => {
       });
 
       const data = res.data;
-      if (data?.token) {
-        localStorage.setItem("token", data.token);
-      }
+      if (data?.token) localStorage.setItem("token", data.token);
+
       alert(`✅ ${mode === "login" ? "Logged in" : "Registered"} successfully!`);
       window.location.href = "/dashboard";
     } catch (err) {
@@ -67,14 +65,24 @@ export const InstructorAuth = () => {
     window.location.href = `${API_BASE}/auth/google`;
   };
 
+  const handleResetPasswordRequest = async () => {
+    if (!resetEmail) return alert("Enter your email");
+
+    try {
+      await axios.post(`${API_BASE}/auth/reset-password`, { email: resetEmail });
+      alert("📩 Reset link sent to your email!");
+      setShowResetForm(false);
+      setResetEmail("");
+    } catch (err) {
+      alert(`❌ ${err?.response?.data?.error || err.message}`);
+    }
+  };
+
   const AuthForm = ({ mode }) => (
     <form onSubmit={(e) => handleSubmit(e, mode)} className="space-y-4">
-      {/* Username field (only for signup) */}
       {mode === "signup" && (
         <div className="space-y-2">
-          <Label htmlFor="username" className="text-sm font-medium">
-            Username
-          </Label>
+          <Label htmlFor="username" className="text-sm font-medium">Username</Label>
           <div className="relative">
             <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
             <Input
@@ -88,11 +96,8 @@ export const InstructorAuth = () => {
         </div>
       )}
 
-      {/* Email field */}
       <div className="space-y-2">
-        <Label htmlFor="email" className="text-sm font-medium">
-          Email Address
-        </Label>
+        <Label htmlFor="email" className="text-sm font-medium">Email Address</Label>
         <div className="relative">
           <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
           <Input
@@ -106,11 +111,8 @@ export const InstructorAuth = () => {
         </div>
       </div>
 
-      {/* Password field */}
       <div className="space-y-2">
-        <Label htmlFor="password" className="text-sm font-medium">
-          Password
-        </Label>
+        <Label htmlFor="password" className="text-sm font-medium">Password</Label>
         <div className="relative">
           <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
           <Input
@@ -124,12 +126,9 @@ export const InstructorAuth = () => {
         </div>
       </div>
 
-      {/* Confirm Password field (only for signup) */}
       {mode === "signup" && (
         <div className="space-y-2">
-          <Label htmlFor="confirm-password" className="text-sm font-medium">
-            Confirm Password
-          </Label>
+          <Label htmlFor="confirm-password" className="text-sm font-medium">Confirm Password</Label>
           <div className="relative">
             <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
             <Input
@@ -149,66 +148,69 @@ export const InstructorAuth = () => {
         className="w-full h-11 bg-gradient-to-r from-primary to-sky-800 hover:opacity-90 transition-all duration-300 shadow-lg"
         disabled={isLoading}
       >
-        {isLoading ? (
-          <div className="flex items-center space-x-2">
-            <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-            <span>{mode === "login" ? "Signing In..." : "Creating Account..."}</span>
-          </div>
-        ) : (
-          <span>{mode === "login" ? "Sign In" : "Create Account"}</span>
-        )}
+        {isLoading ? "Loading..." : mode === "login" ? "Sign In" : "Create Account"}
       </Button>
 
       {/* Google Login */}
       <div className="relative my-6">
-  <Separator />
-  <div className="relative flex justify-center text-xs uppercase">
-    <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
-  </div>
-  <Button variant="outline" className="w-full mt-4 flex items-center justify-center gap-2" type="button" onClick={handleGoogleLogin}>
-    {/* Google SVG */}
-    <svg width="20" height="20" viewBox="0 0 48 48" fill="none">
-      <g>
-        <path fill="#4285F4" d="M24 9.5c3.54 0 6.72 1.23 9.22 3.25l6.9-6.9C35.62 2.36 30.13 0 24 0 14.64 0 6.4 5.48 2.44 13.44l8.06 6.27C12.52 13.13 17.81 9.5 24 9.5z"/>
-        <path fill="#34A853" d="M46.09 24.55c0-1.64-.15-3.22-.43-4.75H24v9.02h12.44c-.54 2.91-2.17 5.38-4.62 7.03l7.19 5.59C43.98 37.77 46.09 31.86 46.09 24.55z"/>
-        <path fill="#FBBC05" d="M10.5 28.73c-1.02-2.98-1.02-6.18 0-9.16l-8.06-6.27C.81 17.41 0 20.61 0 24c0 3.39.81 6.59 2.44 9.44l8.06-6.27z"/>
-        <path fill="#EA4335" d="M24 48c6.13 0 11.62-2.02 15.81-5.5l-7.19-5.59c-2.01 1.35-4.58 2.13-8.62 2.13-6.19 0-11.48-3.63-13.5-8.71l-8.06 6.27C6.4 42.52 14.64 48 24 48z"/>
-        <path fill="none" d="M0 0h48v48H0z"/>
-      </g>
-    </svg>
-    Continue with Google
-  </Button>
-</div>
+        <Separator />
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+        </div>
+        <Button variant="outline" className="w-full mt-4 flex items-center justify-center gap-2" type="button" onClick={handleGoogleLogin}>
+          Continue with Google
+        </Button>
+      </div>
+
+      {/* Forgot Password */}
+      {mode === "login" && (
+        <div className="mt-3">
+          <button
+            type="button"
+            className="text-sm text-sky-700 hover:underline"
+            onClick={() => setShowResetForm(!showResetForm)}
+          >
+            Forgot password?
+          </button>
+
+          {showResetForm && (
+            <div className="space-y-3 mt-3">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={resetEmail}
+                onChange={(e) => setResetEmail(e.target.value)}
+                className="w-full border rounded p-2"
+                required
+              />
+              <button
+                type="button"
+                className="w-full bg-sky-700 text-white py-2 rounded"
+                onClick={handleResetPasswordRequest}
+              >
+                Send Reset Link
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </form>
   );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/20 flex items-center justify-center p-4 relative">
-      {/* Background spline */}
       <div className="absolute top-0 left-0 w-full h-full z-0">
-        <Spline
-          scene="https://prod.spline.design/CX-vaL1eIVj5t5DY/scene.splinecode"
-          className="w-full h-full"
-        />
+        <Spline scene="https://prod.spline.design/CX-vaL1eIVj5t5DY/scene.splinecode" className="w-full h-full" />
       </div>
-      {/* Foreground content */}
       <div className="w-full max-w-md space-y-6 relative z-10">
-        {/* Header */}
         <div className="text-center space-y-4">
           <div className="mx-auto w-16 h-16">
-            <img
-              src={logo}
-              alt="ProLearnX Logo"
-              className="w-full h-full object-cover rounded-2xl shadow-xl"
-            />
+            <img src={logo} alt="ProLearnX Logo" className="w-full h-full object-cover rounded-2xl shadow-xl" />
           </div>
-          <div className="space-y-2">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent text-white">
-              ProLearnX
-            </h1>
-          </div>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent text-white">
+            ProLearnX
+          </h1>
         </div>
-        {/* Auth Card */}
         <Card className="border-border/50 shadow-2xl bg-card/95 backdrop-blur-sm">
           <CardHeader className="space-y-1 pb-4">
             <div className="flex items-center space-x-2 text-primary">
@@ -222,25 +224,15 @@ export const InstructorAuth = () => {
           <CardContent>
             <Tabs defaultValue="login" className="space-y-4">
               <TabsList className="grid w-full grid-cols-2 bg-secondary/50">
-                <TabsTrigger
-                  value="login"
-                  className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sky-800"
-                >
+                <TabsTrigger value="login" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sky-800">
                   Sign In
                 </TabsTrigger>
-                <TabsTrigger
-                  value="signup"
-                  className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sky-800"
-                >
+                <TabsTrigger value="signup" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sky-800">
                   Sign Up
                 </TabsTrigger>
               </TabsList>
-              <TabsContent value="login" className="space-y-4">
-                <AuthForm mode="login" />
-              </TabsContent>
-              <TabsContent value="signup" className="space-y-4">
-                <AuthForm mode="signup" />
-              </TabsContent>
+              <TabsContent value="login"><AuthForm mode="login" /></TabsContent>
+              <TabsContent value="signup"><AuthForm mode="signup" /></TabsContent>
             </Tabs>
           </CardContent>
         </Card>
@@ -248,4 +240,3 @@ export const InstructorAuth = () => {
     </div>
   );
 };
-

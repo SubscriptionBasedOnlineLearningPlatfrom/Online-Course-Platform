@@ -8,13 +8,15 @@ import Sidebar from './Components/Sidebar';
 import LearnerFeedbackCarousel from './Components/LearnerFeedbackCarousel';
 import ViewCreatedCourse from './Components/Course/ViewCreatedCourse';
 import EnrollmentOverview from './Components/Enrollments/EnrollmentOverview';
-import CurriculumPage from './pages/Curriculum';
+import CurriculumPage from './Pages/Curriculum';
 import Pricing from './Pages/Pricing'
 import QuizCreation from './Components/Quizes/QuizCreation';
 import CommentsReplies from './Components/Comments/CommentsReplies';
 import Dashboard from './Pages/Dashboard';
 import CreateCourse from './Pages/CreateCourse';
-import Signup_Login from './pages/Signup_Login'; // Assuming this is the correct path
+import Signup_Login from './Pages/Signup_Login'; // Assuming this is the correct path
+import UpdatePassword from "./Pages/UpdatePassword";
+
 
 
 
@@ -39,6 +41,8 @@ function App() {
           <Route path="/" element={<Signup_Login />} />
 
           <Route path="/dashboard" element={<Dashboard />} />  
+          <Route path="/update-password" element={<UpdatePassword />} />
+
 
               {/* <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/students" element={<Students />} />  */}
