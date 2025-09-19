@@ -1,39 +1,40 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import { APIContext } from "@/Contexts/APIContext";
 
 const EnrollmentOverview = () => {
-  // Sample student overview data (unchanged)
-  const [students] = useState([
-    {
-      id: 1,
-      name: "Alice Johnson",
-      totalEnrollments: 3,
-      watchTime: "12h 30m",
-      completionRate: "85%",
-      certificates: 2,
-    },
-    {
-      id: 2,
-      name: "Mark Lee",
-      totalEnrollments: 5,
-      watchTime: "25h 10m",
-      completionRate: "92%",
-      certificates: 4,
-    },
-    {
-      id: 3,
-      name: "Sophia Davis",
-      totalEnrollments: 2,
-      watchTime: "8h 15m",
-      completionRate: "60%",
-      certificates: 1,
-    },
-  ]);
-
+  const {BackendAPI} = useContext(APIContext);
+  const [students, setStudents] = useState([]);
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    try {
+      const fetchEnrollments = async () => {
+        const response = await axios.get(`${BackendAPI}/overview/enrollment`, 
+          {
+            headers: {
+              Authorization : `Bearer ${token}`
+            }
+          }
+        )
+
+        if(response.status === 200){
+          setStudents(Object.values(response.data));
+        }
+
+        console.log(response.data);
+      }
+      fetchEnrollments();
+    } catch (error) {
+      console.error("Error fetching enrollments:", error);
+    }
+    
+  }, []);
 
   // Filter students by search (unchanged)
   const filteredStudents = students.filter((student) =>
-    student.name.toLowerCase().includes(search.toLowerCase())
+    student.student_name.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -88,26 +89,22 @@ const EnrollmentOverview = () => {
               <tr className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200">
                 <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
                   <div className="flex items-center space-x-2">
-                    <span>👤</span>
                     <span>Student Name</span>
                   </div>
                 </th>
                 <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
                   <div className="flex items-center space-x-2">
-                    <span>📚</span>
                     <span>Total Enrollments</span>
                   </div>
                 </th>
                 
                 <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
                   <div className="flex items-center space-x-2">
-                    <span>✅</span>
                     <span>Completion Rate</span>
                   </div>
                 </th>
                 <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
                   <div className="flex items-center space-x-2">
-                    <span>🎓</span>
                     <span>Certificates Issued</span>
                   </div>
                 </th>
@@ -127,18 +124,18 @@ const EnrollmentOverview = () => {
 
                 return (
                   <tr
-                    key={student.id}
+                    key={student.student_id}
                     className="hover:bg-blue-50/50 transition-all duration-200 group"
                   >
                     {/* Student Name with avatar pill like initials */}
                     <td className="py-5 px-6">
                       <div className="flex items-center">
                         <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-[#0173d1] to-[#85c1f3] group-hover:from-[#85c1f3] group-hover:to-[#0173d1] rounded-lg flex items-center justify-center text-white font-bold text-sm shadow-lg">
-                          {student.name.charAt(0)}
+                          {student.student_name.charAt(0).toUpperCase()}
                         </div>
                         <div className="ml-4">
                           <div className="text-sm font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
-                            {student.name}
+                            {student.student_name}
                           </div>
                         </div>
                       </div>
@@ -147,29 +144,26 @@ const EnrollmentOverview = () => {
                     {/* Total Enrollments */}
                     <td className="py-5 px-6 text-center">
                       <span className="inline-flex items-center  px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 border border-blue-200">
-                        {student.totalEnrollments}
+                        {student.total_enrollments}
                       </span>
                     </td>
-
-                    
 
                     {/* Completion Rate (badge color like ViewCourse price pill) */}
                     <td className="py-5 px-6 text-center">
                       <span
                         className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold border ${rateColor}`}
                       >
-                        {student.completionRate}
+                        {student.completion_rate}
                       </span>
                     </td>
 
                     {/* Certificates Issued */}
                     <td className="py-5 px-6 text-center">
                       <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800 border border-indigo-200">
-                        {student.certificates}
+                        {student.certificates_issued}
                       </span>
                     </td>
 
-                    
                   </tr>
                 );
               })}

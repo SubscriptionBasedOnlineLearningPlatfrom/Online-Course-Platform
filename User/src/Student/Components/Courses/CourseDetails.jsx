@@ -1,82 +1,61 @@
 import React, { useContext, useEffect } from "react";
+import axios from "axios";
 import { useState } from "react";
-
 import { useNavigate, useParams } from "react-router-dom";
 import CourseModules from "./CourseModules";
 import { CourseContext } from "../../Contexts/CourseContext";
+import { useApi } from "../../Contexts/ApiContext";
 
+import { FaStar } from "react-icons/fa6";
 
 const CourseDetails = () => {
-//   const { courseId } = useParams();
-//   const { BackendUrl } = useContext(APIContext);
-//   const {
-//     course,
-//     setCourse,
-//     modules,
-//     setModules,
-//     loading,
-//     setLoading,
-//     fetchCourseDetails,
-//   } = useContext(CourseContext);
+  const [loading, setLoading] = useState(true);
+  const [modules, setModules] = useState([]);
+  const [course, setCourse] = useState(null);
+  const { enrolled, setEnrolled } = useContext(CourseContext);
 
-    const [loading, setLoading] = useState(true);
-    const [modules,setModules] = useState([]);
-    const [course, setCourse] = useState(null);
-    const { enrolled, setEnrolled } = useContext(CourseContext);
+  const navigate = useNavigate();
+  const courseId  = "637468ac-0476-4db8-bc1a-e03b1d822a46"; //useParams();
+  const { BackendAPI } = useApi();
 
-    const navigate = useNavigate();
-    console.log(enrolled);
+  useEffect(() => {
+    try {
+      const fetchCourseDetails = async () => {
+        const response = await axios.get(
+          `${BackendAPI}/courses/${courseId}`
+        );
 
-  // Dummy course data
-  const dummyCourse = {
-    course_id: "1",
-    course_title: "Complete Web Development Bootcamp",
-    course_description: "Learn full-stack web development with HTML, CSS, JavaScript, React, Node.js, and MongoDB. Build real-world projects and master modern web technologies.",
-    course_image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?fit=crop&w=1000&q=80",
-    category: "Web Development",
-    price: "99.99",
-    language: "English",
-    instructor_name: "John Smith",
-    instructor_title: "Senior Full-Stack Developer",
-    instructor_image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=150&q=80",
-    instructor_rating: "4.8",
-    creation_date: "2024-01-15T10:30:00Z",
-    last_update: "2024-07-20T14:45:00Z"
-  };
-
-  
+        if(response.status === 200){
+          setCourse(response.data.course);
+          setModules(response.data.modules || []);
+          setLoading(false);
+        }
+      };
+      fetchCourseDetails();
+    } catch (error) {
+      console.error("Error fetching course details:", error);
+    }
+  },[])
 
   useEffect(() => {
     // Set loading to true initially
     setLoading(true);
-    
     // Simulate API loading delay
     setTimeout(() => {
       setCourse(dummyCourse);
       setLoading(false);
     }, 1000);
-
-    // COMMENTED OUT: Original data fetching code
-    // if (courseId && BackendUrl) {
-    //   // Pass both courseId and BackendUrl as parameters
-    //   fetchCourseDetails(courseId, BackendUrl);
-    // }
   }, []);
   // Note: Removed fetchCourseDetails from dependency array since we're not using it
 
   // Function to format dates
   const formatDate = (dateString) => {
-    if (!dateString) return 'Not available';
+    if (!dateString) return "Not available";
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
       day: "numeric",
     });
-  };
-
-  // Function to format price
-  const formatPrice = (price) => {
-    return price ? `$${parseFloat(price).toFixed(2)}` : "Free";
   };
 
   // Loading state
@@ -141,17 +120,17 @@ const CourseDetails = () => {
                 {/* Course Stats */}
                 <div className="grid grid-cols-2 gap-4 mb-6">
                   <div className="bg-gray-50 p-4 rounded-lg">
-                    <div className="text-2xl font-bold text-green-600">
-                      {formatPrice(course.price)}
-                    </div>
-                    <div className="text-sm text-gray-500">Course Price</div>
-                  </div>
-
-                  <div className="bg-gray-50 p-4 rounded-lg">
                     <div className="text-2xl font-bold text-blue-600">
                       {course.language || "English"}
                     </div>
                     <div className="text-sm text-gray-500">Language</div>
+                  </div>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <div className="text-2xl font-bold flex items-center gap-2">
+                      <FaStar className="text-yellow-400" />
+                      <span>{course.rating || "0.0"}</span> 
+                    </div>
+                    <div className="text-sm text-gray-500">Rating</div>
                   </div>
                 </div>
 
@@ -167,22 +146,15 @@ const CourseDetails = () => {
                         />
                       ) : (
                         <div>
-                          {course.instructor_name?.charAt(0).toUpperCase() || "I"}
+                          {course.instructor_name?.charAt(0).toUpperCase() ||
+                            "I"}
                         </div>
                       )}
                     </div>
                     <div>
-                      <div className="font-semibold text-gray-900">
-                        {course.instructor_name || "Not Assigned"}
-                      </div>
-                      <div className="text-sm text-gray-600">
-                        {course.instructor_title || "Instructor"}
-                      </div>
-                      <div className="flex items-center mt-1">
-                        <span className="text-yellow-500">⭐</span>
-                        <span className="text-sm text-gray-600 ml-1">
-                          {course.instructor_rating || "No rating"}
-                        </span>
+                      <div className="font-semibold ">
+                        <span className="text-2xl font-bold">{course.instructor_name || "Not Assigned"}</span>
+                        <div className="text-sm text-gray-500">Instructor</div>
                       </div>
                     </div>
                   </div>
@@ -202,13 +174,13 @@ const CourseDetails = () => {
                 <div className="flex justify-between">
                   <span className="text-gray-600">Created</span>
                   <span className="text-gray-900 font-medium">
-                    {formatDate(course.creation_date)}
+                    {formatDate(course.created_at)}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Last Updated</span>
                   <span className="text-gray-900 font-medium">
-                    {formatDate(course.last_update)}
+                    {formatDate(course.updated_at)}
                   </span>
                 </div>
                 <div className="flex justify-between">
@@ -228,8 +200,15 @@ const CourseDetails = () => {
               <p className="text-blue-100 mb-4">
                 Join thousands of students already enrolled in this course.
               </p>
-              <button onClick={() => {setEnrolled(true), navigate("/subscription")}} className={`w-full bg-white text-[#0173d1] font-semibold py-3 px-4 rounded-xl hover:bg-gray-50 transition-colors duration-200 cursor-pointer ${enrolled ? 'opacity-50 cursor-not-allowed' : ''}`}>
-                Enroll Now - {formatPrice(course.price)}
+              <button
+                onClick={() => {
+                  setEnrolled(true), navigate("/subscription");
+                }}
+                className={`w-full bg-white text-[#0173d1] font-semibold py-3 px-4 rounded-xl hover:bg-gray-50 transition-colors duration-200 cursor-pointer ${
+                  enrolled ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+              >
+                Enroll Now
               </button>
             </div>
           </div>

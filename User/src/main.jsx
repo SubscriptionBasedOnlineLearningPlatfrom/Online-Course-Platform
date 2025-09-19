@@ -8,10 +8,10 @@ import { ApiProvider } from "./Student/Contexts/ApiContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <ApiProvider>
-        <CourseProvider>
-          <App />
-        </CourseProvider>
-    </ApiProvider>
+    <CourseProvider>
+      <ApiProvider>
+        <App />
+      </ApiProvider>  
+    </CourseProvider>
   </BrowserRouter>
 );

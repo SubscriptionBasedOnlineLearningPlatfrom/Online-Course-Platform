@@ -1,19 +1,28 @@
 import {z} from "zod"
-import { supabase } from "../../Database/SupabaseClient.js";
+import { supabase } from "../../config/supabaseClient.js";
 
-const QuizSchema = z.object({
-    lesson_id: z.uuid(),
-    quiz_title: z.string().min(1),
-    questions: z.array(z.object({
-        question: z.string(
-            z.object({
-                question: z.string().min(1),
-                answers: z.array(z.string().min(1)).min(1),
-                correctAnswer: z.number().int().nullable()
-            })
-        ).min(1)
-    }))
-})
+// const SimpleQuestion = z.object({
+//   question: z.string().min(1),
+//   answers: z.array(z.string().min(1)).min(2),
+//   correctAnswer: z.number().int().nonnegative(),
+// });
+
+const NormalizedQuestion = z.object({
+  question_text: z.string().min(1),
+  answers: z.array(
+    z.object({
+      answer_text: z.string().min(1),
+      is_correct: z.boolean(),
+    })
+  ).min(2),
+});
+
+export const QuizSchema = z.object({
+  lesson_id: z.string().uuid(),
+  quiz_title: z.string().min(1),
+  questions: z.array(NormalizedQuestion).min(1),
+});
+
 
 export const quizCreation = async (req, res) => {
     try {
@@ -33,9 +42,10 @@ export const quizCreation = async (req, res) => {
             questions: questions
         })
 
+        console.log(data);
+
         if (error) {
             console.log(error);
-
             return res.status(500).json({ error: error.message });
         }
 
@@ -51,13 +61,12 @@ export const loadQuiz = async (req,res) => {
         const {data:quiz, error:quizError} = await supabase
                                                     .from('quizzes')
                                                     .select('quiz_id, quiz_title')
-                                                    .eq('lesson_id',req.params.lessonId);
+                                                    .eq('lesson_id','f1dcb0c9-17de-4fe8-8ccf-c5e973faa444'); //req.params.lessonId
         
         if(quizError){
-            // console.log(quizError);
             return res.status(500).json({ error: quizError.message });
         }
-        // console.log(quiz[0].quiz_id)
+        
 
         const {data:questions, error:questionsError} = await supabase
                                                             .from('questions')
@@ -65,9 +74,7 @@ export const loadQuiz = async (req,res) => {
                                                             .eq('quiz_id',quiz[0].quiz_id)
                                                             .order('created_at', {ascending:true});
 
-        console.log(questions)
         if(questionsError){
-            // console.log(questionsError);
             return res.status(500).json({ error: questionsError.message });
         }
 
@@ -78,7 +85,6 @@ export const loadQuiz = async (req,res) => {
                                                          .in('question_id',questionsIds);
 
         if(answersError){
-            // console.log(answersError);
             return res.status(500).json({ error : answersError});
         }
 
