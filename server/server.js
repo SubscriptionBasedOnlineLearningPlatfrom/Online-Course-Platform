@@ -7,6 +7,10 @@ import cors from "cors";
 import dotenv from "dotenv";
 import 'dotenv/config';
 import cookieParser from "cookie-parser";
+
+// import cookieParser from "cookie-parser";
+// import { supabase } from "./Database/SupabaseClient.js";
+
 import OverviewRouter from "./Routers/Instructor/OverviewRouter.js";
 import commentRouter from "./Routers/Instructor/CommentsRouter.js";
 import QuizRouter from "./Routers/Instructor/QuizRouter.js";
@@ -22,7 +26,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: process.env.FRONTEND_URL,
   credentials: true,
 }));
 
@@ -57,7 +61,7 @@ app.use("/student/courses", courseRouter);
 app.use("/auth", authRoutes);
 
 
-app.use("/auth", authRoutes); // signup, login, dashboard
+// app.use("/auth", authRoutes); // signup, login, dashboard
 
 // -------------------- ERROR HANDLER --------------------
 app.use((err, req, res, next) => {

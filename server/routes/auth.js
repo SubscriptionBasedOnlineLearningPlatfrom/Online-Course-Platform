@@ -222,6 +222,7 @@ import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GoogleStrategy } from "passport-google-oidc";
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
 import { createClient } from "@supabase/supabase-js";
+
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -232,6 +233,10 @@ const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY // ✅ must be service role, not anon
 );
+// const supabaseAdmin = createClient(
+//    process.env.SUPABASE_URL,
+//  process.env.SUPABASE_SERVICE_ROLE_KEY
+// )
 
 const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
 
@@ -405,7 +410,53 @@ router.get(
 
   }
 );
+router.post("/reset-password", async (req, res) => {
+  try {
+    const { email } = req.body;
+    console.log("🔔 /reset-password called with:", email);
 
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${process.env.FRONTEND_URL}/update-password`,
+    });
+
+    if (error) throw error;
+    console.log("✅ resetPasswordForEmail response:", data);
+
+    res.json({ message: "Password reset email sent!" });
+  } catch (err) {
+    console.error("❌ /reset-password error:", err);
+    res.status(400).json({ error: err.message });
+  }
+});
+
+
+// Update password after reset
+router.post("/update-password", async (req, res) => {
+  try {
+    const { token, newPassword } = req.body;
+    if (!token) throw new Error("Missing reset token.");
+
+    // Use the token directly to fetch user session
+    const { data: session, error: sessionError } =
+      await supabase.auth.setSession({ access_token: token, refresh_token: "" });
+
+    if (sessionError) throw sessionError;
+
+    const userId = session?.user?.id;
+    if (!userId) throw new Error("Invalid or expired reset token.");
+
+    // Update user password using admin client
+    const { data, error } = await supabase.auth.admin.updateUserById(userId, {
+      password: newPassword,
+    });
+    if (error) throw error;
+
+    res.json({ message: "Password updated successfully!" });
+  } catch (err) {
+    console.error("❌ /update-password error:", err.message);
+    res.status(400).json({ error: err.message });
+  }
+});
 // Protected route
 router.get("/dashboard", passport.authenticate("jwt", { session: false }), (req, res) => {
   res.json({ message: `Welcome ${req.user.username}, you are in dashboard!` });
