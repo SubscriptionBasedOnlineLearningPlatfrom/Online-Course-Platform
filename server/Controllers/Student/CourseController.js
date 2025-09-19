@@ -64,3 +64,20 @@ export const enrollment = async (req, res) => {
     }
 
 }
+
+export const fetchRelatedCourses = async (req, res) => {
+    try {
+        const { data: courses, error } = await supabase
+            .from("course_details")
+            .select("*")
+            .eq("category",req.params.category)
+            .limit(3);
+
+        if (error) {
+            return res.status(500).json({ error: error.message });
+        }   
+        return res.status(200).json({ courses });
+    } catch (error) {
+        return res.status(500).json({ error: "Internal Server Error", details: error.message });
+    }
+}

@@ -10,39 +10,36 @@ import { FaStar } from "react-icons/fa6";
 
 const CourseDetails = () => {
   const [loading, setLoading] = useState(true);
-  const [modules, setModules] = useState([]);
-  const [course, setCourse] = useState(null);
   const { enrolled, setEnrolled } = useContext(CourseContext);
 
   const navigate = useNavigate();
-  const courseId  = "637468ac-0476-4db8-bc1a-e03b1d822a46"; //useParams();
+  const courseId = "637468ac-0476-4db8-bc1a-e03b1d822a46"; //useParams();
   const { BackendAPI } = useApi();
+  const {
+    course,
+    setCourse,
+    modules,
+    setModules,
+    fetchCourseDetails,
+    fetchRelatedCourses,
+  } = useContext(CourseContext);
 
+  // fetch the course when id changes
   useEffect(() => {
-    try {
-      const fetchCourseDetails = async () => {
-        const response = await axios.get(
-          `${BackendAPI}/courses/${courseId}`
-        );
+    fetchCourseDetails(BackendAPI, courseId);
+  }, [BackendAPI, courseId]);
 
-        if(response.status === 200){
-          setCourse(response.data.course);
-          setModules(response.data.modules || []);
-          setLoading(false);
-        }
-      };
-      fetchCourseDetails();
-    } catch (error) {
-      console.error("Error fetching course details:", error);
-    }
-  },[])
+  // fetch related courses when category changes
+  useEffect(() => {
+    if (!course?.category) return; 
+    fetchRelatedCourses(BackendAPI, course.category);
+  }, [BackendAPI, course?.category]);
 
   useEffect(() => {
     // Set loading to true initially
     setLoading(true);
     // Simulate API loading delay
     setTimeout(() => {
-      setCourse(dummyCourse);
       setLoading(false);
     }, 1000);
   }, []);
@@ -128,7 +125,7 @@ const CourseDetails = () => {
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <div className="text-2xl font-bold flex items-center gap-2">
                       <FaStar className="text-yellow-400" />
-                      <span>{course.rating || "0.0"}</span> 
+                      <span>{course.rating || "0.0"}</span>
                     </div>
                     <div className="text-sm text-gray-500">Rating</div>
                   </div>
@@ -146,14 +143,15 @@ const CourseDetails = () => {
                         />
                       ) : (
                         <div>
-                          {course.instructor_name?.charAt(0).toUpperCase() ||
-                            "I"}
+                          {course.instructor_name?.charAt(0).toUpperCase() || 'I'}
                         </div>
                       )}
                     </div>
                     <div>
                       <div className="font-semibold ">
-                        <span className="text-2xl font-bold">{course.instructor_name || "Not Assigned"}</span>
+                        <span className="text-2xl font-bold">
+                          {course.instructor_name || "Not Assigned"}
+                        </span>
                         <div className="text-sm text-gray-500">Instructor</div>
                       </div>
                     </div>
