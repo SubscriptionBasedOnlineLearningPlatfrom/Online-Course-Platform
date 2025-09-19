@@ -1,5 +1,4 @@
-import React, { createContext, useContext } from "react";
-import axios from "axios";
+import React,{ createContext, useState } from "react";
 
 // =======================
 // PRIVATE API (with token)
@@ -8,22 +7,12 @@ const api = axios.create({
   baseURL: "http://localhost:4000",
 });
 
-api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("token");
-    if (token) config.headers.Authorization = `Bearer ${token}`;
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
 
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    const message = error.response?.data?.message || "Something went wrong";
-    return Promise.reject(new Error(message));
-  }
-);
+export const APIContext = createContext(); 
+
+export const APIProvider = ({ children }) => {
+    const BackendAPI = "http://localhost:4000/student";
+
 
 // =======================
 // PUBLIC API (no token)
@@ -72,3 +61,4 @@ export const ApiProvider = ({ children }) => {
 
 // Hook for easy access
 export const useApi = () => useContext(ApiContext);
+
