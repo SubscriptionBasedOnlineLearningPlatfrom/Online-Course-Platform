@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CourseModules from "./CourseModules";
 import { CourseContext } from "../../Contexts/CourseContext";
-import { APIContext } from "../../Contexts/APIContext";
+import { useApi } from "../../Contexts/ApiContext";
 
 import { FaStar } from "react-icons/fa6";
 
@@ -16,7 +16,7 @@ const CourseDetails = () => {
 
   const navigate = useNavigate();
   const courseId  = "637468ac-0476-4db8-bc1a-e03b1d822a46"; //useParams();
-  const { BackendAPI } = useContext(APIContext);
+  const { BackendAPI } = useApi();
 
   useEffect(() => {
     try {
