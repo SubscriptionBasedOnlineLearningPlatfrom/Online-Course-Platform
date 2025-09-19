@@ -4,7 +4,7 @@ import { FaSave } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useContext } from "react";
-import { APIContext } from "@/Contexts/APIContext";
+import { useApi } from "../../Contexts/ApiContext";
 
 const QuizCreation = () => {
   const [question, setQuestion] = useState("");
@@ -13,7 +13,7 @@ const QuizCreation = () => {
   const [quiz, setQuiz] = useState([]);
   const [correctAnswerIndex, setCorrectAnswerIndex] = useState(null);
   const lessonId = "d493f590-6258-4959-9d2f-21f512957164"; //useParams();
-  const { BackendAPI } = useContext(APIContext);
+  const { BackendAPI } = useApi();
 
   // Load quiz data from localStorage on component mount
   useEffect(() => {

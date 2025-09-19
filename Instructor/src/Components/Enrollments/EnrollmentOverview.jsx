@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { APIContext } from "@/Contexts/APIContext";
+import { useApi } from "../../Contexts/ApiContext";
 
 const EnrollmentOverview = () => {
-  const {BackendAPI} = useContext(APIContext);
+  const { BackendAPI } = useApi();
   const [students, setStudents] = useState([]);
   const [search, setSearch] = useState("");
 
