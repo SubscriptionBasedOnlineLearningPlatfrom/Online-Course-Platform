@@ -2,13 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FaStar } from "react-icons/fa6";
-import { APIContext } from "../../Contexts/APIContext";
 import { CourseContext } from "../../Contexts/CourseContext";
 
 const RelatedCourses = () => {
 
   const navigate = useNavigate();
-  const { BackendAPI } = useContext(APIContext);
   const { category, relatedCourses } = useContext(CourseContext);
 
   // Function to format price
