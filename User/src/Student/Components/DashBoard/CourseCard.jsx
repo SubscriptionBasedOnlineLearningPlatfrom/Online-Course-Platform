@@ -12,14 +12,7 @@ const CourseCard = ({ course, type, onContinue, onDownloadCertificate, onReviewC
     });
   };
 
-  const formatDuration = (hours) => {
-    if (hours < 1) {
-      return `${Math.round(hours * 60)}m`;
-    }
-    return `${hours}h ${Math.round((hours % 1) * 60)}m`;
-  };
   const navigate = useNavigate();
-
 
   const getCategoryIcon = (category) => {
     const icons = {
@@ -62,10 +55,10 @@ const CourseCard = ({ course, type, onContinue, onDownloadCertificate, onReviewC
           
           {/* Course Title and Instructor */}
           <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
-            {course.title}
+            {course.course_title}
           </h3>
           <p className="text-sm text-gray-600 mb-4">
-            By {course.instructor}
+            By {course.instructor_name}
           </p>
           
           {/* Progress Bar */}
@@ -84,13 +77,10 @@ const CourseCard = ({ course, type, onContinue, onDownloadCertificate, onReviewC
           
           {/* Course Meta */}
           <div className="space-y-2 mb-4">
-            <div className="flex items-center text-sm text-gray-600">
-              <i className="fas fa-clock mr-2"></i>
-              <span>{formatDuration(course.remainingTime)} remaining</span>
-            </div>
+            
             <div className="flex items-center text-sm text-gray-600">
               <i className="fas fa-calendar mr-2"></i>
-              <span>Last accessed: {formatDate(course.lastAccessed)}</span>
+              <span>Last accessed: {formatDate(course.updated_at)}</span>
             </div>
           </div>
           
@@ -133,10 +123,10 @@ const CourseCard = ({ course, type, onContinue, onDownloadCertificate, onReviewC
           
           {/* Course Title and Instructor */}
           <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
-            {course.title}
+            {course.course_title}
           </h3>
           <p className="text-sm text-gray-600 mb-4">
-            By {course.instructor}
+            By {course.instructor_name}
           </p>
           
           {/* Completion Info */}
@@ -148,7 +138,7 @@ const CourseCard = ({ course, type, onContinue, onDownloadCertificate, onReviewC
                   Completed:
                 </span>
                 <span className="text-sm font-medium text-gray-900">
-                  {formatDate(course.completedDate)}
+                  {formatDate(course.completion_date)}
                 </span>
               </div>
               <div className="flex items-center justify-between">
@@ -160,15 +150,7 @@ const CourseCard = ({ course, type, onContinue, onDownloadCertificate, onReviewC
                   {course.score}%
                 </span>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">
-                  <i className="fas fa-clock mr-2"></i>
-                  Duration:
-                </span>
-                <span className="text-sm font-medium text-gray-900">
-                  {formatDuration(course.duration)}
-                </span>
-              </div>
+              
             </div>
           </div>
           
@@ -195,7 +177,7 @@ const CourseCard = ({ course, type, onContinue, onDownloadCertificate, onReviewC
          <div className="flex space-x-3">
            {course.hasCertificate && (
              <button 
-               onClick={() => navigate(`/certificate/${course.id}`)}
+               onClick={() => navigate(`/certificate/${course.course_id}`)}
                className="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2"
              >
                <i className="fas fa-download"></i>
@@ -203,7 +185,7 @@ const CourseCard = ({ course, type, onContinue, onDownloadCertificate, onReviewC
              </button>
            )}
            <button 
-             onClick={() => onReviewCourse(course.id)}
+             onClick={() => onReviewCourse(course.course_id)}
              className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2"
            >
              <i className="fas fa-redo"></i>

@@ -1,11 +1,11 @@
 import express from 'express'
 import { createReplyForComment, deleteReply, updateReplyForComment, viewStudentsComments } from '../../Controllers/Instructor/CommentsController.js';
-import { Instructor } from '../../Middleware/authInstructor.js';
+import { auth } from '../../Middleware/authMiddleware.js';
 
 const commentRouter = express.Router();
 
-commentRouter.get("/comments",Instructor, viewStudentsComments);
-commentRouter.post("/:commentId/replies",Instructor, createReplyForComment);
+commentRouter.get("/comments",auth, viewStudentsComments);
+commentRouter.post("/:commentId/replies",auth, createReplyForComment);
 commentRouter.put("/update-reply/:replyId", updateReplyForComment);
 commentRouter.delete("/delete-reply/:replyId", deleteReply);
 

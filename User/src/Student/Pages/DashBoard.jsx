@@ -1,21 +1,9 @@
-import React from "react";
+import React, { use, useContext, useEffect, useState } from "react";
+import axios from "axios";
 import EnrolledCourses from "../Components/DashBoard/EnrolledCourses";
 import { useNavigate } from "react-router-dom";
-
-const ProgressBar = ({ value }) => (
-  <div className="w-full h-2 bg-gray-200 rounded-full">
-    <div
-      className="h-2 rounded-full bg-blue-600"
-      style={{ width: `${Math.min(value, 100)}%` }}
-      aria-valuenow={value}
-      aria-valuemin={0}
-      aria-valuemax={100}
-      role="progressbar"
-    />
-  </div>
-);
-
-
+import { useApi } from "../Contexts/APIContext";
+import { CourseContext } from "../Contexts/CourseContext";
 
 const KPI = ({ label, value, sub }) => (
   <div className="bg-white rounded-2xl shadow p-5">
@@ -25,96 +13,47 @@ const KPI = ({ label, value, sub }) => (
   </div>
 );
 
-const ListItem = ({ title, right, sub }) => (
-  <div className="flex items-start justify-between py-3 border-b last:border-0">
-    <div>
-      <p className="text-sm font-medium text-gray-800">{title}</p>
-      {sub && <p className="text-xs text-gray-500 mt-0.5">{sub}</p>}
-    </div>
-    {right && <div className="text-xs text-gray-600">{right}</div>}
-  </div>
-);
-
 const DashBoard = () => {
   // ---- Mock data (replace with API) ----
 
   const navigate = useNavigate();
+  const { BackendAPI } = useApi();
+  const {
+    dashboardData,
+    streakData,
+    fetchDashboardData,
+    fetchEnrolledCourses,
+  } = useContext(CourseContext);
+
+  useEffect(() => {
+    (async () => {
+      console.log("Fetching dashboard data...");
+      await Promise.all([
+        fetchDashboardData(BackendAPI),
+        fetchEnrolledCourses(BackendAPI),
+      ]);
+    })();
+  }, [BackendAPI]);
 
   const kpis = [
-    { label: "Enrolled Courses", value: 6 },
-    { label: "In Progress", value: 3, sub: "Keep it up!" },
-    { label: "Certificates", value: 2 },
-    { label: "Streak", value: "5 days", sub: "🔥 Daily goal met" },
-  ];
-
-  const continueLearning = [
     {
-      id: 1,
-      title: "React for Beginners",
-      lesson: "Lesson 5: Props & State",
-      progress: 62,
+      label: "Enrolled Courses",
+      value: dashboardData ? dashboardData.enrolled_count : 0,
     },
     {
-      id: 2,
-      title: "Node.js Mastery",
-      lesson: "Section 3: REST APIs",
-      progress: 41,
+      label: "In Progress",
+      value: dashboardData ? dashboardData.in_progress_count : 0,
+      sub: "Keep it up!",
     },
     {
-      id: 3,
-      title: "AI with Python",
-      lesson: "Module 2: Numpy Basics",
-      progress: 78,
-    },
-  ];
-
-  const upcoming = [
-    {
-      id: 1,
-      title: "Live Q&A – React",
-      time: "Aug 30, 6:00 PM",
-      sub: "Instructor: Sarah P.",
+      label: "Certificates",
+      value: dashboardData ? dashboardData.certificates_count : 0,
     },
     {
-      id: 2,
-      title: "Workshop – APIs with Express",
-      time: "Sep 02, 7:30 PM",
-      sub: "Zoom link in course",
+      label: "Streak",
+      value: streakData ? streakData.streak : 0,
+      sub: "Daily goal met",
     },
-  ];
-
-  const deadlines = [
-    {
-      id: 1,
-      title: "Quiz 2 – React Basics",
-      due: "Due Aug 29, 11:59 PM",
-      sub: "Minimum pass 70%",
-    },
-    {
-      id: 2,
-      title: "Assignment – Build Todo API",
-      due: "Due Sep 03, 11:59 PM",
-      sub: "Node.js Mastery",
-    },
-  ];
-
-  const recommendations = [
-    {
-      id: 1,
-      title: "TypeScript Essentials",
-      sub: "Because you’re learning React",
-    },
-    {
-      id: 2,
-      title: "Git & GitHub Crash Course",
-      sub: "Improve your project workflow",
-    },
-  ];
-
-  const recent = [
-    { id: 1, title: "Completed: React – Lesson 4", time: "2h ago" },
-    { id: 2, title: "Scored 8/10 on Quiz 1", time: "1d ago" },
-    { id: 3, title: "New comment on ‘AI with Python’", time: "2d ago" },
   ];
 
   return (
@@ -127,7 +66,10 @@ const DashBoard = () => {
             Here’s a quick look at your learning progress.
           </p>
         </div>
-        <button onClick={() => navigate("/courses/2/content")} className="px-4 py-2 text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700">
+        <button
+          onClick={() => navigate("/courses/2/content")}
+          className="px-4 py-2 text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+        >
           Continue Learning
         </button>
       </div>
